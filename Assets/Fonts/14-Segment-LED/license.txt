@@ -1,0 +1,12 @@
+﻿The FontStruction “14 Segment LED”
+(http://fontstruct.com/fontstructions/show/417799) by “rea5245” is licensed
+under a Creative Commons Attribution Share Alike license
+(http://creativecommons.org/licenses/by-sa/3.0/).
+“14 Segment LED” was originally cloned (copied) from the FontStruction “14
+Leds” (http://fontstruct.com/fontstructions/show/66495) by “Karras”, which
+is licensed under a Creative Commons Attribution Share Alike license
+(http://creativecommons.org/licenses/by-sa/3.0/).
+“14 Leds” was in turn cloned (copied) from the FontStruction “Seven
+Leds” (http://fontstruct.com/fontstructions/show/66274) by “Karras”, which
+is licensed under a Creative Commons Attribution Share Alike license
+(http://creativecommons.org/licenses/by-sa/3.0/).
