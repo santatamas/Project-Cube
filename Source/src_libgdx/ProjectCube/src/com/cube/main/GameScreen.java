@@ -3,6 +3,8 @@ package com.cube.main;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
@@ -17,6 +19,9 @@ public class GameScreen implements Screen, GestureListener {
 	TwoStateIcon _eatIcon;
 	private float _width;
 	private float _height;
+	private boolean _rendering = true;
+	Sound _switchSound;
+	Music _bgMusic;
 	
 	public GameScreen()
 	{
@@ -28,6 +33,9 @@ public class GameScreen implements Screen, GestureListener {
 		_eatIcon = new TwoStateIcon("data/eat_icon_off.png", "data/eat_icon_on.png");
 		_stage.addActor(_matrixRenderer);	
 		_stage.addActor(_eatIcon);
+		_switchSound = CubeGame.AssetManager.get("data/switch_effect.wav");
+		_bgMusic = Gdx.audio.newMusic(Gdx.files.internal("data/bg_music.mp3"));
+		_bgMusic.play();
 	}
 	
 	public void resize(int width, int height) {
@@ -35,6 +43,8 @@ public class GameScreen implements Screen, GestureListener {
 
 	@Override
 	public void render(float delta) {
+		if(!_rendering) return;
+		
 		Gdx.gl.glClearColor(125/255f, 140/255f, 115/255f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		_stage.act(delta);
@@ -50,14 +60,19 @@ public class GameScreen implements Screen, GestureListener {
     public void hide() {
     	Gdx.input.setInputProcessor(null);
     }
-	
-	
-	
-	
-	
+
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
-		return false;
+		_rendering = !_rendering;
+		_switchSound.play();
+		if(_rendering)
+		{
+			_bgMusic.play();
+		}else
+		{
+			_bgMusic.pause();
+		}
+		return true;
 	}
 
 	@Override

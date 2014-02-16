@@ -3,6 +3,7 @@ package com.cube.main;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,6 +27,7 @@ public class LoadingScreen implements Screen {
 	private void LoadPrimaryAssets() {
 		CubeGame.AssetManager.load("data/eat_icon_off.png", Texture.class);
 		CubeGame.AssetManager.load("data/eat_icon_on.png", Texture.class);
+		CubeGame.AssetManager.load("data/switch_effect.wav", Sound.class);
 	}
 	
 	@Override

@@ -25,7 +25,7 @@ public class PixelMatrixRenderer extends Actor {
 	}
 	
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void draw(SpriteBatch batch, float parentAlpha) {	
 		shapeRenderer.begin(ShapeType.Filled);			
 			for(int i = 0;i<72;i++)
 	        {
@@ -44,5 +44,5 @@ public class PixelMatrixRenderer extends Actor {
 	        }
 		shapeRenderer.end();	
 		font.draw(batch, Integer.toString(Gdx.graphics.getFramesPerSecond()), 10, 20);		
-	}	
+	}
 }
