@@ -11,3 +11,8 @@ C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEdito
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\PixelMatrixEditor.exe
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\PixelMatrixEditor.pdb
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\PixelMatrixEditor_MarkupCompile.lref
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\PixelMatrixEditor.csprojResolveAssemblyReference.cache
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\PixelMatrixView.baml
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\PixelMatrixView.g.cs
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\bin\Debug\Microsoft.Practices.Prism.dll

@@ -1,4 +1,4 @@
-﻿namespace PixelMatrixEditor
+﻿namespace PixelMatrixEditor.Models
 {
     public struct MatrixInfo
     {

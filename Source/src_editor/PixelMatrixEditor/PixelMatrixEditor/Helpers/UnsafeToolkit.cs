@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace PixelMatrixEditor
+namespace PixelMatrixEditor.Helpers
 {
     public static class UnSafeToolKit
     {

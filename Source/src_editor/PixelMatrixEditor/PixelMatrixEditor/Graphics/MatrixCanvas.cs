@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace PixelMatrixEditor
+namespace PixelMatrixEditor.Graphics
 {
     public class MatrixCanvas : Canvas
     {
