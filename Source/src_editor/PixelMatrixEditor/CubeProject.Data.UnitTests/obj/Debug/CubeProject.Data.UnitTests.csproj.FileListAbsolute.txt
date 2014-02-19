@@ -1,0 +1,9 @@
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\bin\Debug\CubeProject.Data.UnitTests.dll
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\bin\Debug\CubeProject.Data.UnitTests.pdb
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\bin\Debug\CubeProject.Data.dll
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\bin\Debug\CubeProject.Infrastructure.dll
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\bin\Debug\CubeProject.Data.pdb
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\bin\Debug\CubeProject.Infrastructure.pdb
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\obj\Debug\CubeProject.Data.UnitTests.csprojResolveAssemblyReference.cache
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\obj\Debug\CubeProject.Data.UnitTests.dll
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\obj\Debug\CubeProject.Data.UnitTests.pdb
