@@ -3,7 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PixelMatrixEditor", "PixelMatrixEditor\PixelMatrixEditor.csproj", "{8F3D91C5-3315-46DB-80A4-0CC94F2018C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeProject.PixelMatrixEditor", "PixelMatrixEditor\CubeProject.PixelMatrixEditor.csproj", "{8F3D91C5-3315-46DB-80A4-0CC94F2018C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeProject.Data", "CubeProject.Data\CubeProject.Data.csproj", "{4EF911DD-31EA-43BF-8ED3-B37383B15FEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeProject.Data.UnitTests", "CubeProject.Data.UnitTests\CubeProject.Data.UnitTests.csproj", "{5A13811D-169C-4BB6-9B66-3A656378F0BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeProject.Infrastructure", "CubeProject.Infrastructure\CubeProject.Infrastructure.csproj", "{ED9AA0DA-221E-46DC-9CBC-B46501372760}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CubeProject.Graphics", "CubeProject.Graphics\CubeProject.Graphics.csproj", "{BFCEBDD1-1D17-4989-95DC-67C304AB3D39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +23,22 @@ Global
 		{8F3D91C5-3315-46DB-80A4-0CC94F2018C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F3D91C5-3315-46DB-80A4-0CC94F2018C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F3D91C5-3315-46DB-80A4-0CC94F2018C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EF911DD-31EA-43BF-8ED3-B37383B15FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EF911DD-31EA-43BF-8ED3-B37383B15FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EF911DD-31EA-43BF-8ED3-B37383B15FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EF911DD-31EA-43BF-8ED3-B37383B15FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A13811D-169C-4BB6-9B66-3A656378F0BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A13811D-169C-4BB6-9B66-3A656378F0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A13811D-169C-4BB6-9B66-3A656378F0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A13811D-169C-4BB6-9B66-3A656378F0BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED9AA0DA-221E-46DC-9CBC-B46501372760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED9AA0DA-221E-46DC-9CBC-B46501372760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED9AA0DA-221E-46DC-9CBC-B46501372760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED9AA0DA-221E-46DC-9CBC-B46501372760}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFCEBDD1-1D17-4989-95DC-67C304AB3D39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFCEBDD1-1D17-4989-95DC-67C304AB3D39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFCEBDD1-1D17-4989-95DC-67C304AB3D39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFCEBDD1-1D17-4989-95DC-67C304AB3D39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

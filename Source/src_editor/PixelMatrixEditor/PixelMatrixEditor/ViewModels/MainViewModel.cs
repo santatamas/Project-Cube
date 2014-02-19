@@ -4,8 +4,11 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using CubeProject.Data.Entities;
 using Microsoft.Practices.Prism.Commands;
 using PixelMatrixEditor.Annotations;
+using PixelMatrixEditor.Data;
 using PixelMatrixEditor.Models;
 
 namespace PixelMatrixEditor.ViewModels
@@ -39,11 +42,11 @@ namespace PixelMatrixEditor.ViewModels
             }
         }
 
-        public Matrix CurrentMatrix
+        public Frame<byte> CurrentMatrix
         {
             get
             {
-                return _currentMatrix ?? (_currentMatrix = new Matrix(72, 72));
+                return _currentMatrix ?? (_currentMatrix = new Frame<byte>(72, 72));
             }
         }
 
@@ -97,7 +100,7 @@ namespace PixelMatrixEditor.ViewModels
             {
                 for (int j = 0; j < 72; j++)
                 {
-                    sb.Append((_currentMatrix[j, i] ? 1 : 0) + " ");
+                    sb.Append(_currentMatrix[j, i] + " ");
                 }
                 sb.Append(Environment.NewLine);
             }
@@ -116,7 +119,7 @@ namespace PixelMatrixEditor.ViewModels
         private DelegateCommand<object> _saveCommand;
         private DelegateCommand<object> _saveAsCommand;
         private DelegateCommand<object> _closeCommand;
-        private Matrix _currentMatrix;
+        private Frame<byte> _currentMatrix;
 
         #endregion
         #endregion
