@@ -1,4 +1,4 @@
-﻿namespace PixelMatrixEditor.Models
+﻿namespace CubeProject.Infrastructure.Enums
 {
     public enum ToggleMode
     {

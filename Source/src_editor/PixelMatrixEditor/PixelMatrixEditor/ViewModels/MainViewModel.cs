@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using CubeProject.Data.Entities;
+using CubeProject.Data.Serializers;
 using Microsoft.Practices.Prism.Commands;
 using PixelMatrixEditor.Annotations;
-using PixelMatrixEditor.Data;
-using PixelMatrixEditor.Models;
+using Application = System.Windows.Application;
+using ColorDepth = CubeProject.Infrastructure.Enums.ColorDepth;
+using MessageBox = System.Windows.MessageBox;
 
 namespace PixelMatrixEditor.ViewModels
 {
@@ -19,10 +22,35 @@ namespace PixelMatrixEditor.ViewModels
         public MainViewModel()
         {
             SelectedAreaSize = 1;
+            _animation = new Animation
+            {
+                ColorDepth = ColorDepth.Onebit
+            };
+
+            for (int i = 0; i < 30; i++)
+            {
+                _animation.Frames.Add(new Frame<byte>(50,50));
+                _animation.FrameDurations.Add(500);
+            }
+            _currentMatrix = _animation.Frames[0];
         }
         #endregion
 
         #region Properties
+
+        public string ActiveStatusMessage
+        {
+            get { return _activeStatusMessage; }
+            set
+            {
+                if (value == _activeStatusMessage) return;
+                _activeStatusMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string CurrentFilePath { get; set; }
+
         public int SelectedAreaSize
         {
             get { return _selectedAreaSize; }
@@ -44,16 +72,33 @@ namespace PixelMatrixEditor.ViewModels
 
         public Frame<byte> CurrentMatrix
         {
-            get
+            get { return _currentMatrix; }
+            set
             {
-                return _currentMatrix ?? (_currentMatrix = new Frame<byte>(72, 72));
+                if (Equals(value, _currentMatrix)) return;
+                _currentMatrix = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Animation Animation
+        {
+            get { return _animation; }
+            set
+            {
+                if (Equals(value, _animation)) return;
+                _animation = value;
+
+                if(_animation != null && _animation.Frames.Count != 0)
+                    CurrentMatrix = _animation.Frames[0];
+
+                OnPropertyChanged();
             }
         }
 
         #endregion
 
         #region Commands
-
         public DelegateCommand<object> NewCommand
         {
             get { return _newCommand ?? (_newCommand = new DelegateCommand<object>(CreateNew)); }
@@ -85,31 +130,63 @@ namespace PixelMatrixEditor.ViewModels
 
         private void CreateNew(object obj)
         {
-            MessageBox.Show("Create");
+            Animation = new Animation();
+            ActiveStatusMessage = "New animation created.";
         }
 
         private void Open(object obj)
         {
-            MessageBox.Show("Open");
+            OpenFileDialog ofd = new OpenFileDialog();
+            // set a default file name
+            ofd.FileName = "unknown.pma";
+            // set filters - this can be done in properties as well
+            ofd.Filter = "Pixel Matrix Animation (*.pma)|*.pma|All files (*.*)|*.*";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                var serializer = new AnimationSerializer();
+                Animation = serializer.Deserialize(File.Open(ofd.FileName, FileMode.Open));
+                CurrentFilePath = ofd.FileName;
+                ActiveStatusMessage = "Animation loaded.";
+            }
         }
 
         private void Save(object obj)
         {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < 72; i++)
+            if (!String.IsNullOrEmpty(CurrentFilePath))
             {
-                for (int j = 0; j < 72; j++)
-                {
-                    sb.Append(_currentMatrix[j, i] + " ");
-                }
-                sb.Append(Environment.NewLine);
+                SaveAnimationTo(Animation, CurrentFilePath);
+                ActiveStatusMessage = "Saving complete.";
             }
-            MessageBox.Show(sb.ToString());
         }
 
         private void SaveAs(object obj)
         {
-            MessageBox.Show("Save As");
+            var sfd = new SaveFileDialog();
+            // set a default file name
+            sfd.FileName = "unknown.pma";
+            // set filters - this can be done in properties as well
+            sfd.Filter = "Pixel Matrix Animation (*.pma)|*.pma|All files (*.*)|*.*";
+
+            if (sfd.ShowDialog() != DialogResult.OK) return;
+
+            SaveAnimationTo(Animation, sfd.FileName);
+            CurrentFilePath = sfd.FileName;
+            ActiveStatusMessage = "Saving complete.";
+        }
+
+        private void SaveAnimationTo(Animation animation, string path)
+        {
+            var serializer = new AnimationSerializer();
+            using (var animStream = serializer.Serialize(animation))
+            {
+                animStream.Position = 0;
+
+                using (var fs = File.Create(path))
+                {
+                    animStream.CopyTo(fs);
+                }
+            }
         }
 
         #region Private State
@@ -120,6 +197,8 @@ namespace PixelMatrixEditor.ViewModels
         private DelegateCommand<object> _saveAsCommand;
         private DelegateCommand<object> _closeCommand;
         private Frame<byte> _currentMatrix;
+        private Animation _animation;
+        private string _activeStatusMessage;
 
         #endregion
         #endregion

@@ -1,17 +1,20 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CubeProject.Data.Entities;
 using CubeProject.Graphics.Helpers;
 using CubeProject.Graphics.Renderers;
-using PixelMatrixEditor.Models;
+using CubeProject.Infrastructure.Enums;
+using PixelMatrixEditor.Annotations;
 
 namespace PixelMatrixEditor.Views
 {
     /// <summary>
     /// Interaction logic for PixelMatrixView.xaml
     /// </summary>
-    public partial class PixelMatrixView : UserControl
+    public partial class PixelMatrixView : UserControl, INotifyPropertyChanged
     {
         #region AreaSize Dependency Property
 
@@ -37,8 +40,18 @@ namespace PixelMatrixEditor.Views
 
         private static void MatrixSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PixelMatrixView view = (PixelMatrixView) d;
-            view.UpdateRenderer((Frame<byte>)e.NewValue);
+            var view = (PixelMatrixView) d;
+            var currentFrame = (Frame<byte>) e.NewValue;
+            view.MatrixRenderer = new MatrixRenderer(new MatrixInfo
+            {
+                PixelSize = 8,
+                GapSize = 2,
+                ScreenHeight = currentFrame.Height * 10,
+                ScreenWidth = currentFrame.Width * 10,
+                SizeX = currentFrame.Width,
+                SizeY = currentFrame.Height
+            });
+            view.MatrixRenderer.Frame = currentFrame;
         }
 
         // .NET Property wrapper
@@ -49,54 +62,92 @@ namespace PixelMatrixEditor.Views
         }
         #endregion
 
-        public MatrixRenderer MatrixRenderer { get; private set; }
+        #region AutoRefresh Dependency Property
+
+        // Dependency Property
+        public static readonly DependencyProperty AutoRefreshProperty =
+             DependencyProperty.Register("AutoRefresh", typeof(bool),
+             typeof(PixelMatrixView), new FrameworkPropertyMetadata(AutoRefreshChanged));
+
+        private static void AutoRefreshChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var view = (PixelMatrixView)d;
+            view.MatrixRenderer.Render();
+        }
+
+        // .NET Property wrapper
+        public bool AutoRefresh
+        {
+            get { return (bool)GetValue(MatrixSourceProperty); }
+            set { SetValue(MatrixSourceProperty, value); }
+        }
+        #endregion
+
+        public MatrixRenderer MatrixRenderer
+        {
+            get { return _matrixRenderer; }
+            private set
+            {
+                _matrixRenderer = value;
+                OnPropertyChanged();
+            }
+        }
+        private MatrixRenderer _matrixRenderer;
+
         public PixelMatrixView()
         {
             InitializeComponent();
-
-            MatrixRenderer = new MatrixRenderer(new MatrixInfo
-            {
-                PixelSize = 8,
-                GapSize = 2,
-                ScreenHeight = (int)MainScreen.Height,
-                ScreenWidth = (int)MainScreen.Width,
-                SizeX = 72,
-                SizeY = 72
-            });
         }
 
         #region EventHandlers
         private void MainScreen_OnMouseUp(object sender, MouseButtonEventArgs e)
         {
-            Point clickLocation = e.GetPosition((Image)sender);
+            var realLocation = GetRelativelLocation(e.GetPosition((Image)sender));
+
             if (e.ChangedButton == MouseButton.Left)
             {
-                MatrixRenderer.TogglePixelAtLocation(clickLocation, AreaSize - 1, ToggleMode.On);
+                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.On);
             }
 
             if (e.ChangedButton == MouseButton.Right)
             {
-                MatrixRenderer.TogglePixelAtLocation(clickLocation, AreaSize - 1, ToggleMode.Off);
-            }
+                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.Off);
+            }         
         }
+
+        private Point GetRelativelLocation(Point clickLocation)
+        {
+            var realLocationX = clickLocation.X*(MatrixRenderer.Settings.ScreenWidth/MainScreen.ActualWidth);
+            var realLocationY = clickLocation.Y*(MatrixRenderer.Settings.ScreenHeight/MainScreen.ActualHeight);
+            Point realLocation = new Point(realLocationX, realLocationY);
+            return realLocation;
+        }
+
         private void MainScreen_OnMouseMove(object sender, MouseEventArgs e)
         {
-            Point clickLocation = e.GetPosition((Image)sender);
+            var realLocation = GetRelativelLocation(e.GetPosition((Image)sender));
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                MatrixRenderer.TogglePixelAtLocation(clickLocation, AreaSize - 1, ToggleMode.On);
+                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.On);
             }
 
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                MatrixRenderer.TogglePixelAtLocation(clickLocation, AreaSize - 1, ToggleMode.Off);
+                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.Off);
             }
         }
         #endregion
-        private void UpdateRenderer(Frame<byte> matrix)
+
+        #region INotifyPropertyChanged
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            MatrixRenderer.Matrix = matrix;
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
     }
 }

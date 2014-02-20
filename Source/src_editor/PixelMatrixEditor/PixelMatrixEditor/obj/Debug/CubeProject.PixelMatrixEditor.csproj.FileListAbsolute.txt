@@ -22,3 +22,5 @@ C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEdito
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\Views\PixelMatrixView.g.cs
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\Views\MainWindow.baml
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\Views\PixelMatrixView.baml
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\Views\AnimationView.baml
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\obj\Debug\Views\AnimationView.g.cs

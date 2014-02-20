@@ -7,3 +7,5 @@ C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEdito
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\obj\Debug\CubeProject.Data.UnitTests.csprojResolveAssemblyReference.cache
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\obj\Debug\CubeProject.Data.UnitTests.dll
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\obj\Debug\CubeProject.Data.UnitTests.pdb
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\bin\Debug\nunit.framework.dll
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Data.UnitTests\bin\Debug\nunit.framework.xml

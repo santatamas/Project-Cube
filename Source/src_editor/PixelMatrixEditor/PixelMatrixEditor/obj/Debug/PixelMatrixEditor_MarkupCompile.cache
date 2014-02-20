@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\PixelMatrixEditor\App.xaml
-2-1735201964
+3-1601149506
 
-8-1420383537
+92116778351
 17295745388
-Views\MainWindow.xaml;Views\PixelMatrixView.xaml;
+Views\AnimationView.xaml;Views\MainWindow.xaml;Views\PixelMatrixView.xaml;
 
 False
 

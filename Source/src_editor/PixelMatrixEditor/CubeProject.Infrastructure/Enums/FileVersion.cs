@@ -1,4 +1,4 @@
-﻿namespace PixelMatrixEditor.Data
+﻿namespace CubeProject.Infrastructure.Enums
 {
     public enum FileVersion
     {

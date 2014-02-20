@@ -8,10 +8,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Image x:Name="MainScreen" Height="720" Width="720"
+        <Image x:Name="MainScreen" SnapsToDevicePixels="True" UseLayoutRounding="True"
                Source="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:PixelMatrixView}}, Path=MatrixRenderer.RenderedSource, Mode=OneWay}"
-               HorizontalAlignment="Stretch" 
-               VerticalAlignment="Stretch" Stretch="Fill" MouseUp="MainScreen_OnMouseUp" MouseMove="MainScreen_OnMouseMove">
+               MouseUp="MainScreen_OnMouseUp" 
+               MouseMove="MainScreen_OnMouseMove">
         </Image>
     </Grid>
 </UserControl>

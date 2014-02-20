@@ -2,3 +2,4 @@ C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEdito
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Infrastructure\bin\Debug\CubeProject.Infrastructure.pdb
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Infrastructure\obj\Debug\CubeProject.Infrastructure.dll
 C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Infrastructure\obj\Debug\CubeProject.Infrastructure.pdb
+C:\Users\Thomas\Documents\GitHub\project-cube\Source\src_editor\PixelMatrixEditor\CubeProject.Infrastructure\obj\Debug\CubeProject.Infrastructure.csprojResolveAssemblyReference.cache

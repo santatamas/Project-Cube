@@ -1,6 +1,7 @@
 ﻿using System.IO;
+using CubeProject.Infrastructure.Enums;
 
-namespace PixelMatrixEditor.Data
+namespace CubeProject.Infrastructure.Interfaces
 {
     public interface IBinarySerializer<T>
     {

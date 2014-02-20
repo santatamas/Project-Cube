@@ -1,17 +1,18 @@
 ﻿<Window x:Class="PixelMatrixEditor.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:pMe="clr-namespace:PixelMatrixEditor" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:viewModels="clr-namespace:PixelMatrixEditor.ViewModels"
         xmlns:views="clr-namespace:PixelMatrixEditor.Views"
         mc:Ignorable="d"
-        Title="Pixel Matrix Editor v0.1" MinHeight="720" MinWidth="720" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+        Title="Pixel Matrix Editor v0.2" Height="800" Width="800" SizeToContent="Manual" ResizeMode="CanResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0">
@@ -25,20 +26,20 @@
             </MenuItem>
         </Menu>
 
-        <DockPanel Grid.Row="1">
-            <ToolBarTray DockPanel.Dock="Top">
-                <ToolBar>
-                    <Label>Brush size:</Label>
-                    <ComboBox x:Name="AreaSizeComboBox" MinWidth="40" ItemsSource="{Binding Path=AreaSize}" SelectedItem="{Binding Path=SelectedAreaSize}"/>
-                </ToolBar>
-            </ToolBarTray>
+        <ToolBarTray Grid.Row="1">
+            <ToolBar>
+                <Label>Brush size:</Label>
+                <ComboBox x:Name="AreaSizeComboBox" MinWidth="40" ItemsSource="{Binding Path=AreaSize}" SelectedItem="{Binding Path=SelectedAreaSize}"/>
+            </ToolBar>
+        </ToolBarTray>
 
-            <StatusBar DockPanel.Dock="Bottom">
-                <StatusBarItem Content="Filler" />
-            </StatusBar>
+        <views:PixelMatrixView x:Name="MatrixView" Grid.Row="2"
+                               AreaSize="{Binding Path=SelectedValue, ElementName=AreaSizeComboBox}" 
+                               MatrixSource="{Binding Path=CurrentMatrix}" />
 
-            <views:PixelMatrixView AreaSize="{Binding Path=SelectedValue, ElementName=AreaSizeComboBox}" 
-                                 MatrixSource="{Binding Path=CurrentMatrix}" />
-        </DockPanel>
+        <views:AnimationView Grid.Row="3" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}, Path=ActualWidth}" DataContext="{Binding}" />
+        <StatusBar Grid.Row="4">
+            <StatusBarItem Content="{Binding ActiveStatusMessage}" />
+        </StatusBar>
     </Grid>
 </Window>

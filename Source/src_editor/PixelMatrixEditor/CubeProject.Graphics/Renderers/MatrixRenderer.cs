@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CubeProject.Data.Entities;
 using CubeProject.Graphics.Helpers;
-using PixelMatrixEditor.Models;
+using CubeProject.Infrastructure.Enums;
 
 namespace CubeProject.Graphics.Renderers
 {
@@ -18,7 +18,6 @@ namespace CubeProject.Graphics.Renderers
         public MatrixRenderer()
         {
             InitializeRenderSource();
-            Render();
         }
         public MatrixRenderer(MatrixInfo settings)
         {
@@ -38,12 +37,12 @@ namespace CubeProject.Graphics.Renderers
             }
         }
 
-        public Frame<byte> Matrix
+        public Frame<byte> Frame
         {
-            get { return _matrix; }
+            get { return _frame; }
             set
             {
-                _matrix = value;
+                _frame = value;
                 Render();
             }
         }
@@ -67,18 +66,18 @@ namespace CubeProject.Graphics.Renderers
             Format = PixelFormats.Pbgra32;
             var section = CreateFileMapping(INVALID_HANDLE_VALUE, IntPtr.Zero, PAGE_READWRITE, 0, Count, null);
             _map = MapViewOfFile(section, FILE_MAP_ALL_ACCESS, 0, 0, Count);
-            _page0 = System.Windows.Interop.Imaging.CreateBitmapSourceFromMemorySection(section, _settings.ScreenWidth, _settings.ScreenHeight, Format, Stride, 0) as InteropBitmap;
+            _page0 = System.Windows.Interop.Imaging.CreateBitmapSourceFromMemorySection(section, Settings.ScreenWidth, Settings.ScreenHeight, Format, Stride, 0) as InteropBitmap;
         }
 
-        private unsafe void Render()
+        public unsafe void Render()
         {
             #region Background render
 
             uint* buffer = (uint*)_map;
 
-            for (int j = 0; j < _settings.ScreenWidth; j++)
+            for (int j = 0; j < Settings.ScreenWidth; j++)
             {
-                for (int i = 0; i < _settings.ScreenHeight; i++)
+                for (int i = 0; i < Settings.ScreenHeight; i++)
                 {
                     *buffer++ = UnSafeToolKit.GetIntFromColor(_backGroundBrush);
                 }
@@ -90,14 +89,14 @@ namespace CubeProject.Graphics.Renderers
 
             Color currentPixelColor;
             int* mapPtr = (int*)_map;
-            int rectSize = _settings.PixelSize + _settings.GapSize;
+            int rectSize = Settings.PixelSize + Settings.GapSize;
 
-            for (int i = 0; i < _settings.SizeX; i++)
+            for (int i = 0; i < Settings.SizeX; i++)
             {
-                for (int j = 0; j < _settings.SizeY; j++)
+                for (int j = 0; j < Settings.SizeY; j++)
                 {
-                    currentPixelColor = _matrix.Data[i, j] == 1 ? _pixelOnBrush : _pixelOffBrush;
-                    UnSafeToolKit.DrawRectange(new Rect(i * rectSize, j * rectSize, _settings.PixelSize, _settings.PixelSize), currentPixelColor, mapPtr, _settings.ScreenWidth);
+                    currentPixelColor = _frame.Data[i, j] == 1 ? _pixelOnBrush : _pixelOffBrush;
+                    UnSafeToolKit.DrawRectange(new Rect(i * rectSize, j * rectSize, Settings.PixelSize, Settings.PixelSize), currentPixelColor, mapPtr, Settings.ScreenWidth);
                 }
             }
             #endregion
@@ -109,8 +108,8 @@ namespace CubeProject.Graphics.Renderers
         {
             return new PixelCoordinate
             {
-                X = (int)clickLocation.X / (_settings.PixelSize + _settings.GapSize),
-                Y = (int)clickLocation.Y / (_settings.PixelSize + _settings.GapSize)
+                X = (int)clickLocation.X / (Settings.PixelSize + Settings.GapSize),
+                Y = (int)clickLocation.Y / (Settings.PixelSize + Settings.GapSize)
             };
         }
 
@@ -119,16 +118,21 @@ namespace CubeProject.Graphics.Renderers
         {
             get
             {
-                return (uint)(_settings.ScreenWidth * _settings.ScreenHeight * (Format.BitsPerPixel / 8));
+                return (uint)(Settings.ScreenWidth * Settings.ScreenHeight * (Format.BitsPerPixel / 8));
             }
         }
 
         private int Stride
         {
-            get { return (_settings.ScreenWidth * Format.BitsPerPixel / 8); }
+            get { return (Settings.ScreenWidth * Format.BitsPerPixel / 8); }
         }
 
         private PixelFormat Format { get; set; }
+
+        public MatrixInfo Settings
+        {
+            get { return _settings; }
+        }
 
         private InteropBitmap _page0;
         private IntPtr _map;
@@ -159,7 +163,7 @@ namespace CubeProject.Graphics.Renderers
         private Color _pixelOnBrush = Color.FromRgb(53, 53, 53);
 
         private MatrixInfo _settings;
-        private Frame<byte> _matrix;
+        private Frame<byte> _frame;
 
         #endregion
         #endregion
@@ -167,7 +171,7 @@ namespace CubeProject.Graphics.Renderers
         #region Public
         public void TogglePixelAtLocation(Point clickLocation, int area, ToggleMode mode)
         {
-            if (_matrix == null) return;
+            if (_frame == null) return;
 
             PixelCoordinate coordinate = GetCoordinateFromLocation(clickLocation);
 
@@ -177,26 +181,26 @@ namespace CubeProject.Graphics.Renderers
                 for (int j = (coordinate.Y - area); j <= (coordinate.Y + area); j++)
                 {
                     // checking boundaries
-                    if (i >= _settings.SizeX || j >= _settings.SizeY || i < 0 || j < 0) continue;
+                    if (i >= Settings.SizeX || j >= Settings.SizeY || i < 0 || j < 0) continue;
 
                     // change pixel's value based on the selected drawing mode
                     switch (mode)
                     {
                         case ToggleMode.On:
-                            _matrix[i, j] = 1;
+                            _frame[i, j] = 1;
                             break;
                         case ToggleMode.Off:
-                            _matrix[i, j] = 0;
+                            _frame[i, j] = 0;
                             break;
                         case ToggleMode.Inverse:
 
-                            if (_matrix[i, j] == 0)
+                            if (_frame[i, j] == 0)
                             {
-                                _matrix[i, j] = 1;
+                                _frame[i, j] = 1;
                             }
                             else
                             {
-                                _matrix[i, j] = 0;
+                                _frame[i, j] = 0;
                             }
                             
                             break;

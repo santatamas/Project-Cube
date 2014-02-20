@@ -1,8 +1,8 @@
-﻿namespace PixelMatrixEditor.Data
+﻿namespace CubeProject.Infrastructure.Enums
 {
     public enum ColorDepth
     {
-        Onebit,
-        GrayScale
+        Onebit = 1,
+        GrayScale = 8
     }
 }
