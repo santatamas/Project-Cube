@@ -3,37 +3,49 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Forms;
 using CubeProject.Data.Entities;
 using CubeProject.Data.Serializers;
+using CubeProject.Infrastructure.BaseClasses;
 using Microsoft.Practices.Prism.Commands;
 using PixelMatrixEditor.Annotations;
+using PixelMatrixEditor.Views;
 using Application = System.Windows.Application;
 using ColorDepth = CubeProject.Infrastructure.Enums.ColorDepth;
-using MessageBox = System.Windows.MessageBox;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace PixelMatrixEditor.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ViewModelBase
     {
         #region Construction
         public MainViewModel()
         {
             SelectedAreaSize = 1;
-            _animation = new Animation
+           _animation = CreateNewAnimation(ColorDepth.Onebit, 50,50);
+           _currentMatrix = _animation.Frames[0];
+        }
+
+        private Animation CreateNewAnimation(ColorDepth depth, short frameWidth, short frameHeight)
+        {
+            var animation = new Animation()
             {
-                ColorDepth = ColorDepth.Onebit
+                ColorDepth = depth
             };
 
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < 5; i++)
             {
-                _animation.Frames.Add(new Frame<byte>(50,50));
-                _animation.FrameDurations.Add(500);
+                animation.Frames.Add(new Frame<byte>(frameWidth, frameHeight));
+                animation.FrameDurations.Add(500);
             }
-            _currentMatrix = _animation.Frames[0];
+
+            _currentAnimationFrameWidth = frameWidth;
+            _currentAnimationFrameHeight = frameHeight;
+
+            return animation;
         }
+
         #endregion
 
         #region Properties
@@ -120,6 +132,16 @@ namespace PixelMatrixEditor.ViewModels
             get { return _closeCommand ?? (_closeCommand = new DelegateCommand<object>(CloseApplication)); }
         }
 
+        public DelegateCommand<object> DeleteFrameCommand
+        {
+            get { return _deleteFrameCommand ?? (_deleteFrameCommand = new DelegateCommand<object>(DeleteFrame)); }
+        }
+
+        public DelegateCommand<object> AddFrameCommand
+        {
+            get { return _addFrameCommand ?? (_addFrameCommand = new DelegateCommand<object>(AddFrame)); }
+        }
+
         #endregion
 
         #region Private
@@ -130,8 +152,14 @@ namespace PixelMatrixEditor.ViewModels
 
         private void CreateNew(object obj)
         {
-            Animation = new Animation();
-            ActiveStatusMessage = "New animation created.";
+            NewAnimationView newAnimWindow = new NewAnimationView();
+            if (newAnimWindow.ShowDialog() == true)
+            {
+                var viewModel = (newAnimWindow.DataContext as NewAnimationViewModel);
+                Animation = CreateNewAnimation(viewModel.SelectedColorDepth, viewModel.FrameWidth, viewModel.FrameHeight);
+                ActiveStatusMessage = "New animation created.";
+
+            }
         }
 
         private void Open(object obj)
@@ -188,6 +216,29 @@ namespace PixelMatrixEditor.ViewModels
                 }
             }
         }
+        private void DeleteFrame(object obj)
+        {
+            MessageBoxButtons btnMessageBox = MessageBoxButtons.YesNo;
+            MessageBoxIcon icnMessageBox = MessageBoxIcon.Warning;
+
+            MessageBoxResult rsltMessageBox = (MessageBoxResult)MessageBox.Show("Are you sure you want to delete the Frame?", "Delete", btnMessageBox, icnMessageBox);
+
+            switch (rsltMessageBox)
+            {
+                case MessageBoxResult.Yes:
+                    Animation.Frames.Remove((Frame<byte>)obj);
+                    break;
+
+                case MessageBoxResult.No:
+                    /* ... */
+                    break;
+            }
+        }
+
+        private void AddFrame(object obj)
+        {
+            Animation.Frames.Add(new Frame<byte>(_currentAnimationFrameWidth, _currentAnimationFrameHeight));
+        }
 
         #region Private State
         private int _selectedAreaSize;
@@ -199,19 +250,14 @@ namespace PixelMatrixEditor.ViewModels
         private Frame<byte> _currentMatrix;
         private Animation _animation;
         private string _activeStatusMessage;
+        private DelegateCommand<object> _deleteFrameCommand;
+        private DelegateCommand<object> _addFrameCommand;
+
+        private short _currentAnimationFrameWidth = 0;
+        private short _currentAnimationFrameHeight = 0;
 
         #endregion
-        #endregion
 
-        #region INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
         #endregion
     }
 }

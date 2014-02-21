@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseClasses\ViewModelBase.cs" />
     <Compile Include="Enums\ColorDepth.cs" />
     <Compile Include="Enums\FileVersion.cs" />
     <Compile Include="Enums\ToggleMode.cs" />
