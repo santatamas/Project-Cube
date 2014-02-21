@@ -58,6 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\ByteToColorConverter.cs" />
+    <Compile Include="Converters\ColorDepthToBoolConverter.cs" />
     <Compile Include="ViewModels\AnimationViewModel.cs" />
     <Compile Include="ViewModels\NewAnimationViewModel.cs" />
     <Compile Include="Views\AnimationView.xaml.cs">

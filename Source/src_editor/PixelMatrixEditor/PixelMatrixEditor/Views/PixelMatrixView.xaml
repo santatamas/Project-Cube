@@ -7,11 +7,11 @@
              xmlns:views="clr-namespace:PixelMatrixEditor.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Image x:Name="MainScreen" SnapsToDevicePixels="True" UseLayoutRounding="True"
+    <Border Background="#FF7D8C73" CornerRadius="1" BorderBrush="DarkGreen" BorderThickness="1">
+        <Image x:Name="MainScreen" SnapsToDevicePixels="True" UseLayoutRounding="True" 
                Source="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:PixelMatrixView}}, Path=MatrixRenderer.RenderedSource, Mode=OneWay}"
                MouseUp="MainScreen_OnMouseUp" 
                MouseMove="MainScreen_OnMouseMove">
         </Image>
-    </Grid>
+    </Border>
 </UserControl>

@@ -1,6 +1,8 @@
-﻿namespace CubeProject.Graphics.Helpers
+﻿using CubeProject.Infrastructure.Enums;
+
+namespace CubeProject.Graphics.Helpers
 {
-    public struct MatrixInfo
+    public class MatrixInfo
     {
         public int SizeX;
         public int SizeY;
@@ -8,5 +10,7 @@
         public int GapSize;
         public int ScreenWidth;
         public int ScreenHeight;
+
+        public ColorDepth ColorDepth;
     }
 }

@@ -49,7 +49,8 @@ namespace PixelMatrixEditor.Views
                 ScreenHeight = currentFrame.Height * 10,
                 ScreenWidth = currentFrame.Width * 10,
                 SizeX = currentFrame.Width,
-                SizeY = currentFrame.Height
+                SizeY = currentFrame.Height,
+                ColorDepth = view.RenderDepth
             });
             view.MatrixRenderer.Frame = currentFrame;
         }
@@ -83,6 +84,48 @@ namespace PixelMatrixEditor.Views
         }
         #endregion
 
+        #region RenderDepth Dependency Property
+
+        // Dependency Property
+        public static readonly DependencyProperty RenderDepthProperty =
+             DependencyProperty.Register("RenderDepth", typeof(ColorDepth),
+             typeof(PixelMatrixView), new FrameworkPropertyMetadata(RenderDepthChanged));
+
+        private static void RenderDepthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var view = (PixelMatrixView)d;
+            if (e.NewValue != null && e.NewValue != DependencyProperty.UnsetValue)
+            {
+                var currentDepth = (ColorDepth) e.NewValue;
+                view.MatrixRenderer.Settings.ColorDepth = currentDepth;
+            }
+        }
+
+
+        // .NET Property wrapper
+        public ColorDepth RenderDepth
+        {
+            get { return (ColorDepth)GetValue(RenderDepthProperty); }
+            set { SetValue(RenderDepthProperty, value); }
+        }
+        #endregion
+
+        #region ShadeLevel Dependency Property
+
+        // Dependency Property
+        public static readonly DependencyProperty ShadeLevelProperty =
+             DependencyProperty.Register("ShadeLevel", typeof(byte),
+             typeof(PixelMatrixView), new FrameworkPropertyMetadata(null));
+
+
+        // .NET Property wrapper
+        public byte ShadeLevel
+        {
+            get { return (byte)GetValue(ShadeLevelProperty); }
+            set { SetValue(ShadeLevelProperty, value); }
+        }
+        #endregion
+
         public MatrixRenderer MatrixRenderer
         {
             get { return _matrixRenderer; }
@@ -106,12 +149,12 @@ namespace PixelMatrixEditor.Views
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.On);
+                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.On, ShadeLevel);
             }
 
             if (e.ChangedButton == MouseButton.Right)
             {
-                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.Off);
+                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.Off, ShadeLevel);
             }         
         }
 
@@ -129,12 +172,12 @@ namespace PixelMatrixEditor.Views
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.On);
+                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.On, ShadeLevel);
             }
 
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.Off);
+                MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.Off, ShadeLevel);
             }
         }
         #endregion

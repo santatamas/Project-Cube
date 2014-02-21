@@ -4,8 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:PixelMatrixEditor.Views"
+        xmlns:converters="clr-namespace:PixelMatrixEditor.Converters"
         mc:Ignorable="d"
         Title="Pixel Matrix Editor v0.2" Height="800" Width="800" SizeToContent="Manual" ResizeMode="CanResize">
+    <Window.Resources>
+        <converters:ColorDepthToBoolConverter x:Key="ColorDepthToBoolConverter" />
+        <converters:ByteToColorConverter x:Key="ByteToColorConverter" />
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -30,12 +35,26 @@
             <ToolBar>
                 <Label>Brush size:</Label>
                 <ComboBox x:Name="AreaSizeComboBox" MinWidth="40" ItemsSource="{Binding Path=AreaSize}" SelectedItem="{Binding Path=SelectedAreaSize}"/>
+                <Separator></Separator>
+                <Label>Shade:</Label>
+                <ComboBox x:Name="ShadeComboBox" MinWidth="40" 
+                          ItemsSource="{Binding Path=AvaliableShadeLevels}" 
+                          SelectedItem="{Binding Path=SelectedShadeLevel}" 
+                          IsEnabled="{Binding Path=Animation.ColorDepth, Converter={StaticResource ColorDepthToBoolConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="15" Height="15" Fill="{Binding Converter={StaticResource ByteToColorConverter}}"></Rectangle>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </ToolBar>
         </ToolBarTray>
 
-        <views:PixelMatrixView x:Name="MatrixView" Grid.Row="2"
+        <views:PixelMatrixView x:Name="MatrixView" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"
                                AreaSize="{Binding Path=SelectedValue, ElementName=AreaSizeComboBox}" 
-                               MatrixSource="{Binding Path=CurrentMatrix}" />
+                               MatrixSource="{Binding Path=CurrentMatrix}" 
+                               RenderDepth="{Binding Path=Animation.ColorDepth}"
+                               ShadeLevel="{Binding SelectedShadeLevel}"/>
 
         <views:AnimationView Grid.Row="3" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}, Path=ActualWidth}" DataContext="{Binding}" />
         <StatusBar Grid.Row="4">

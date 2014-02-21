@@ -23,7 +23,7 @@ namespace PixelMatrixEditor.ViewModels
         public MainViewModel()
         {
             SelectedAreaSize = 1;
-           _animation = CreateNewAnimation(ColorDepth.Onebit, 50,50);
+           _animation = CreateNewAnimation(ColorDepth.GrayScale, 50,50);
            _currentMatrix = _animation.Frames[0];
         }
 
@@ -101,10 +101,37 @@ namespace PixelMatrixEditor.ViewModels
                 if (Equals(value, _animation)) return;
                 _animation = value;
 
-                if(_animation != null && _animation.Frames.Count != 0)
-                    CurrentMatrix = _animation.Frames[0];
+                if (_animation != null)
+                {
+                    if (_animation.Frames.Count != 0)
+                    {
+                        CurrentMatrix = _animation.Frames[0];
+                    }
+
+                    if (_animation.ColorDepth == ColorDepth.Onebit)
+                    {
+                        SelectedShadeLevel = 1;
+                    }
+                }
 
                 OnPropertyChanged();
+            }
+        }
+
+        public byte SelectedShadeLevel
+        {
+            get { return _selectedShadeLevel; }
+            set
+            {
+                _selectedShadeLevel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public byte[] AvaliableShadeLevels {
+            get
+            {
+                return new byte[]{50,100,150,200,255};
             }
         }
 
@@ -255,6 +282,7 @@ namespace PixelMatrixEditor.ViewModels
 
         private short _currentAnimationFrameWidth = 0;
         private short _currentAnimationFrameHeight = 0;
+        private byte _selectedShadeLevel = 200;
 
         #endregion
 

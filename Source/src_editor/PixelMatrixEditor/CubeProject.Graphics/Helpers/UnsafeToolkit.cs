@@ -6,21 +6,21 @@ namespace CubeProject.Graphics.Helpers
 {
     public static class UnSafeToolKit
     {
-        public static unsafe int UnSafeGetPixel(int x, int y, int width, int* imgPtr)
+        public static unsafe uint UnSafeGetPixel(int x, int y, int width, uint* imgPtr)
         {
             imgPtr += (y*width) + x;
             return *imgPtr;
         }
 
-        public static unsafe void UnSafeSetPixel(int x, int y, int width, int* imgPtr, int value)
+        public static unsafe void UnSafeSetPixel(int x, int y, int width, uint* imgPtr, uint value)
         {
             imgPtr += (y*width) + x;
             *imgPtr = value;
         }
 
-        public static unsafe void DrawRectange(Rect rectangle, Color color, int* imgPtr,int imageWidth)
+        public static unsafe void DrawRectange(Rect rectangle, Color color, uint* imgPtr,int imageWidth)
         {
-           int colorCode = (int)GetIntFromColor(color);
+           uint colorCode = GetIntFromColor(color);
 
             for (int i = 0; i < rectangle.Width; i++)
             {
@@ -33,7 +33,8 @@ namespace CubeProject.Graphics.Helpers
 
         public static uint GetIntFromColor(Color color)
         {
-            return (uint)BitConverter.ToInt32(new byte[] { color.B, color.G, color.R, color.A /*0x00*/ }, 0);
+            return (uint)((color.A << 24) | (color.R << 16) |
+                     (color.G << 8) | (color.B << 0));
         }
     }
 }

@@ -63,7 +63,7 @@ namespace CubeProject.Graphics.Renderers
 
         private void InitializeRenderSource()
         {
-            Format = PixelFormats.Pbgra32;
+            Format = PixelFormats.Bgra32;
             var section = CreateFileMapping(INVALID_HANDLE_VALUE, IntPtr.Zero, PAGE_READWRITE, 0, Count, null);
             _map = MapViewOfFile(section, FILE_MAP_ALL_ACCESS, 0, 0, Count);
             _page0 = System.Windows.Interop.Imaging.CreateBitmapSourceFromMemorySection(section, Settings.ScreenWidth, Settings.ScreenHeight, Format, Stride, 0) as InteropBitmap;
@@ -73,29 +73,43 @@ namespace CubeProject.Graphics.Renderers
         {
             #region Background render
 
-            uint* buffer = (uint*)_map;
+            //uint* buffer = (uint*)_map;
 
-            for (int j = 0; j < Settings.ScreenWidth; j++)
-            {
-                for (int i = 0; i < Settings.ScreenHeight; i++)
-                {
-                    *buffer++ = UnSafeToolKit.GetIntFromColor(_backGroundBrush);
-                }
-            }
+            //for (int j = 0; j < Settings.ScreenWidth; j++)
+            //{
+            //    for (int i = 0; i < Settings.ScreenHeight; i++)
+            //    {
+            //        *buffer++ = UnSafeToolKit.GetIntFromColor(_backGroundBrush);
+            //    }
+            //}
 
             #endregion
 
             #region Pixel render
 
             Color currentPixelColor;
-            int* mapPtr = (int*)_map;
+            uint* mapPtr = (uint*)_map;
             int rectSize = Settings.PixelSize + Settings.GapSize;
 
             for (int i = 0; i < Settings.SizeX; i++)
             {
                 for (int j = 0; j < Settings.SizeY; j++)
                 {
-                    currentPixelColor = _frame.Data[i, j] == 1 ? _pixelOnBrush : _pixelOffBrush;
+                    if (Settings.ColorDepth == ColorDepth.Onebit)
+                    {
+                        if (_frame.Data[i, j] == 1 || _frame.Data[i, j] == 255)
+                        {
+                            currentPixelColor = _pixelOnBrush;
+                        }
+                        else
+                        {
+                            currentPixelColor = Color.FromArgb(0, 0, 0, 0);
+                        }
+                    }
+                    else
+                    {
+                        currentPixelColor = Color.FromArgb(_frame.Data[i, j], _pixelOnBrush.R, _pixelOnBrush.G, _pixelOnBrush.B);
+                    }
                     UnSafeToolKit.DrawRectange(new Rect(i * rectSize, j * rectSize, Settings.PixelSize, Settings.PixelSize), currentPixelColor, mapPtr, Settings.ScreenWidth);
                 }
             }
@@ -169,7 +183,13 @@ namespace CubeProject.Graphics.Renderers
         #endregion
 
         #region Public
+
         public void TogglePixelAtLocation(Point clickLocation, int area, ToggleMode mode)
+        {
+            TogglePixelAtLocation(clickLocation, area, mode, 50);
+        }
+
+        public void TogglePixelAtLocation(Point clickLocation, int area, ToggleMode mode, byte shadeLevel)
         {
             if (_frame == null) return;
 
@@ -187,7 +207,7 @@ namespace CubeProject.Graphics.Renderers
                     switch (mode)
                     {
                         case ToggleMode.On:
-                            _frame[i, j] = 1;
+                            _frame[i, j] = shadeLevel;
                             break;
                         case ToggleMode.Off:
                             _frame[i, j] = 0;
@@ -196,7 +216,7 @@ namespace CubeProject.Graphics.Renderers
 
                             if (_frame[i, j] == 0)
                             {
-                                _frame[i, j] = 1;
+                                _frame[i, j] = shadeLevel;
                             }
                             else
                             {
