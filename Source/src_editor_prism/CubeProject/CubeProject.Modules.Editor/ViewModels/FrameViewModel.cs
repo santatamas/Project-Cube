@@ -6,6 +6,7 @@ using CubeProject.Graphics;
 using CubeProject.Graphics.Renderers;
 using CubeProject.Infrastructure.BaseClasses;
 using CubeProject.Infrastructure.Enums;
+using CubeProject.Infrastructure.Events;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
@@ -29,6 +30,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         public FrameViewModel(IUnityContainer container, IEventAggregator aggregator) : base(container, aggregator)
         {
+            
         }
 
         private BitmapSource _renderedSource;
@@ -38,7 +40,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         {
             get
             {
-                return _renderedSource;
+                return MatrixRenderer.Render(_frame.Data, _settings.SizeX, _settings.SizeY);
             }
         }
 
@@ -52,7 +54,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private void Delete(object obj)
         {
-            
+            EventAggregator.GetEvent<DeleteFrameViewModelEvent>().Publish(this);
         }
 
         #endregion

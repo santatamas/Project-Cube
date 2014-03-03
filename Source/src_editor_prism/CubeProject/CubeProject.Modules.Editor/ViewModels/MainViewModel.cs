@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using CubeProject.Data.Entities;
@@ -20,45 +20,40 @@ namespace CubeProject.Modules.Editor.ViewModels
         public MainViewModel(IUnityContainer container, IEventAggregator aggregator)
             : base(container, aggregator)
         {
-            EventAggregator.GetEvent<CloseApplicationEvent>().Subscribe(CloseApplication);
+            _dialogService = container.Resolve<IDialogService>();
 
-            _animation = CreateNewAnimation(ColorDepth.GrayScale, 50, 50);
-            _currentMatrix = _animation.Frames[0];
+            SubscribeEvents();
         }
 
-        private Animation CreateNewAnimation(ColorDepth depth, short frameWidth, short frameHeight)
+        private void SubscribeEvents()
         {
-            var animation = new Animation()
-            {
-                ColorDepth = depth
-            };
+            EventAggregator.GetEvent<CloseApplicationEvent>().Subscribe(CloseApplication);
+            EventAggregator.GetEvent<CreateNewAnimationEvent>().Subscribe(CreateNew);
+            EventAggregator.GetEvent<OpenAnimationEvent>().Subscribe(Open);
+            EventAggregator.GetEvent<SaveAnimationEvent>().Subscribe(Save);
+            EventAggregator.GetEvent<SaveAnimationAsEvent>().Subscribe(SaveAs);
 
-            for (int i = 0; i < 5; i++)
-            {
-                animation.Frames.Add(new Frame<byte>(frameWidth, frameHeight));
-                animation.FrameDurations.Add(500);
-            }
+            EventAggregator.GetEvent<DeleteFrameViewModelEvent>().Subscribe(DeleteFrame);
 
-            _currentAnimationFrameWidth = frameWidth;
-            _currentAnimationFrameHeight = frameHeight;
-
-            return animation;
+            EventAggregator.GetEvent<BrushSizeChangedEvent>().Subscribe(BrushSizeChanged);
+            EventAggregator.GetEvent<ShadeChangedEvent>().Subscribe(ShadeChanged);
         }
 
         #endregion
 
         #region Properties
 
+        private readonly IDialogService _dialogService;
+
         public string CurrentFilePath { get; set; }
 
-
-        public Frame<byte> CurrentMatrix
+        public FrameViewModel CurrentFrame
         {
-            get { return _currentMatrix; }
+            get { return _currentFrame; }
             set
             {
-                if (Equals(value, _currentMatrix)) return;
-                _currentMatrix = value;
+                if (Equals(value, _currentFrame)) return;
+                _currentFrame = value;
                 OnPropertyChanged();
             }
         }
@@ -71,24 +66,11 @@ namespace CubeProject.Modules.Editor.ViewModels
                 if (Equals(value, _animation)) return;
                 _animation = value;
 
-                if (_animation != null)
-                {
-                    if (_animation.Frames.Count != 0)
-                    {
-                        CurrentMatrix = _animation.Frames[0];
-                    }
-
-                    if (_animation.ColorDepth == ColorDepth.Onebit)
-                    {
-                        //SelectedShadeLevel = 1;
-                    }
-                }
-
                 OnPropertyChanged();
             }
         }
 
-
+        public ObservableCollection<FrameViewModel> FrameViewModels { get; set; }
 
         #endregion
 
@@ -109,14 +91,9 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private void CreateNew(object obj)
         {
-            //NewAnimationView newAnimWindow = new NewAnimationView();
-            //if (newAnimWindow.ShowDialog() == true)
-            //{
-            //    var viewModel = (newAnimWindow.DataContext as NewAnimationViewModel);
-            //    Animation = CreateNewAnimation(viewModel.SelectedColorDepth, viewModel.FrameWidth, viewModel.FrameHeight);
-            //    ActiveStatusMessage = "New animation created.";
-
-            //}
+            var dialogResult = (NewAnimationViewModel)_dialogService.ShowDialog("Create new animation", Container.Resolve<NewAnimationViewModel>());
+            Animation = CreateNewAnimation(dialogResult.SelectedColorDepth, dialogResult.FrameWidth, dialogResult.FrameHeight);
+            EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("New animation created.");
         }
 
         private void Open(object obj)
@@ -141,23 +118,19 @@ namespace CubeProject.Modules.Editor.ViewModels
             if (!String.IsNullOrEmpty(CurrentFilePath))
             {
                 SaveAnimationTo(Animation, CurrentFilePath);
-                //ActiveStatusMessage = "Saving complete.";
+                EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("Saving complete.");
             }
         }
 
         private void SaveAs(object obj)
         {
-            //var sfd = new SaveFileDialog();
-            //// set a default file name
-            //sfd.FileName = "unknown.pma";
-            //// set filters - this can be done in properties as well
-            //sfd.Filter = "Pixel Matrix Animation (*.pma)|*.pma|All files (*.*)|*.*";
-
-            //if (sfd.ShowDialog() != DialogResult.OK) return;
-
-            //SaveAnimationTo(Animation, sfd.FileName);
-            //CurrentFilePath = sfd.FileName;
-            //ActiveStatusMessage = "Saving complete.";
+            string filePath;
+            var dialogResult = _dialogService.ShowSaveFileDialog("Pixel Matrix Animation (*.pma)|*.pma|All files (*.*)|*.*", out filePath);
+            if (dialogResult == DialogResult.Ok)
+            {
+                SaveAnimationTo(Animation, filePath);
+                EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("Saving complete.");
+            }
         }
 
         private void SaveAnimationTo(Animation animation, string path)
@@ -173,6 +146,7 @@ namespace CubeProject.Modules.Editor.ViewModels
                 }
             }
         }
+
         private void DeleteFrame(object obj)
         {
             //MessageBoxButtons btnMessageBox = MessageBoxButtons.YesNo;
@@ -197,19 +171,46 @@ namespace CubeProject.Modules.Editor.ViewModels
             Animation.Frames.Add(new Frame<byte>(_currentAnimationFrameWidth, _currentAnimationFrameHeight));
         }
 
+        private void ShadeChanged(int obj)
+        {
+
+        }
+
+        private void BrushSizeChanged(int obj)
+        {
+
+        }
+
+        private Animation CreateNewAnimation(ColorDepth depth, short frameWidth, short frameHeight)
+        {
+            var animation = new Animation()
+            {
+                ColorDepth = depth
+            };
+
+            for (int i = 0; i < 5; i++)
+            {
+                animation.Frames.Add(new Frame<byte>(frameWidth, frameHeight));
+                animation.FrameDurations.Add(500);
+            }
+
+            _currentAnimationFrameWidth = frameWidth;
+            _currentAnimationFrameHeight = frameHeight;
+
+            return animation;
+        }
+
         #region Private State
 
-        private Frame<byte> _currentMatrix;
         private Animation _animation;
 
         private DelegateCommand<object> _addFrameCommand;
 
         private short _currentAnimationFrameWidth = 0;
         private short _currentAnimationFrameHeight = 0;
-
+        private FrameViewModel _currentFrame;
 
         #endregion
-
         #endregion
     }
 }

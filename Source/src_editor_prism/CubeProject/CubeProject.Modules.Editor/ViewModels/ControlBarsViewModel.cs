@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CubeProject.Infrastructure.BaseClasses;
 using CubeProject.Infrastructure.Events;
 using CubeProject.Infrastructure.Interfaces;
@@ -12,13 +11,14 @@ namespace CubeProject.Modules.Editor.ViewModels
     public class ControlBarsViewModel : ViewModelBase, IControlBarsViewModel
     {
         #region Properties
-        public int SelectedAreaSize
+        public int SelectedBrushSize
         {
-            get { return _selectedAreaSize; }
+            get { return _selectedBrushSize; }
             set
             {
-                if (value == _selectedAreaSize) return;
-                _selectedAreaSize = value;
+                if (value == _selectedBrushSize) return;
+                _selectedBrushSize = value;
+                EventAggregator.GetEvent<BrushSizeChangedEvent>().Publish(_selectedBrushSize);
                 OnPropertyChanged();
             }
         }
@@ -35,6 +35,7 @@ namespace CubeProject.Modules.Editor.ViewModels
             set
             {
                 _selectedShadeLevel = value;
+                EventAggregator.GetEvent<ShadeChangedEvent>().Publish(_selectedShadeLevel);
                 OnPropertyChanged();
             }
         }
@@ -110,7 +111,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         private DelegateCommand<object> _closeCommand;
 
         private byte _selectedShadeLevel = 200;
-        private int _selectedAreaSize = 1;
+        private int _selectedBrushSize = 1;
         #endregion
         #endregion
     }

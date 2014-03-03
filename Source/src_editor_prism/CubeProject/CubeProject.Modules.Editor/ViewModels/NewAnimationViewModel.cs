@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using CubeProject.Infrastructure.BaseClasses;
 using CubeProject.Infrastructure.Enums;
+using CubeProject.Infrastructure.Interfaces;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 
 namespace CubeProject.Modules.Editor.ViewModels
 {
-    public class NewAnimationViewModel : ViewModelBase
+    public class NewAnimationViewModel : ViewModelBase, IDialogResultProvider
     {
         public NewAnimationViewModel(IUnityContainer container, IEventAggregator aggregator)
             : base(container, aggregator)
@@ -60,6 +61,14 @@ namespace CubeProject.Modules.Editor.ViewModels
             {
                 _frameHeight = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public object DialogResult
+        {
+            get
+            {
+                return this;
             }
         }
     }

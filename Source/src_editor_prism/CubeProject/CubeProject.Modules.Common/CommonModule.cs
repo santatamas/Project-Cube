@@ -14,10 +14,8 @@ namespace CubeProject.Modules.Common
 
         public override void Initialize()
         {
-            this.Container.RegisterType(typeof(IDialogService), typeof(DialogService), "DialogService",
-               new ContainerControlledLifetimeManager(), new InjectionConstructor());
-            this.Container.RegisterType(typeof(ILoggingService), typeof(LoggingService), "LoggingService",
-              new ContainerControlledLifetimeManager(), new InjectionConstructor());
+            Container.RegisterType<IDialogService, DialogService>();
+            Container.RegisterType<ILoggingService, LoggingService>();
         }
     }
 }

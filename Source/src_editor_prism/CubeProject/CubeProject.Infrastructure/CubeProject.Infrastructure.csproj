@@ -53,11 +53,14 @@
     <Compile Include="Enums\FileVersion.cs" />
     <Compile Include="Enums\LogLevel.cs" />
     <Compile Include="Enums\ToggleMode.cs" />
+    <Compile Include="Events\BrushSizeChangedEvent.cs" />
     <Compile Include="Events\CloseApplicationEvent.cs" />
     <Compile Include="Events\CreateNewAnimationEvent.cs" />
+    <Compile Include="Events\DeleteFrameViewModelEvent.cs" />
     <Compile Include="Events\OpenAnimationEvent.cs" />
     <Compile Include="Events\SaveAnimationAsEvent.cs" />
     <Compile Include="Events\SaveAnimationEvent.cs" />
+    <Compile Include="Events\ShadeChangedEvent.cs" />
     <Compile Include="Events\StatusBarMessageChangeEvent.cs" />
     <Compile Include="Interfaces\IBinarySerializer.cs" />
     <Compile Include="Interfaces\IControlBarsViewModel.cs" />
@@ -68,9 +71,7 @@
     <Compile Include="Interfaces\IStatusBarViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,6 +2,6 @@
 {
     public interface IDialogResultProvider
     {
-        object DialogResult { get; set; }
+        object DialogResult { get; }
     }
 }
