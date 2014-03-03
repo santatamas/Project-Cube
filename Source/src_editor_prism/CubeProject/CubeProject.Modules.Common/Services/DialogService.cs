@@ -55,5 +55,13 @@ namespace CubeProject.Modules.Common.Services
             filePath = sfd.FileName;
             return DialogResult.Ok;
         }
+
+        public object ShowDialog(string title, IDialogResultProvider dataContext)
+        {
+            var win = new WindowDialog {Title = title, DataContext = dataContext};
+            win.ShowDialog();
+
+            return dataContext.DialogResult;
+        }
     }
 }

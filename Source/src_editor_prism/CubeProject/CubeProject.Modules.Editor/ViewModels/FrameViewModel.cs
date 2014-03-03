@@ -7,6 +7,7 @@ using CubeProject.Graphics.Renderers;
 using CubeProject.Infrastructure.BaseClasses;
 using CubeProject.Infrastructure.Enums;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 
 namespace CubeProject.Modules.Editor.ViewModels
@@ -26,7 +27,7 @@ namespace CubeProject.Modules.Editor.ViewModels
             }
         }
 
-        public FrameViewModel(IUnityContainer container) : base(container)
+        public FrameViewModel(IUnityContainer container, IEventAggregator aggregator) : base(container, aggregator)
         {
         }
 

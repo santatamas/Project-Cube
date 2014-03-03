@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using CubeProject.Modules.Common;
+using CubeProject.Modules.Editor;
 using CubeProject.Shell.View;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
@@ -25,6 +26,7 @@ namespace CubeProject.Shell
             var catalog = new ModuleCatalog();
             catalog.AddModule(typeof(CommonModule));
             catalog.AddModule(typeof(ShellModule));
+            catalog.AddModule(typeof(EditorModule));
             return catalog;
         }
     }

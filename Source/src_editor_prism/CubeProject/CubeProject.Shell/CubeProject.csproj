@@ -132,6 +132,10 @@
       <Project>{479b704e-98a1-4273-86d9-1332cdffb5ce}</Project>
       <Name>CubeProject.Modules.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CubeProject.Modules.Editor\CubeProject.Modules.Editor.csproj">
+      <Project>{E05B05C3-4CF2-43BE-A4A0-A2EF7526268B}</Project>
+      <Name>CubeProject.Modules.Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

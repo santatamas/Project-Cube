@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="CubeProject.Modules.Editor.Views.ControlBarsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:CubeProject.Modules.Editor.Converters">
+    <UserControl.Resources>
+        <converters:ColorDepthToBoolConverter x:Key="ColorDepthToBoolConverter" />
+        <converters:ByteToColorConverter x:Key="ByteToColorConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="New" Command="{Binding Path=NewCommand}"></MenuItem>
+                <MenuItem Header="Open..." Command="{Binding Path=OpenCommand}"></MenuItem>
+                <MenuItem Header="Save" Command="{Binding Path=SaveCommand}"></MenuItem>
+                <MenuItem Header="SaveAs..." Command="{Binding Path=SaveAsCommand}"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="Close" Command="{Binding Path=CloseCommand}"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <ToolBarTray Grid.Row="1">
+            <ToolBar>
+                <Label>Brush size:</Label>
+                <ComboBox x:Name="AreaSizeComboBox" MinWidth="40" ItemsSource="{Binding Path=AreaSize}" SelectedItem="{Binding Path=SelectedAreaSize}"/>
+                <Separator></Separator>
+                <Label>Shade:</Label>
+                <ComboBox x:Name="ShadeComboBox" MinWidth="40" 
+                          ItemsSource="{Binding Path=AvaliableShadeLevels}" 
+                          SelectedItem="{Binding Path=SelectedShadeLevel}" 
+                          IsEnabled="{Binding Path=Animation.ColorDepth, Converter={StaticResource ColorDepthToBoolConverter}}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <Rectangle Width="15" Height="15" Fill="{Binding Converter={StaticResource ByteToColorConverter}}"></Rectangle>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </ToolBar>
+        </ToolBarTray>
+    </Grid>
+</UserControl>

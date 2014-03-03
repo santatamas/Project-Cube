@@ -1,7 +1,6 @@
-﻿<Window x:Class="CubeProject.Modules.Editor.Views.NewAnimationView"
+﻿<UserControl x:Class="CubeProject.Modules.Editor.Views.NewAnimationView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="New Animation" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -31,7 +30,7 @@
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1">
             <Button Content="Cancel" Width="75" Margin="5" IsCancel="True"></Button>
-            <Button Content="Ok" Width="75" Margin="5" IsDefault="True" Click="OkButton_OnClick"></Button>
+            <Button Content="Ok" Width="75" Margin="5" IsDefault="True"></Button>
         </StackPanel>
     </Grid>
-</Window>
+</UserControl>

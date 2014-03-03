@@ -5,12 +5,14 @@ namespace CubeProject.Infrastructure.Interfaces
 {
     public interface IDialogService
     {
-            void ShowMessage(string message, string caption);
+        void ShowMessage(string message, string caption);
 
-            DialogResult ShowPrompt(string message, string caption);
+        DialogResult ShowPrompt(string message, string caption);
 
-            DialogResult ShowOpenFileDialog(string filterText, out Stream fileStream);
+        DialogResult ShowOpenFileDialog(string filterText, out Stream fileStream);
 
-            DialogResult ShowSaveFileDialog(string filterText, out string filePath);
+        DialogResult ShowSaveFileDialog(string filterText, out string filePath);
+
+        object ShowDialog(string title, IDialogResultProvider dataContext);
     }
 }

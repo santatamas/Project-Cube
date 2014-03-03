@@ -54,12 +54,29 @@
     <Compile Include="Converters\ColorDepthToBoolConverter.cs" />
     <Compile Include="EditorModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\AnimationViewModel.cs" />
+    <Compile Include="ViewModels\ControlBarsViewModel.cs" />
     <Compile Include="ViewModels\FrameViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\NewAnimationViewModel.cs" />
-    <Compile Include="Views\AnimationView.xaml.cs" />
-    <Compile Include="Views\NewAnimationView.xaml.cs" />
-    <Compile Include="Views\PixelMatrixView.xaml.cs" />
+    <Compile Include="ViewModels\StatusBarViewModel.cs" />
+    <Compile Include="Views\AnimationView.xaml.cs">
+      <DependentUpon>AnimationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ControlBarsView.xaml.cs">
+      <DependentUpon>ControlBarsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewAnimationView.xaml.cs">
+      <DependentUpon>NewAnimationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PixelMatrixView.xaml.cs">
+      <DependentUpon>PixelMatrixView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusBarView.xaml.cs">
+      <DependentUpon>StatusBarView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CubeProject.Data\CubeProject.Data.csproj">
@@ -81,11 +98,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ControlBarsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\NewAnimationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PixelMatrixView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusBarView.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

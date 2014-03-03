@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using CubeProject.Infrastructure.BaseClasses;
 using CubeProject.Infrastructure.Enums;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 
 namespace CubeProject.Modules.Editor.ViewModels
 {
     public class NewAnimationViewModel : ViewModelBase
     {
-        public NewAnimationViewModel(IUnityContainer container) : base(container)
+        public NewAnimationViewModel(IUnityContainer container, IEventAggregator aggregator)
+            : base(container, aggregator)
         {
             _avaliableColorDepths = new List<ColorDepth>
             {
