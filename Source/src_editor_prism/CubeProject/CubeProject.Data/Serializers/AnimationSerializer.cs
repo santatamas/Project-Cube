@@ -78,7 +78,7 @@ namespace CubeProject.Data.Serializers
                 var width  = br.ReadInt16();
                 var height = br.ReadInt16();
 
-                frame = new Frame<byte>(width, height);
+                frame = new Frame<byte>(width, height, colorDepth);
 
                 // Fill pixel data
                 for (int i = 0; i < frame.Width; i++)

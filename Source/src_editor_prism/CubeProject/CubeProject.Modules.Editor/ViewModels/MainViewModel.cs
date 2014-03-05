@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 using CubeProject.Data.Entities;
 using CubeProject.Data.Serializers;
 using CubeProject.Infrastructure.BaseClasses;
@@ -21,8 +24,11 @@ namespace CubeProject.Modules.Editor.ViewModels
             : base(container, aggregator)
         {
             _dialogService = container.Resolve<IDialogService>();
+            FrameViewModels = new ObservableCollection<FrameViewModel>();
 
             SubscribeEvents();
+
+            Animation = CreateNewAnimation(ColorDepth.GrayScale, 50, 50);
         }
 
         private void SubscribeEvents()
@@ -34,9 +40,6 @@ namespace CubeProject.Modules.Editor.ViewModels
             EventAggregator.GetEvent<SaveAnimationAsEvent>().Subscribe(SaveAs);
 
             EventAggregator.GetEvent<DeleteFrameViewModelEvent>().Subscribe(DeleteFrame);
-
-            EventAggregator.GetEvent<BrushSizeChangedEvent>().Subscribe(BrushSizeChanged);
-            EventAggregator.GetEvent<ShadeChangedEvent>().Subscribe(ShadeChanged);
         }
 
         #endregion
@@ -66,11 +69,21 @@ namespace CubeProject.Modules.Editor.ViewModels
                 if (Equals(value, _animation)) return;
                 _animation = value;
 
+                if (_animation != null)
+                {
+                    FrameViewModels = new ObservableCollection<FrameViewModel>();
+                    foreach (var frame in value.Frames)
+                    {
+                        FrameViewModels.Add(CreateFrameViewModel(frame));
+                    }
+                    CurrentFrame = FrameViewModels.FirstOrDefault();
+                }
+
                 OnPropertyChanged();
             }
         }
 
-        public ObservableCollection<FrameViewModel> FrameViewModels { get; set; }
+        public ObservableCollection<FrameViewModel> FrameViewModels { get; private set; }
 
         #endregion
 
@@ -98,19 +111,16 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private void Open(object obj)
         {
-            //OpenFileDialog ofd = new OpenFileDialog();
-            //// set a default file name
-            //ofd.FileName = "unknown.pma";
-            //// set filters - this can be done in properties as well
-            //ofd.Filter = "Pixel Matrix Animation (*.pma)|*.pma|All files (*.*)|*.*";
-
-            //if (ofd.ShowDialog() == DialogResult.OK)
-            //{
-            //    var serializer = new AnimationSerializer();
-            //    Animation = serializer.Deserialize(File.Open(ofd.FileName, FileMode.Open));
-            //    CurrentFilePath = ofd.FileName;
-            //    ActiveStatusMessage = "Animation loaded.";
-            //}
+            Stream fileStream;
+            string filePath;
+            var dialogResult = _dialogService.ShowOpenFileDialog("Pixel Matrix Animation (*.pma)|*.pma|All files (*.*)|*.*", out fileStream, out filePath);
+            if (dialogResult == DialogResult.Ok)
+            {
+                var serializer = new AnimationSerializer();             
+                Animation = serializer.Deserialize(fileStream);
+                CurrentFilePath = filePath;
+                EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("Animation loaded.");
+            }
         }
 
         private void Save(object obj)
@@ -125,7 +135,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         private void SaveAs(object obj)
         {
             string filePath;
-            var dialogResult = _dialogService.ShowSaveFileDialog("Pixel Matrix Animation (*.pma)|*.pma|All files (*.*)|*.*", out filePath);
+            var dialogResult = _dialogService.ShowSaveFileDialog("Pixel Matrix Animation (*.pma)|*.pma|All files (*.*)|*.*","untitled.pma", out filePath);
             if (dialogResult == DialogResult.Ok)
             {
                 SaveAnimationTo(Animation, filePath);
@@ -149,37 +159,26 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private void DeleteFrame(object obj)
         {
-            //MessageBoxButtons btnMessageBox = MessageBoxButtons.YesNo;
-            //MessageBoxIcon icnMessageBox = MessageBoxIcon.Warning;
-
-            //MessageBoxResult rsltMessageBox = (MessageBoxResult)MessageBox.Show("Are you sure you want to delete the Frame?", "Delete", btnMessageBox, icnMessageBox);
-
-            //switch (rsltMessageBox)
-            //{
-            //    case MessageBoxResult.Yes:
-            //        Animation.Frames.Remove((Frame<byte>)obj);
-            //        break;
-
-            //    case MessageBoxResult.No:
-            //        /* ... */
-            //        break;
-            //}
+            var dialogResult = _dialogService.ShowPrompt("Are you sure you want to delete the Frame?", "Warning!");
+            if (dialogResult == DialogResult.Ok)
+            {
+                FrameViewModels.Remove((FrameViewModel)obj);
+            }
         }
 
         private void AddFrame(object obj)
         {
-            Animation.Frames.Add(new Frame<byte>(_currentAnimationFrameWidth, _currentAnimationFrameHeight));
+            var newFrame = CreateFrameViewModel(null);
+            FrameViewModels.Add(newFrame);
         }
 
-        private void ShadeChanged(int obj)
+        private FrameViewModel CreateFrameViewModel(Frame<byte> frame)
         {
-
+            var newFrame = Container.Resolve<FrameViewModel>();
+            newFrame.Frame = frame ?? new Frame<byte>(_currentAnimationFrameWidth, _currentAnimationFrameHeight, _animation.ColorDepth);
+            return newFrame;
         }
 
-        private void BrushSizeChanged(int obj)
-        {
-
-        }
 
         private Animation CreateNewAnimation(ColorDepth depth, short frameWidth, short frameHeight)
         {

@@ -25,7 +25,7 @@
         <ToolBarTray Grid.Row="1">
             <ToolBar>
                 <Label>Brush size:</Label>
-                <ComboBox x:Name="AreaSizeComboBox" MinWidth="40" ItemsSource="{Binding Path=AreaSize}" SelectedItem="{Binding Path=SelectedAreaSize}"/>
+                <ComboBox x:Name="AreaSizeComboBox" MinWidth="40" ItemsSource="{Binding Path=BrushSize}" SelectedItem="{Binding Path=SelectedBrushSize}"/>
                 <Separator></Separator>
                 <Label>Shade:</Label>
                 <ComboBox x:Name="ShadeComboBox" MinWidth="40" 

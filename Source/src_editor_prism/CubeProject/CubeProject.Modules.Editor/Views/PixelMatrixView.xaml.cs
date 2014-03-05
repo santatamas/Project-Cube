@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using CubeProject.Infrastructure.Interfaces;
+using CubeProject.Modules.Editor.ViewModels;
 
 namespace CubeProject.Modules.Editor.Views
 {
@@ -13,44 +13,56 @@ namespace CubeProject.Modules.Editor.Views
         public PixelMatrixView()
         {
             InitializeComponent();
+            DataContextChanged += PixelMatrixView_DataContextChanged;
         }
+
+        void PixelMatrixView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            _viewModel = e.NewValue as FrameViewModel;
+        }
+
+        private FrameViewModel _viewModel;
 
         #region EventHandlers
         private void MainScreen_OnMouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (_viewModel == null) return;
+
             var realLocation = GetRelativelLocation(e.GetPosition((Image)sender));
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                //MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.On, ShadeLevel);
+                _viewModel.TurnOnPixelAtLocation(realLocation);
             }
 
             if (e.ChangedButton == MouseButton.Right)
             {
-                //MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.Off, ShadeLevel);
+                _viewModel.TurnOffPixelAtLocation(realLocation);
             }         
         }
 
         private Point GetRelativelLocation(Point clickLocation)
         {
-            var realLocationX = 0;//clickLocation.X*(MatrixRenderer.Settings.ScreenWidth/MainScreen.ActualWidth);
-            var realLocationY = 0;//clickLocation.Y*(MatrixRenderer.Settings.ScreenHeight/MainScreen.ActualHeight);
-            Point realLocation = new Point(realLocationX, realLocationY);
+            var realLocationX = clickLocation.X * (_viewModel.Settings.ScreenWidth / MainScreen.ActualWidth);
+            var realLocationY = clickLocation.Y * (_viewModel.Settings.ScreenHeight / MainScreen.ActualHeight);
+            var realLocation = new Point(realLocationX, realLocationY);
             return realLocation;
         }
 
         private void MainScreen_OnMouseMove(object sender, MouseEventArgs e)
         {
+            if (_viewModel == null) return;
+
             var realLocation = GetRelativelLocation(e.GetPosition((Image)sender));
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                //MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.On, ShadeLevel);
+                _viewModel.TurnOnPixelAtLocation(realLocation);
             }
 
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                //MatrixRenderer.TogglePixelAtLocation(realLocation, AreaSize - 1, ToggleMode.Off, ShadeLevel);
+                _viewModel.TurnOffPixelAtLocation(realLocation);
             }
         }
         #endregion

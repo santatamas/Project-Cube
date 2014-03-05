@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using CubeProject.Infrastructure.Enums;
 using CubeProject.Infrastructure.Interfaces;
@@ -34,21 +35,25 @@ namespace CubeProject.Modules.Common.Services
             }
         }
 
-        public DialogResult ShowOpenFileDialog(string filterText, out System.IO.Stream fileStream)
+        public DialogResult ShowOpenFileDialog(string filterText, out Stream fileStream, out string filePath)
         {
             fileStream = null;
-            var ofd = new OpenFileDialog {Filter = filterText};
-            if (ofd.ShowDialog() != true) 
+            filePath = null;
+
+            var ofd = new OpenFileDialog { Filter = filterText };
+            if (ofd.ShowDialog() != true)
                 return DialogResult.Cancel;
 
             fileStream = ofd.OpenFile();
+            filePath = ofd.FileName;
+
             return DialogResult.Ok;
         }
 
-        public DialogResult ShowSaveFileDialog(string filterText, out string filePath)
+        public DialogResult ShowSaveFileDialog(string filterText, string defaultFileName, out string filePath)
         {
             filePath = string.Empty;
-            var sfd = new SaveFileDialog {Filter = filterText};
+            var sfd = new SaveFileDialog { Filter = filterText, FileName = defaultFileName};
             if (sfd.ShowDialog() != true)
                 return DialogResult.Cancel;
 

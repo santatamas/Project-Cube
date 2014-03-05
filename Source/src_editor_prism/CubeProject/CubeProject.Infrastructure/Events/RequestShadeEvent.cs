@@ -2,7 +2,7 @@
 
 namespace CubeProject.Infrastructure.Events
 {
-    public class ShadeChangedEvent : CompositePresentationEvent<byte>
+    public class RequestShadeEvent : CompositePresentationEvent<byte>
     {
     }
 }

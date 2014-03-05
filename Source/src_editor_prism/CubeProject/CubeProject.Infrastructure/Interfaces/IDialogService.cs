@@ -9,9 +9,9 @@ namespace CubeProject.Infrastructure.Interfaces
 
         DialogResult ShowPrompt(string message, string caption);
 
-        DialogResult ShowOpenFileDialog(string filterText, out Stream fileStream);
+        DialogResult ShowOpenFileDialog(string filterText, out Stream fileStream, out string filePath);
 
-        DialogResult ShowSaveFileDialog(string filterText, out string filePath);
+        DialogResult ShowSaveFileDialog(string filterText, string defaultFileName, out string filePath);
 
         object ShowDialog(string title, IDialogResultProvider dataContext);
     }

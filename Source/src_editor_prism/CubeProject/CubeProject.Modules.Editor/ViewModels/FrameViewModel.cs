@@ -15,8 +15,20 @@ namespace CubeProject.Modules.Editor.ViewModels
 {
     public class FrameViewModel : ViewModelBase
     {
-        private Frame<byte> _frame;
-        private DelegateCommand<object> _deleteCommand;
+        public FrameViewModel(IUnityContainer container, IEventAggregator aggregator) : base(container, aggregator)
+        {
+            EventAggregator.GetEvent<BrushSizeChangedEvent>().Subscribe(BrushSizeChanged);
+            EventAggregator.GetEvent<ShadeChangedEvent>().Subscribe(ShadeChanged);
+
+            EventAggregator.GetEvent<RequestBrushSizeEvent>().Publish(0);
+            EventAggregator.GetEvent<RequestShadeEvent>().Publish(0);
+        }
+
+        #region Properties
+        public RendererSettings Settings
+        {
+            get { return _settings; }
+        }
 
         public Frame<byte> Frame
         {
@@ -24,27 +36,43 @@ namespace CubeProject.Modules.Editor.ViewModels
             set
             {
                 _frame = value;
+                if (value != null)
+                {
+                    _settings = new RendererSettings()
+                    {
+                        ColorDepth = _frame.ColorDepth,
+                        GapSize = 2,
+                        PixelSize = 8,
+                        ScreenHeight = _frame.Height * (2 + 8),
+                        ScreenWidth = _frame.Width * (2 + 8),
+                        SizeX = _frame.Width,
+                        SizeY = _frame.Height
+                    };
+                    MatrixRenderer = new MatrixRenderer(_settings);
+                }
                 OnPropertyChanged();
             }
         }
-
-        public FrameViewModel(IUnityContainer container, IEventAggregator aggregator) : base(container, aggregator)
-        {
-            
-        }
-
-        private BitmapSource _renderedSource;
-        private RendererSettings _settings;
 
         public BitmapSource RenderedSource
         {
             get
             {
-                return MatrixRenderer.Render(_frame.Data, _settings.SizeX, _settings.SizeY);
+                if (_renderedSource == null)
+                {
+                    ReDraw();
+                }
+                return _renderedSource;
+            }
+            private set
+            {
+                _renderedSource = value;
+                OnPropertyChanged();
             }
         }
 
         private MatrixRenderer MatrixRenderer { get; set; }
+        #endregion
 
         #region Commands
         public DelegateCommand<object> DeleteCommand
@@ -59,9 +87,16 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         #endregion
 
-        public RendererSettings Settings
+        #region Private
+
+        private void ShadeChanged(byte shade)
         {
-            get { return _settings; }
+            _brushShade = (byte)shade;
+        }
+
+        private void BrushSizeChanged(int size)
+        {
+            _brushSize = size;
         }
 
         private PixelCoordinate GetCoordinateFromLocation(Point clickLocation)
@@ -73,14 +108,13 @@ namespace CubeProject.Modules.Editor.ViewModels
             };
         }
 
-        #region Public
-
-        public void TogglePixelAtLocation(Point clickLocation, int area, ToggleMode mode)
+        private void ReDraw()
         {
-            TogglePixelAtLocation(clickLocation, area, mode, 50);
+            _renderedSource = MatrixRenderer.Render(_frame.Data, _settings.SizeX, _settings.SizeY);
+            OnPropertyChanged("RenderedSource");
         }
 
-        public void TogglePixelAtLocation(Point clickLocation, int area, ToggleMode mode, byte shadeLevel)
+        private void TogglePixelAtLocation(Point clickLocation, int area, ToggleMode mode, byte shadeLevel)
         {
             if (_frame == null) return;
 
@@ -120,8 +154,31 @@ namespace CubeProject.Modules.Editor.ViewModels
                     }
                 }
             }
-            //Render();
         }
+
+
+        #region Private State
+
+        private int _brushSize = 0;
+        private byte _brushShade = 255;
+
+        private BitmapSource _renderedSource;
+        private RendererSettings _settings;
+        private Frame<byte> _frame;
+        private DelegateCommand<object> _deleteCommand;
         #endregion
+        #endregion
+
+        internal void TurnOnPixelAtLocation(Point realLocation)
+        {
+            TogglePixelAtLocation(realLocation, _brushSize, ToggleMode.On, _brushShade);
+            ReDraw();
+        }
+
+        internal void TurnOffPixelAtLocation(Point realLocation)
+        {
+            TogglePixelAtLocation(realLocation, _brushSize, ToggleMode.Off, _brushShade);
+            ReDraw();
+        }
     }
 }

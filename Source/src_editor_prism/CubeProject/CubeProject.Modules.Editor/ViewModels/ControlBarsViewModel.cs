@@ -22,7 +22,7 @@ namespace CubeProject.Modules.Editor.ViewModels
                 OnPropertyChanged();
             }
         }
-        public List<int> AreaSize
+        public List<int> BrushSize
         {
             get
             {
@@ -50,7 +50,8 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         public ControlBarsViewModel(IUnityContainer container, IEventAggregator aggregator) : base(container, aggregator)
         {
-
+            aggregator.GetEvent<RequestBrushSizeEvent>().Subscribe(HandleRequestBrushSize);
+            aggregator.GetEvent<RequestShadeEvent>().Subscribe(HandleRequestShade);
         }
 
         #region Commands
@@ -101,6 +102,15 @@ namespace CubeProject.Modules.Editor.ViewModels
         private void CloseApplication(object obj)
         {
             EventAggregator.GetEvent<CloseApplicationEvent>().Publish("");
+        }
+        private void HandleRequestShade(byte obj)
+        {
+            EventAggregator.GetEvent<ShadeChangedEvent>().Publish(_selectedShadeLevel);
+        }
+
+        private void HandleRequestBrushSize(int obj)
+        {
+            EventAggregator.GetEvent<BrushSizeChangedEvent>().Publish(_selectedBrushSize);
         }
 
         #region Private State

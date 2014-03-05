@@ -30,7 +30,7 @@
         
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1">
             <Button Content="Cancel" Width="75" Margin="5" IsCancel="True"></Button>
-            <Button Content="Ok" Width="75" Margin="5" IsDefault="True"></Button>
+            <Button Content="Ok" Width="75" Margin="5" IsDefault="True" Command="{Binding OkCommand}"></Button>
         </StackPanel>
     </Grid>
 </UserControl>
