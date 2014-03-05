@@ -18,7 +18,7 @@ namespace CubeProject.Modules.Editor.ViewModels
                 OnPropertyChanged();
             }
         }
-        private string _activeStatusMessage;
+        private string _activeStatusMessage = @"¯\(ツ)/¯";
 
         public StatusBarViewModel(IUnityContainer container, IEventAggregator aggregator) : base(container, aggregator)
         {

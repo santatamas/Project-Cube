@@ -10,6 +10,12 @@ namespace CubeProject.Modules.Editor.Views
     /// </summary>
     public partial class PixelMatrixView : UserControl
     {
+        public bool CanDraw
+        {
+            get { return _canDraw; }
+            set { _canDraw = value; }
+        }
+
         public PixelMatrixView()
         {
             InitializeComponent();
@@ -22,11 +28,12 @@ namespace CubeProject.Modules.Editor.Views
         }
 
         private FrameViewModel _viewModel;
+        private bool _canDraw = true;
 
         #region EventHandlers
         private void MainScreen_OnMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (_viewModel == null) return;
+            if (_viewModel == null || !CanDraw) return;
 
             var realLocation = GetRelativelLocation(e.GetPosition((Image)sender));
 
@@ -51,7 +58,7 @@ namespace CubeProject.Modules.Editor.Views
 
         private void MainScreen_OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (_viewModel == null) return;
+            if (_viewModel == null || !CanDraw) return;
 
             var realLocation = GetRelativelLocation(e.GetPosition((Image)sender));
 

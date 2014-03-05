@@ -12,7 +12,7 @@
         </Grid.RowDefinitions>
 
         <ItemsControl Grid.Row="0" regions:RegionManager.RegionName="{x:Static constants:RegionNames.ToolbarRegion}"></ItemsControl>
-        <ItemsControl Grid.Row="1" regions:RegionManager.RegionName="{x:Static constants:RegionNames.MainRegion}"></ItemsControl>
+        <ContentControl Grid.Row="1" regions:RegionManager.RegionName="{x:Static constants:RegionNames.MainRegion}"></ContentControl>
         <ItemsControl Grid.Row="2" regions:RegionManager.RegionName="{x:Static constants:RegionNames.StatusbarRegion}"></ItemsControl>
         
     </Grid>

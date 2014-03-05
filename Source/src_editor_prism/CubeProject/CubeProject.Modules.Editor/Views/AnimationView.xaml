@@ -50,7 +50,7 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <ListView x:Name="AnimListView" ItemsSource="{Binding Path=Frames}" SelectedItem="{Binding Path=CurrentMatrix, Mode=TwoWay}" >
+    <ListView x:Name="AnimListView" ItemsSource="{Binding Path=FrameViewModels}" SelectedItem="{Binding Path=CurrentFrame, Mode=TwoWay}" >
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
                 <StackPanel Orientation="Horizontal" />
@@ -63,11 +63,11 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <views1:PixelMatrixView Grid.ColumnSpan="2" Grid.Column="0" Width="150" Height="150" x:Name="MatrixView" />
+                    <views1:PixelMatrixView Grid.ColumnSpan="2" Grid.Column="0" Width="150" Height="150" x:Name="MatrixView" DataContext="{Binding}" CanDraw="False" />
                     <Button Content="X" Foreground="Red" 
                             Width="20" Height="20" 
                             Grid.Column="1" VerticalAlignment="Top" 
-                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DeleteCommand, Mode=OneWay}">
+                            Command="{Binding Path=DeleteCommand, Mode=OneWay}">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
                                 <Style.Triggers>

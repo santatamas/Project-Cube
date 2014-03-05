@@ -4,15 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:CubeProject.Modules.Editor.Views"
-        mc:Ignorable="d" Height="800" Width="800">
-    <Grid Background="Red">
-        <Grid.RowDefinitions>         
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
+        mc:Ignorable="d" >
+    <DockPanel LastChildFill="True">
+        <views:AnimationView DockPanel.Dock="Bottom" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}, Path=ActualWidth}" DataContext="{Binding}" />
 
-        <views:PixelMatrixView x:Name="MatrixView" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding CurrentFrame}" />
+        <views:PixelMatrixView x:Name="MatrixView" Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding CurrentFrame}" />
 
-        <views:AnimationView Grid.Row="1" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}, Path=ActualWidth}" DataContext="{Binding}" />
-    </Grid>
+    </DockPanel>
 </UserControl>

@@ -83,7 +83,15 @@ namespace CubeProject.Modules.Editor.ViewModels
             }
         }
 
-        public ObservableCollection<FrameViewModel> FrameViewModels { get; private set; }
+        public ObservableCollection<FrameViewModel> FrameViewModels
+        {
+            get { return _frameViewModels; }
+            private set
+            {
+                _frameViewModels = value;
+                OnPropertyChanged();
+            }
+        }
 
         #endregion
 
@@ -208,6 +216,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         private short _currentAnimationFrameWidth = 0;
         private short _currentAnimationFrameHeight = 0;
         private FrameViewModel _currentFrame;
+        private ObservableCollection<FrameViewModel> _frameViewModels;
 
         #endregion
         #endregion
