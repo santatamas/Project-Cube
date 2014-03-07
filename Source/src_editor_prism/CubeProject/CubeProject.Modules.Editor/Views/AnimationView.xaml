@@ -3,11 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:views1="clr-namespace:CubeProject.Modules.Editor.Views">
     <UserControl.Resources>
-        <Color x:Key="ControlLightColor">White</Color>
         <Color x:Key="BorderMediumColor">#FF888888</Color>
         <Style x:Key="{x:Type ListView}" TargetType="ListView">
             <Setter Property="SnapsToDevicePixels" Value="true" />
-            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="false" />
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
@@ -16,9 +15,6 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ListView">
                         <Border Name="Border" BorderThickness="1">
-                            <Border.Background>
-                                <SolidColorBrush Color="{StaticResource ControlLightColor}" />
-                            </Border.Background>
                             <Border.BorderBrush>
                                 <SolidColorBrush Color="{StaticResource BorderMediumColor}" />
                             </Border.BorderBrush>
@@ -58,7 +54,7 @@
         </ListView.ItemsPanel>
         <ListView.ItemTemplate>
             <DataTemplate>
-                <Grid>
+                <Grid Background="{DynamicResource WindowBackgroundBrush}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>

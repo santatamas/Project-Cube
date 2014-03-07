@@ -55,8 +55,11 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private void Ok(object obj)
         {
+            _dialogResult = this;
+
             if(OkTriggered != null)
                 OkTriggered(this, new EventArgs());
+
         }
 
         public short FrameWidth
@@ -78,11 +81,12 @@ namespace CubeProject.Modules.Editor.ViewModels
             }
         }
 
+        private object _dialogResult;
         public object DialogResult
         {
             get
             {
-                return this;
+                return _dialogResult;
             }
         }
 

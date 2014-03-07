@@ -112,9 +112,13 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private void CreateNew(object obj)
         {
-            var dialogResult = (NewAnimationViewModel)_dialogService.ShowDialog("Create new animation", Container.Resolve<NewAnimationViewModel>());
-            Animation = CreateNewAnimation(dialogResult.SelectedColorDepth, dialogResult.FrameWidth, dialogResult.FrameHeight);
-            EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("New animation created.");
+            var dialogResult = _dialogService.ShowDialog("Create new animation", Container.Resolve<NewAnimationViewModel>()) as NewAnimationViewModel;
+            if (dialogResult != null)
+            {
+                Animation = CreateNewAnimation(dialogResult.SelectedColorDepth, dialogResult.FrameWidth,
+                    dialogResult.FrameHeight);
+                EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("New animation created.");
+            }
         }
 
         private void Open(object obj)

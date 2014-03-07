@@ -3,17 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:regions="http://www.codeplex.com/CompositeWPF"
         xmlns:constants="clr-namespace:CubeProject.Infrastructure.Constants;assembly=CubeProject.Infrastructure"
-        Title="PixelMatrix Editor V0.3" Height="350" Width="525">
+        xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation/shell"
+        xmlns:ui="clr-namespace:CubeProject.Infrastructure.UI;assembly=CubeProject.Infrastructure"
+        xmlns:uiExtensions="clr-namespace:CubeProject.UIExtensions;assembly=CubeProject.UIExtensions"
+        WindowStyle="None"
+		ResizeMode="CanResize"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        Title="PixelMatrix Editor V0.3" Height="1000" Width="950">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome
+            ResizeBorderThickness="3"
+            CaptionHeight="25"
+            CornerRadius="5,5,5,5"
+            GlassFrameThickness="0">
+        </shell:WindowChrome>
+    </shell:WindowChrome.WindowChrome>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="35"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ItemsControl Grid.Row="0" regions:RegionManager.RegionName="{x:Static constants:RegionNames.ToolbarRegion}"></ItemsControl>
-        <ContentControl Grid.Row="1" regions:RegionManager.RegionName="{x:Static constants:RegionNames.MainRegion}"></ContentControl>
-        <ItemsControl Grid.Row="2" regions:RegionManager.RegionName="{x:Static constants:RegionNames.StatusbarRegion}"></ItemsControl>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>               
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="PixelMatrix Editor" Foreground="WhiteSmoke" Grid.Column="0"></TextBlock>
+            <uiExtensions:CaptionButtons VerticalAlignment="Top" Grid.Column="1"/>
+            <!--<Border Margin="0" Height="1" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="{DynamicResource GlyphBrush}" Grid.Row="1"></Border>-->
+        </Grid>
+        
+        <ItemsControl Grid.Row="1" regions:RegionManager.RegionName="{x:Static constants:RegionNames.ToolbarRegion}"></ItemsControl>
+        <ContentControl Grid.Row="2" regions:RegionManager.RegionName="{x:Static constants:RegionNames.MainRegion}"></ContentControl>
+        <ItemsControl Grid.Row="3" regions:RegionManager.RegionName="{x:Static constants:RegionNames.StatusbarRegion}"></ItemsControl>
         
     </Grid>
 </Window>

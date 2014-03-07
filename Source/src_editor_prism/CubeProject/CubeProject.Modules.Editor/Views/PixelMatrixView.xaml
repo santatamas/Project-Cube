@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" 
+             mc:Ignorable="d" MaxHeight="700" MaxWidth="700"
              d:DesignHeight="300" d:DesignWidth="300">
     <Border Background="#FF7D8C73" CornerRadius="1" BorderBrush="DarkGreen" BorderThickness="1">
         <Image x:Name="MainScreen" SnapsToDevicePixels="True" UseLayoutRounding="True" 
