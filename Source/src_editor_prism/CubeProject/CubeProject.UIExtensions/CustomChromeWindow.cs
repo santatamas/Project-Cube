@@ -1,11 +1,24 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using Microsoft.Windows.Shell;
 
 namespace CubeProject.UIExtensions
 {
 	public class CustomChromeWindow: Window, INotifyPropertyChanged
 	{
+	    public CustomChromeWindow()
+	    {
+            WindowChrome.SetWindowChrome(this, new WindowChrome
+            {
+                ResizeBorderThickness = new Thickness(3),
+                CaptionHeight = 25,
+                CornerRadius = new CornerRadius(3),
+                GlassFrameThickness = new Thickness(0)
+            });
+            this.ResizeMode = ResizeMode.CanResize;
+            this.WindowStyle = WindowStyle.None;
+	    }
 
 		protected override void OnStateChanged(EventArgs e)
 		{

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 
-namespace CubeProject.Infrastructure.UI
+namespace CubeProject.UIExtensions
 {
     public class MouseBehaviour
     {

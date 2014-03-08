@@ -1,12 +1,11 @@
-﻿using System.Windows;
-using CubeProject.Infrastructure.UI;
+﻿using CubeProject.UIExtensions;
 
 namespace CubeProject.Shell.View
 {
     /// <summary>
     /// Interaction logic for ShellView.xaml
     /// </summary>
-    public partial class ShellView : Window
+    public partial class ShellView : CustomChromeWindow
     {
         public ShellView()
         {

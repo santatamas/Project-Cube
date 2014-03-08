@@ -62,6 +62,10 @@
       <Project>{c5eb436c-2a75-4d43-9ff4-058407db9476}</Project>
       <Name>CubeProject.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CubeProject.UIExtensions\CubeProject.UIExtensions.csproj">
+      <Project>{CE1254C8-97E0-45CB-B8B9-FFDE8AA2B7A1}</Project>
+      <Name>CubeProject.UIExtensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Services\WindowDialog.xaml">

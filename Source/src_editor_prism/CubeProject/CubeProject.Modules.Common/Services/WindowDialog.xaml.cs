@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows;
 using CubeProject.Infrastructure.Interfaces;
+using CubeProject.UIExtensions;
 
 namespace CubeProject.Modules.Common.Services
 {
     /// <summary>
     /// Interaction logic for WindowDialog.xaml
     /// </summary>
-    public partial class WindowDialog : Window
+    public partial class WindowDialog : CustomChromeWindow
     {
         public WindowDialog()
         {
