@@ -8,5 +8,8 @@
         <DataTemplate DataType="{x:Type viewModels:NewAnimationViewModel}" >
             <views:NewAnimationView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:ChangeDurationViewModel}" >
+            <views:ChangeDurationView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

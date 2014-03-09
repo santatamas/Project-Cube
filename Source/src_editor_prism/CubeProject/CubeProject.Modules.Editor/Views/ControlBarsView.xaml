@@ -1,7 +1,10 @@
 ﻿<UserControl x:Class="CubeProject.Modules.Editor.Views.ControlBarsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="clr-namespace:CubeProject.Modules.Editor.Converters">
+             xmlns:converters="clr-namespace:CubeProject.Modules.Editor.Converters"
+             xmlns:views="clr-namespace:CubeProject.Modules.Editor.Views"
+             xmlns:constants="clr-namespace:CubeProject.Infrastructure.Constants;assembly=CubeProject.Infrastructure"
+             xmlns:regions="http://www.codeplex.com/CompositeWPF">
     <UserControl.Resources>
         <converters:ColorDepthToBoolConverter x:Key="ColorDepthToBoolConverter" />
         <converters:ByteToColorConverter x:Key="ByteToColorConverter" />
@@ -38,6 +41,8 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                <Separator></Separator>
+                <ContentControl regions:RegionManager.RegionName="{x:Static constants:RegionNames.PlayerControlRegion}"></ContentControl>
             </ToolBar>
         </ToolBarTray>
     </Grid>

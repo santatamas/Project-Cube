@@ -39,12 +39,12 @@ namespace CubeProject.Modules.Editor.Views
 
             if (e.ChangedButton == MouseButton.Left)
             {
-                _viewModel.TurnOnPixelAtLocation(realLocation);
+                _viewModel.TurnOnPixelsAtArea(realLocation);
             }
 
             if (e.ChangedButton == MouseButton.Right)
             {
-                _viewModel.TurnOffPixelAtLocation(realLocation);
+                _viewModel.TurnOffPixelsAtArea(realLocation);
             }         
         }
 
@@ -64,13 +64,15 @@ namespace CubeProject.Modules.Editor.Views
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                _viewModel.TurnOnPixelAtLocation(realLocation);
+                _viewModel.TurnOnPixelsAtArea(realLocation);
             }
 
             if (e.RightButton == MouseButtonState.Pressed)
             {
-                _viewModel.TurnOffPixelAtLocation(realLocation);
+                _viewModel.TurnOffPixelsAtArea(realLocation);
             }
+
+            _viewModel.ReportMouseAtLocation(realLocation);
         }
         #endregion
     }

@@ -9,7 +9,7 @@ namespace CubeProject.Infrastructure.BaseClasses
         public IRegionManager RegionManager { get; private set; }
         public IUnityContainer Container { get; private set; }
 
-        public ModuleBase(IUnityContainer container, IRegionManager regionManager)
+        protected ModuleBase(IUnityContainer container, IRegionManager regionManager)
         {
             RegionManager = regionManager;
             Container = container;

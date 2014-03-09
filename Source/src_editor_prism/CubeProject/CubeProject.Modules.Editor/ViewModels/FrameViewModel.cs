@@ -1,22 +1,26 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.TextFormatting;
 using CubeProject.Data.Entities;
 using CubeProject.Graphics;
 using CubeProject.Graphics.Renderers;
 using CubeProject.Infrastructure.BaseClasses;
 using CubeProject.Infrastructure.Enums;
 using CubeProject.Infrastructure.Events;
+using CubeProject.Infrastructure.Interfaces;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 
 namespace CubeProject.Modules.Editor.ViewModels
 {
-    public class FrameViewModel : ViewModelBase
+    public class FrameViewModel : ViewModelBase, IFrameViewModel
     {
-        public FrameViewModel(IUnityContainer container, IEventAggregator aggregator) : base(container, aggregator)
+        public FrameViewModel(IUnityContainer container, IEventAggregator aggregator, IDialogService dialogService) : base(container, aggregator)
         {
+            _dialogService = dialogService;
+
             EventAggregator.GetEvent<BrushSizeChangedEvent>().Subscribe(BrushSizeChanged);
             EventAggregator.GetEvent<ShadeChangedEvent>().Subscribe(ShadeChanged);
 
@@ -30,7 +34,7 @@ namespace CubeProject.Modules.Editor.ViewModels
             get { return _settings; }
         }
 
-        public Frame<byte> Frame
+        public IFrame<byte> Frame
         {
             get { return _frame; }
             set
@@ -72,6 +76,13 @@ namespace CubeProject.Modules.Editor.ViewModels
         }
 
         private MatrixRenderer MatrixRenderer { get; set; }
+
+        public Int16 Duration {
+            get
+            {
+                return Frame.Duration;
+            }
+        }
         #endregion
 
         #region Commands
@@ -79,15 +90,48 @@ namespace CubeProject.Modules.Editor.ViewModels
         {
             get { return _deleteCommand ?? (_deleteCommand = new DelegateCommand<object>(Delete)); }
         }
-
-        private void Delete(object obj)
+        public DelegateCommand<object> ChangeDurationCommand
         {
-            EventAggregator.GetEvent<DeleteFrameViewModelEvent>().Publish(this);
+            get { return _changeDurationCommand ?? (_changeDurationCommand = new DelegateCommand<object>(ChangeDurationCommandHandler)); }
+        }
+        public DelegateCommand<object> CopyCommand
+        {
+            get { return _copyCommand ?? (_copyCommand = new DelegateCommand<object>(CopyCommandHandler)); }
+        }
+
+        public DelegateCommand<object> PasteCommand
+        {
+            get { return _pasteCommand ?? (_pasteCommand = new DelegateCommand<object>(PasteCommandHandler)); }
         }
 
         #endregion
 
         #region Private
+
+        private void CopyCommandHandler(object obj)
+        {
+            EventAggregator.GetEvent<CopyContentEvent>().Publish(Frame);
+        }
+
+        private void PasteCommandHandler(object obj)
+        {
+            EventAggregator.GetEvent<PasteContentEvent>().Publish(this);
+        }
+
+        private void ChangeDurationCommandHandler(object obj)
+        {
+            var dialogViewModel = Container.Resolve<IChangeDurationViewModel>();
+            dialogViewModel.Duration = Frame.Duration;
+            _dialogService.ShowDialog("Change Duration", (IDialogResultProvider)dialogViewModel);
+
+            Frame.Duration = dialogViewModel.Duration;
+            OnPropertyChanged("Duration");
+        }
+
+        private void Delete(object obj)
+        {
+            EventAggregator.GetEvent<DeleteFrameViewModelEvent>().Publish(this);
+        }
 
         private void ShadeChanged(byte shade)
         {
@@ -108,54 +152,63 @@ namespace CubeProject.Modules.Editor.ViewModels
             };
         }
 
-        private void ReDraw()
+        public void ReDraw()
         {
             _renderedSource = MatrixRenderer.Render(_frame.Data, _settings.SizeX, _settings.SizeY);
             OnPropertyChanged("RenderedSource");
         }
 
-        private void TogglePixelAtLocation(Point clickLocation, int area, ToggleMode mode, byte shadeLevel)
+        private void TogglePixelAtArea(Point clickLocation, int area, ToggleMode mode, byte shadeLevel)
         {
             if (_frame == null) return;
 
             PixelCoordinate coordinate = GetCoordinateFromLocation(clickLocation);
 
-            // iterate through the selected pixel, and it's surrounding area
-            for (int i = (coordinate.X - area); i <= (coordinate.X + area); i++)
+            if (area == 1)
             {
-                for (int j = (coordinate.Y - area); j <= (coordinate.Y + area); j++)
+                SetPixelAtLocation(mode, shadeLevel, coordinate);
+                return;
+            }
+
+            // iterate through the selected pixel, and it's surrounding area
+            for (int i = (coordinate.X - area / 2); i <= (coordinate.X + area / 2); i++)
+            {
+                for (int j = (coordinate.Y - area / 2); j <= (coordinate.Y + area / 2); j++)
                 {
-                    // checking boundaries
-                    if (i >= Settings.SizeX || j >= Settings.SizeY || i < 0 || j < 0) continue;
-
-                    // change pixel's value based on the selected drawing mode
-                    switch (mode)
-                    {
-                        case ToggleMode.On:
-                            _frame[i, j] = shadeLevel;
-                            break;
-                        case ToggleMode.Off:
-                            _frame[i, j] = 0;
-                            break;
-                        case ToggleMode.Inverse:
-
-                            if (_frame[i, j] == 0)
-                            {
-                                _frame[i, j] = shadeLevel;
-                            }
-                            else
-                            {
-                                _frame[i, j] = 0;
-                            }
-
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException("mode");
-                    }
+                    SetPixelAtLocation(mode, shadeLevel, new PixelCoordinate(i,j));
                 }
             }
         }
 
+        private void SetPixelAtLocation(ToggleMode mode, byte shadeLevel, PixelCoordinate coordinate)
+        {
+            // checking boundaries
+            if (coordinate.X >= Settings.SizeX || coordinate.Y >= Settings.SizeY || coordinate.X < 0 || coordinate.Y < 0) return;
+
+            switch (mode)
+            {
+                case ToggleMode.On:
+                    _frame[coordinate.X, coordinate.Y] = shadeLevel;
+                    break;
+                case ToggleMode.Off:
+                    _frame[coordinate.X, coordinate.Y] = 0;
+                    break;
+                case ToggleMode.Inverse:
+
+                    if (_frame[coordinate.X, coordinate.Y] == 0)
+                    {
+                        _frame[coordinate.X, coordinate.Y] = shadeLevel;
+                    }
+                    else
+                    {
+                        _frame[coordinate.X, coordinate.Y] = 0;
+                    }
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("mode");
+            }
+        }
 
         #region Private State
 
@@ -164,20 +217,32 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private BitmapSource _renderedSource;
         private RendererSettings _settings;
-        private Frame<byte> _frame;
+        private IFrame<byte> _frame;
         private DelegateCommand<object> _deleteCommand;
+        private DelegateCommand<object> _changeDurationCommand;
+        private DelegateCommand<object> _copyCommand;
+        private DelegateCommand<object> _pasteCommand;
+
+        private IDialogService _dialogService;
+
         #endregion
         #endregion
 
-        internal void TurnOnPixelAtLocation(Point realLocation)
+        internal void ReportMouseAtLocation(Point realLocation)
         {
-            TogglePixelAtLocation(realLocation, _brushSize, ToggleMode.On, _brushShade);
+            PixelCoordinate coordinate = GetCoordinateFromLocation(realLocation);
+            EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish(coordinate.X + " X " + coordinate.Y);
+        }
+
+        internal void TurnOnPixelsAtArea(Point realLocation)
+        {
+            TogglePixelAtArea(realLocation, _brushSize, ToggleMode.On, _brushShade);
             ReDraw();
         }
 
-        internal void TurnOffPixelAtLocation(Point realLocation)
+        internal void TurnOffPixelsAtArea(Point realLocation)
         {
-            TogglePixelAtLocation(realLocation, _brushSize, ToggleMode.Off, _brushShade);
+            TogglePixelAtArea(realLocation, _brushSize, ToggleMode.Off, _brushShade);
             ReDraw();
         }
     }

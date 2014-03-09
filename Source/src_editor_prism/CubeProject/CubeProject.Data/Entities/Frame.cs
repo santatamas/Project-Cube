@@ -1,12 +1,15 @@
 ﻿using System;
 using CubeProject.Infrastructure.Enums;
+using CubeProject.Infrastructure.Interfaces;
 
 namespace CubeProject.Data.Entities
 {
-    public class Frame<T>
+    [Serializable]
+    public class Frame<T>: IFrame<T>
     {
         public Int16 Width { get; private set; }
         public Int16 Height { get; private set; }
+        public Int16 Duration { get; set; }
 
         public ColorDepth ColorDepth { get; internal set; }
 

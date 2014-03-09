@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="CubeProject.Modules.Editor.Views.PlayerControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal">
+        <Button Command="{Binding PreviousCommand}" >
+            <Button.Content>
+                <Image Source="pack://application:,,,/CubeProject.Modules.Editor;component/Images/prev_track.png" /> 
+            </Button.Content>
+        </Button>
+        <Button Command="{Binding PauseCommand}" Visibility="{Binding IsPauseVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Button.Content>
+                <Image Source="pack://application:,,,/CubeProject.Modules.Editor;component/Images/pause.png" />
+            </Button.Content>
+        </Button>
+        <Button Command="{Binding PlayCommand}" Visibility="{Binding IsPlayVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Button.Content>
+                <Image Source="pack://application:,,,/CubeProject.Modules.Editor;component/Images/play.png" />
+            </Button.Content>
+        </Button>
+        <Button Command="{Binding NextCommand}">
+            <Button.Content>
+                <Image Source="pack://application:,,,/CubeProject.Modules.Editor;component/Images/next_track.png" />
+            </Button.Content>
+        </Button>
+        <Button Command="{Binding StopCommand}">
+            <Button.Content>
+                <Image Source="pack://application:,,,/CubeProject.Modules.Editor;component/Images/stop.png" />
+            </Button.Content>
+        </Button>
+    </StackPanel>
+</UserControl>

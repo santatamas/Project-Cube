@@ -5,10 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:CubeProject.Modules.Editor.Views"
         mc:Ignorable="d" >
+    
     <DockPanel LastChildFill="True">
         <views:AnimationView DockPanel.Dock="Bottom" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}, Path=ActualWidth}" DataContext="{Binding}" />
-
-        <views:PixelMatrixView x:Name="MatrixView" Grid.Row="0"  HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding CurrentFrame}" />
-
+        <views:PixelMatrixView x:Name="MatrixView" HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding CurrentFrame}" />
     </DockPanel>
 </UserControl>

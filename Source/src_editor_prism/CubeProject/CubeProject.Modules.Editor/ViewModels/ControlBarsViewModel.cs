@@ -26,7 +26,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         {
             get
             {
-                return new List<int> { 1, 2, 3, 4 };
+                return new List<int> { 1, 2, 4, 8 };
             }
         }
         public byte SelectedShadeLevel

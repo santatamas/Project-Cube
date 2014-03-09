@@ -24,18 +24,18 @@ namespace CubeProject.Data.Tests
             frame.Data[0, 1] = 1;
             frame.Data[1, 0] = 1;
             frame.Data[1, 1] = 1;
+            frame.Duration = 500;
 
             _animation.Frames.Add(frame);
-            _animation.FrameDurations.Add(500);
 
             var frame2 = new Frame<byte>(2, 2);
             frame2.Data[0, 0] = 0;
             frame2.Data[0, 1] = 0;
             frame2.Data[1, 0] = 0;
             frame2.Data[1, 1] = 0;
+            frame2.Duration = 500;
 
             _animation.Frames.Add(frame2);
-            _animation.FrameDurations.Add(500);
         }
 
         [Test]

@@ -13,7 +13,7 @@ namespace CubeProject.Shell
 
         public override void Initialize()
         {
-            //_regionManager.RegisterViewWithRegion(Constants.MainRegionName, () => _container.Resolve<ShellView>());
+            
         }
     }
 }

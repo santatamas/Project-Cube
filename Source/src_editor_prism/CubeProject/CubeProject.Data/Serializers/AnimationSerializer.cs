@@ -28,7 +28,7 @@ namespace CubeProject.Data.Serializers
                 var frame = data.Frames[index];
 
                 // Write out current frame duration - 2 byte
-                bw.Write((short)data.FrameDurations[index]);
+                bw.Write((short)data.Frames[index].Duration);
 
                 // Write out current Frame width and height
                 bw.Write((short)frame.Width);
@@ -39,7 +39,7 @@ namespace CubeProject.Data.Serializers
                 {
                     for (int j = 0; j < frame.Height; j++)
                     {
-                         bw.Write((byte)frame[i, j]);
+                        bw.Write((byte)frame[i, j]);
                     }
                 }
             }
@@ -64,7 +64,7 @@ namespace CubeProject.Data.Serializers
             var noFrames = br.ReadInt16();
 
             // Get the ColorDepth of the frames in animation - 1 byte
-            ColorDepth colorDepth = (ColorDepth) br.ReadByte();
+            ColorDepth colorDepth = (ColorDepth)br.ReadByte();
             result.ColorDepth = colorDepth;
 
             Frame<byte> frame;
@@ -72,13 +72,13 @@ namespace CubeProject.Data.Serializers
             for (int frameIndex = 0; frameIndex < noFrames; frameIndex++)
             {
                 // Get the duration - 2 byte
-                result.FrameDurations.Add(br.ReadInt16());
+                var duration = br.ReadInt16();
 
                 // Get the width and height 
-                var width  = br.ReadInt16();
+                var width = br.ReadInt16();
                 var height = br.ReadInt16();
 
-                frame = new Frame<byte>(width, height, colorDepth);
+                frame = new Frame<byte>(width, height, colorDepth) { Duration = duration };
 
                 // Fill pixel data
                 for (int i = 0; i < frame.Width; i++)

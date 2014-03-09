@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CubeProject.Infrastructure.BaseClasses;
 using CubeProject.Infrastructure.Enums;
-using CubeProject.Infrastructure.Interfaces;
-using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 
 namespace CubeProject.Modules.Editor.ViewModels
 {
-    public class NewAnimationViewModel : ViewModelBase, IDialogResultProvider, IDialogViewModel
+    public class NewAnimationViewModel : DialogViewModelBase
     {
         public NewAnimationViewModel(IUnityContainer container, IEventAggregator aggregator)
             : base(container, aggregator)
@@ -24,9 +21,8 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private List<ColorDepth> _avaliableColorDepths;
         private ColorDepth _selectedColorDepth;
-        private short _frameWidth;
-        private short _frameHeight;
-        private DelegateCommand<object> _okCommand;
+        private short _frameWidth = 50;
+        private short _frameHeight = 50;
 
         public List<ColorDepth> AvaliableColorDepths
         {
@@ -48,17 +44,6 @@ namespace CubeProject.Modules.Editor.ViewModels
             }
         }
 
-        public DelegateCommand<object> OkCommand
-        {
-            get { return _okCommand ?? (_okCommand = new DelegateCommand<object>(Ok)); }
-        }
-
-        private void Ok(object obj)
-        {
-            if(OkTriggered != null)
-                OkTriggered(this, new EventArgs());
-        }
-
         public short FrameWidth
         {
             get { return _frameWidth; }
@@ -77,15 +62,5 @@ namespace CubeProject.Modules.Editor.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        public object DialogResult
-        {
-            get
-            {
-                return this;
-            }
-        }
-
-        public event System.EventHandler OkTriggered;
     }
 }
