@@ -33,7 +33,11 @@ namespace CubeProject.Modules.Editor.Views
         #region EventHandlers
         private void MainScreen_OnMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (_viewModel == null || !CanDraw) return;
+            if (_viewModel == null || !CanDraw)
+            {
+                e.Handled = false;
+                return;
+            }
 
             var realLocation = GetRelativelLocation(e.GetPosition((Image)sender));
 
@@ -58,7 +62,11 @@ namespace CubeProject.Modules.Editor.Views
 
         private void MainScreen_OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (_viewModel == null || !CanDraw) return;
+            if (_viewModel == null || !CanDraw)
+            {
+                e.Handled = false;
+                return;
+            }
 
             var realLocation = GetRelativelLocation(e.GetPosition((Image)sender));
 

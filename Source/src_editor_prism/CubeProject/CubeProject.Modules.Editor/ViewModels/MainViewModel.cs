@@ -25,7 +25,7 @@ namespace CubeProject.Modules.Editor.ViewModels
             : base(container, aggregator)
         {
             _dialogService = container.Resolve<IDialogService>();
-            FrameViewModels = new ObservableCollection<IFrameViewModel>();
+            FrameViewModels = new ObservableCollection<FrameViewModel>();
 
             SubscribeEvents();
 
@@ -64,7 +64,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         public string CurrentFilePath { get; set; }
 
-        public IFrameViewModel CurrentFrame
+        public FrameViewModel CurrentFrame
         {
             get { return _currentFrame; }
             set
@@ -85,7 +85,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
                 if (_animation != null)
                 {
-                    FrameViewModels = new ObservableCollection<IFrameViewModel>();
+                    FrameViewModels = new ObservableCollection<FrameViewModel>();
                     foreach (var frame in value.Frames)
                     {
                         FrameViewModels.Add(CreateFrameViewModel(frame));
@@ -97,7 +97,7 @@ namespace CubeProject.Modules.Editor.ViewModels
             }
         }
 
-        public ObservableCollection<IFrameViewModel> FrameViewModels
+        public ObservableCollection<FrameViewModel> FrameViewModels
         {
             get { return _frameViewModels; }
             private set
@@ -193,9 +193,9 @@ namespace CubeProject.Modules.Editor.ViewModels
             FrameViewModels.Add(newFrame);
         }
 
-        private IFrameViewModel CreateFrameViewModel(IFrame<byte> frame)
+        private FrameViewModel CreateFrameViewModel(IFrame<byte> frame)
         {
-            var newFrame = Container.Resolve<IFrameViewModel>();
+            var newFrame = Container.Resolve<FrameViewModel>();
             newFrame.Frame = frame ?? new Frame<byte>(_currentAnimationFrameWidth, _currentAnimationFrameHeight, _animation.ColorDepth);
             return newFrame;
         }
@@ -299,7 +299,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         {
             if (_clipBoardFrame == null) return;
 
-            var model = frameViewModel as IFrameViewModel;
+            var model = frameViewModel as FrameViewModel;
             if (model == null) return;
 
             model.Frame = _clipBoardFrame;
@@ -319,13 +319,13 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private short _currentAnimationFrameWidth = 0;
         private short _currentAnimationFrameHeight = 0;
-        private IFrameViewModel _currentFrame;
-        private ObservableCollection<IFrameViewModel> _frameViewModels;
+        private FrameViewModel _currentFrame;
+        private ObservableCollection<FrameViewModel> _frameViewModels;
 
         private Thread _playerThread = null;
         private bool _isPlaying = false;
 
-        private IFrameViewModel _clipBoardFVM = null;
+        private FrameViewModel _clipBoardFVM = null;
         private Frame<byte> _clipBoardFrame = null;
 
         #endregion

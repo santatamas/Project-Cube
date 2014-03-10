@@ -94,7 +94,9 @@
     <Compile Include="Interfaces\IShellViewModel.cs" />
     <Compile Include="Interfaces\IStatusBarViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\MouseBehaviour.cs" />
+    <Compile Include="UI\DragAdorner.cs" />
+    <Compile Include="UI\ListViewDragDropManager.cs" />
+    <Compile Include="UI\MouseUtilities.cs" />
     <Compile Include="Utility\DeepCopy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

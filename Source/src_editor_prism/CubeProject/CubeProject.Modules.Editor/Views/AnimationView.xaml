@@ -50,7 +50,7 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <ListView x:Name="AnimListView" ItemsSource="{Binding Path=FrameViewModels}" SelectedItem="{Binding Path=CurrentFrame, Mode=TwoWay}" >
+    <ListView x:Name="AnimListView" ItemsSource="{Binding Path=FrameViewModels}" SelectedItem="{Binding Path=CurrentFrame, Mode=TwoWay}" SelectionMode="Single" >
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
                 <StackPanel Orientation="Horizontal" />
