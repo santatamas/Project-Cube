@@ -2,6 +2,9 @@
 
 namespace CubeProject.Infrastructure.Events
 {
+    /// <summary>
+    /// Skip to the next frame.
+    /// </summary>
     public class NextFrameEvent : CompositePresentationEvent<int>
     {
     }

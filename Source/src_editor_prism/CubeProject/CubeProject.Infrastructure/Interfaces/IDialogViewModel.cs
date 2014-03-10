@@ -4,6 +4,6 @@ namespace CubeProject.Infrastructure.Interfaces
 {
     public interface IDialogViewModel
     {
-        event EventHandler OkTriggered;
+        event EventHandler OkExecuted;
     }
 }

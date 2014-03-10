@@ -4,6 +4,9 @@ using CubeProject.Infrastructure.Interfaces;
 
 namespace CubeProject.Modules.Common.Services
 {
+    /// <summary>
+    /// Provides WPF implementation for <see cref="ILoggingService"/>.
+    /// </summary>
     public class LoggingService : ILoggingService
     {
         public void LogInfo(string message)

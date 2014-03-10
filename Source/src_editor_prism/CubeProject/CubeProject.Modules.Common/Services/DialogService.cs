@@ -7,6 +7,9 @@ using Microsoft.Win32;
 
 namespace CubeProject.Modules.Common.Services
 {
+    /// <summary>
+    /// Provides WPF implementation for <see cref="IDialogService"/>.
+    /// </summary>
     public class DialogService : IDialogService
     {
         public void ShowMessage(string message, string caption)

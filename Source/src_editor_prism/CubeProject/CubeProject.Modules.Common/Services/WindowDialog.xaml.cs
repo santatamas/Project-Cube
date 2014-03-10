@@ -22,16 +22,16 @@ namespace CubeProject.Modules.Common.Services
 
             if (oldContext != null)
             {
-                oldContext.OkTriggered -= context_OkTriggered;
+                oldContext.OkExecuted -= ContextOkExecuted;
             }
 
             if (newContext != null)
             {
-                newContext.OkTriggered += context_OkTriggered;
+                newContext.OkExecuted += ContextOkExecuted;
             }
         }
 
-        private void context_OkTriggered(object sender, EventArgs e)
+        private void ContextOkExecuted(object sender, EventArgs e)
         {
             this.Close();
         }

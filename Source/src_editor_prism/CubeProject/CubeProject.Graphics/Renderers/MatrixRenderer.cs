@@ -9,13 +9,19 @@ using CubeProject.Infrastructure.Enums;
 
 namespace CubeProject.Graphics.Renderers
 {
+    /// <summary>
+    /// Provides in-memory bitmap render capability for byte multiarrays.
+    /// Before use, please provide a preconfigured <see cref="CubeProject.Graphics.RendererSettings"/> object.
+    /// </summary>
+    /// <seealso cref="CubeProject.Graphics.RendererSettings"/>
     public class MatrixRenderer
     {
         #region Construction
-        public MatrixRenderer()
-        {
-            InitializeRenderSource();
-        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MatrixRenderer"/> class.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
+        /// /// <seealso cref="CubeProject.Graphics.RendererSettings"/>
         public MatrixRenderer(RendererSettings settings)
         {
             _settings = settings;
@@ -50,6 +56,13 @@ namespace CubeProject.Graphics.Renderers
 
         private PixelFormat Format { get; set; }
 
+
+        /// <summary>
+        /// Gets the RendererSettings.
+        /// </summary>
+        /// <value>
+        /// The RendererSettings.
+        /// </value>
         public RendererSettings Settings
         {
             get { return _settings; }
@@ -87,6 +100,14 @@ namespace CubeProject.Graphics.Renderers
         #endregion
 
         #region Public
+        /// <summary>
+        /// Renders the specified frame.
+        /// </summary>
+        /// <param name="frame">The frame.</param>
+        /// <param name="sizeX">The size x.</param>
+        /// <param name="sizeY">The size y.</param>
+        /// <returns>A memory-mapped BitmapSource</returns>
+        /// <exception cref="System.ArgumentException">Renderer called with invalid frame size!</exception>
         public unsafe BitmapSource Render(byte[,] frame, int sizeX, int sizeY)
         {
             if (sizeX != Settings.SizeX || sizeY != Settings.SizeY)

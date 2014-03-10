@@ -6,8 +6,17 @@ using CubeProject.Infrastructure.Interfaces;
 
 namespace CubeProject.Data.Serializers
 {
+    /// <summary>
+    /// Provides binary serialization and deserialization capabilities for <see cref="Animation"/> objects.
+    /// </summary>
+    /// <seealso cref="Animation"/>
     public class AnimationSerializer : IBinarySerializer<Animation>
     {
+        /// <summary>
+        /// Serializes the specified Animation.
+        /// </summary>
+        /// <param name="data">The Animation.</param>
+        /// <returns></returns>
         public Stream Serialize(Animation data)
         {
             MemoryStream ms = new MemoryStream();
@@ -47,6 +56,12 @@ namespace CubeProject.Data.Serializers
 
         }
 
+        /// <summary>
+        /// Deserializes the specified stream to an Animation object.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
+        /// <returns>An Animation object.</returns>
+        /// <exception cref="System.NotSupportedException">File Version not supported!</exception>
         public Animation Deserialize(Stream stream)
         {
             BinaryReader br = new BinaryReader(stream);
@@ -94,6 +109,11 @@ namespace CubeProject.Data.Serializers
             return result;
         }
 
+        /// <summary>
+        /// Returns whether the current implementation supports the specified <see cref="FileVersion"/>.
+        /// </summary>
+        /// <param name="version">The <see cref="FileVersion"/>.</param>
+        /// <returns>Whether the current implementation supports the specified <see cref="FileVersion"/></returns>
         public bool SupportsFileVersion(FileVersion version)
         {
             return version == FileVersion.V1;

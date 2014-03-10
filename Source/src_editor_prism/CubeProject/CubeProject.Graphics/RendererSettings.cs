@@ -2,6 +2,9 @@
 
 namespace CubeProject.Graphics
 {
+    /// <summary>
+    /// Contains rendering informations for <see cref="CubeProject.Graphics.Renderers.MatrixRenderer"/>
+    /// </summary>
     public struct RendererSettings
     {
         /// <summary>
