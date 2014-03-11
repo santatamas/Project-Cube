@@ -1,4 +1,4 @@
-package com.cube.main;
+package com.cube.graphics;
 
 import java.util.Random;
 

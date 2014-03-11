@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.cube.main.Screens.LoadingScreen;
 
 public class CubeGame extends Game implements ApplicationListener {
 	

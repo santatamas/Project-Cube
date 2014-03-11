@@ -1,8 +1,9 @@
-package com.cube.main;
+package com.cube.main.Elements;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.cube.main.CubeGame;
 
 public class TwoStateIcon extends Actor {
 	Texture _txStateA;
