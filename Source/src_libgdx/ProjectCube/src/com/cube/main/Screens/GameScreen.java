@@ -11,6 +11,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.cube.data.Animation;
 import com.cube.graphics.PixelMatrixRenderer;
 import com.cube.main.CubeGame;
 import com.cube.main.Elements.TwoStateIcon;
@@ -20,11 +21,12 @@ public class GameScreen implements Screen, GestureListener {
 	Stage _stage;
 	PixelMatrixRenderer _matrixRenderer;
 	TwoStateIcon _eatIcon;
-	private float _width;
-	private float _height;
-	private boolean _rendering = true;
+	float _width;
+	float _height;
+	boolean _rendering = true;
 	Sound _switchSound;
 	Music _bgMusic;
+	
 	
 	public GameScreen()
 	{
@@ -37,6 +39,7 @@ public class GameScreen implements Screen, GestureListener {
 		_stage.addActor(_matrixRenderer);	
 		_stage.addActor(_eatIcon);
 		_switchSound = CubeGame.AssetManager.get("data/switch_effect.wav");
+		_matrixRenderer.get_animations().add((Animation) CubeGame.AssetManager.get("data/demo_animation.pma"));
 		_bgMusic = Gdx.audio.newMusic(Gdx.files.internal("data/bg_music.mp3"));
 		_bgMusic.play();
 	}

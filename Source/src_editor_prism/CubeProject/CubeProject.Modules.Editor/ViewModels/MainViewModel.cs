@@ -167,6 +167,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         private void SaveAnimationTo(Animation animation, string path)
         {
             var serializer = new AnimationSerializer();
+            animation.Frames = FrameViewModels.Select(fvm => (Frame<byte>)fvm.Frame).ToList();
             using (var animStream = serializer.Serialize(animation))
             {
                 animStream.Position = 0;

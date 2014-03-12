@@ -105,7 +105,7 @@ namespace CubeProject.Data.Serializers
                 }
                 result.Frames.Add(frame);
             }
-
+            br.Close();
             return result;
         }
 

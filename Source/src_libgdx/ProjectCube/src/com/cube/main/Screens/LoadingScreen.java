@@ -3,10 +3,13 @@ package com.cube.main.Screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.cube.data.Animation;
+import com.cube.data.AnimationLoader;
 import com.cube.main.CubeGame;
 
 public class LoadingScreen implements Screen {
@@ -22,10 +25,13 @@ public class LoadingScreen implements Screen {
 		parentGame = parent;
 		batch = new SpriteBatch();
 		font = new BitmapFont();
+		
 		LoadPrimaryAssets();		
 	}
 	
-	private void LoadPrimaryAssets() {
+	private void LoadPrimaryAssets() {	
+		CubeGame.AssetManager.setLoader(Animation.class, new AnimationLoader(new InternalFileHandleResolver()));
+		CubeGame.AssetManager.load("data/demo_animation.pma", Animation.class);
 		CubeGame.AssetManager.load("data/eat_icon_off.png", Texture.class);
 		CubeGame.AssetManager.load("data/eat_icon_on.png", Texture.class);
 		CubeGame.AssetManager.load("data/switch_effect.wav", Sound.class);
