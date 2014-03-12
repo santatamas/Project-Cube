@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -21,7 +23,7 @@ public class PixelMatrixRenderer extends Actor {
 	private BitmapFont font;
 	private Stage _parentStage;
 
-	private byte[][] _screenBuffer = new byte[72][72];
+	private int[][] _screenBuffer = new int[72][72];
 	private List<Animation> _animations = new ArrayList<Animation>();
 	private float _totalTime = 0;
 
@@ -45,10 +47,11 @@ public class PixelMatrixRenderer extends Actor {
 			Frame frame = anim.getCurrentFrame();
 			short frameWidth = frame.get_width();
 			short frameHeight = frame.get_height();
+			int[][] frameData = frame.get_data();
 			for (int x = 0; x < frameWidth; x++) {
 				for (int y = 0; y < frameHeight; y++) {
 					// TODO: array size check
-					_screenBuffer[x][y] = frame.get_data()[x][y];
+					_screenBuffer[x][y] = frameData[x][y];
 				}
 			}
 		}
@@ -59,14 +62,17 @@ public class PixelMatrixRenderer extends Actor {
 
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
+		batch.end();
+		Gdx.gl.glEnable(GL10.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 		shapeRenderer.begin(ShapeType.Filled);
+
 		for (int i = 0; i < 72; i++) {
 			for (int j = 0; j < 72; j++) {
-				byte currentPixelValue = _screenBuffer[i][j];
+				int currentPixelValue = _screenBuffer[i][71 - j];
 
 				if (currentPixelValue == 0) {
-					shapeRenderer.setColor(116 / 255f, 129 / 255f, 107 / 255f,
-							1);
+					shapeRenderer.setColor(116 / 255f, 129 / 255f, 107 / 255f, 0.3f);
 					shapeRenderer.rect(i * 10, j * 10, 8, 8);
 					continue;
 				}
@@ -76,9 +82,13 @@ public class PixelMatrixRenderer extends Actor {
 				shapeRenderer.rect(i * 10, j * 10, 8, 8);
 			}
 		}
+
 		shapeRenderer.end();
+		Gdx.gl.glDisable(GL10.GL_BLEND);
+		batch.begin();
 		font.draw(batch, Integer.toString(Gdx.graphics.getFramesPerSecond()),
 				10, 20);
+
 	}
 
 	public List<Animation> get_animations() {

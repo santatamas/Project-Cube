@@ -9,14 +9,14 @@ public class Frame {
 		//TODO: do parameterized constructor
 	}
 
-	public byte get(short x, short y) {
+	public int get(short x, short y) {
 		return _data[x][y];
 	}
 	
-	public byte[][] get_data() {
+	public int[][] get_data() {
 		return _data;
 	}
-	public void set_data(byte[][] data){
+	public void set_data(int[][] data){
 		_data = data;
 	}
 
@@ -54,5 +54,5 @@ public class Frame {
 	private short _height;
 	private short _duration;
 	private ColorDepth _depth; 	
-	private byte[][] _data;
+	private int[][] _data;
 }

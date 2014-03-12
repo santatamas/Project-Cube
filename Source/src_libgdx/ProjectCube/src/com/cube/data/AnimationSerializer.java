@@ -34,6 +34,7 @@ public class AnimationSerializer {
 			result.set_depth(ColorDepth.GrayScale);
 
 		Frame frame;
+		int[][] data;
 		// Iterate through the frames and add them to Animation
 		for (int frameIndex = 0; frameIndex < noFrames; frameIndex++) {
 			// Get the duration - 2 byte
@@ -48,14 +49,16 @@ public class AnimationSerializer {
 			frame.set_height(height);
 			frame.set_duration(duration);
 			frame.set_depth(result.get_depth());
-			frame.set_data(new byte[width][height]);
-
+						
 			// Fill pixel data
+			data = new int[width][height];
 			for (int i = 0; i < frame.get_width(); i++) {
 				for (int j = 0; j < frame.get_height(); j++) {
-					frame.get_data()[i][j] = br.readByte();
+					data[i][j] = br.readUnsignedByte();
 				}
 			}
+			frame.set_data(data);
+			
 			result.get_frames().add(frame);
 		}
 		br.close();

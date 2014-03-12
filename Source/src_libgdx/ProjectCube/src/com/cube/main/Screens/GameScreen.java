@@ -32,8 +32,14 @@ public class GameScreen implements Screen, GestureListener {
 	{
 		_width = Gdx.graphics.getWidth();
 		_height = Gdx.graphics.getHeight();
-		_stage = new Stage();
-		_stage.setCamera(new OrthographicCamera(_width, _height));
+
+		/*OrthographicCamera camera = new OrthographicCamera();
+		camera.setToOrtho(false);*/
+		
+		_stage = new Stage(_width, _height, true);
+		//_stage.setCamera(camera);
+		
+		
 		_matrixRenderer = new PixelMatrixRenderer(_stage);
 		_eatIcon = new TwoStateIcon("data/eat_icon_off.png", "data/eat_icon_on.png");
 		_stage.addActor(_matrixRenderer);	
