@@ -2,11 +2,8 @@ package com.cube.graphics;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -19,7 +16,6 @@ import com.cube.data.Frame;
 public class PixelMatrixRenderer extends Actor {
 
 	private ShapeRenderer shapeRenderer;
-	private Random rnd = new Random();
 	private BitmapFont font;
 	private Stage _parentStage;
 
@@ -77,8 +73,7 @@ public class PixelMatrixRenderer extends Actor {
 					continue;
 				}
 
-				shapeRenderer.setColor(53 / 255f, 53 / 255f, 53 / 255f,
-						currentPixelValue / 255f);
+				shapeRenderer.setColor(53 / 255f, 53 / 255f, 53 / 255f, currentPixelValue / 255f);
 				shapeRenderer.rect(i * 10, j * 10, 8, 8);
 			}
 		}
@@ -86,8 +81,7 @@ public class PixelMatrixRenderer extends Actor {
 		shapeRenderer.end();
 		Gdx.gl.glDisable(GL10.GL_BLEND);
 		batch.begin();
-		font.draw(batch, Integer.toString(Gdx.graphics.getFramesPerSecond()),
-				10, 20);
+		font.draw(batch, Integer.toString(Gdx.graphics.getFramesPerSecond()), 10, 20);
 
 	}
 

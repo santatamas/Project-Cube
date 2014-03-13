@@ -2,11 +2,9 @@ package com.cube.main.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
@@ -41,13 +39,13 @@ public class GameScreen implements Screen, GestureListener {
 		
 		
 		_matrixRenderer = new PixelMatrixRenderer(_stage);
-		_eatIcon = new TwoStateIcon("data/eat_icon_off.png", "data/eat_icon_on.png");
+		//_eatIcon = new TwoStateIcon("data/eat_icon_off.png", "data/eat_icon_on.png");
 		_stage.addActor(_matrixRenderer);	
-		_stage.addActor(_eatIcon);
+		//_stage.addActor(_eatIcon);
 		_switchSound = CubeGame.AssetManager.get("data/switch_effect.wav");
-		_matrixRenderer.get_animations().add((Animation) CubeGame.AssetManager.get("data/demo_animation.pma"));
-		_bgMusic = Gdx.audio.newMusic(Gdx.files.internal("data/bg_music.mp3"));
-		_bgMusic.play();
+		_matrixRenderer.get_animations().add((Animation) CubeGame.AssetManager.get("data/dante_animation.pma"));
+		//_bgMusic = Gdx.audio.newMusic(Gdx.files.internal("data/bg_music.mp3"));
+		//_bgMusic.play();
 	}
 	
 	public void resize(int width, int height) {
@@ -77,13 +75,13 @@ public class GameScreen implements Screen, GestureListener {
 	public boolean touchDown(float x, float y, int pointer, int button) {
 		_rendering = !_rendering;
 		_switchSound.play();
-		if(_rendering)
+		/*if(_rendering)
 		{
 			_bgMusic.play();
 		}else
 		{
 			_bgMusic.pause();
-		}
+		}*/
 		return true;
 	}
 

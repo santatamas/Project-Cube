@@ -32,6 +32,7 @@ public class LoadingScreen implements Screen {
 	private void LoadPrimaryAssets() {	
 		CubeGame.AssetManager.setLoader(Animation.class, new AnimationLoader(new InternalFileHandleResolver()));
 		CubeGame.AssetManager.load("data/demo_animation.pma", Animation.class);
+		CubeGame.AssetManager.load("data/dante_animation.pma", Animation.class);
 		CubeGame.AssetManager.load("data/eat_icon_off.png", Texture.class);
 		CubeGame.AssetManager.load("data/eat_icon_on.png", Texture.class);
 		CubeGame.AssetManager.load("data/switch_effect.wav", Sound.class);

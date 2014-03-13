@@ -32,6 +32,12 @@ public class Animation {
 	void set_depth(ColorDepth depth) {
 		this._depth = depth;
 	}
+	
+	public void Reset() {
+		_currentFrameIndex = 0;
+		_elapsedTime = 0;
+		_currentFrameDuration = _frames.get(0).get_duration(); 
+	}
 
 	public void act(float delta) {
 		_elapsedTime += delta * 1000;
