@@ -29,7 +29,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
             SubscribeEvents();
 
-            Animation = CreateNewAnimation(ColorDepth.GrayScale, 50, 50);
+            Animation = CreateNewAnimation(ColorDepth.GrayScale, 72, 72);
         }
 
         private void SubscribeEvents()
@@ -43,7 +43,7 @@ namespace CubeProject.Modules.Editor.ViewModels
             EventAggregator.GetEvent<DeleteFrameViewModelEvent>().Subscribe(DeleteFrame);
 
             EventAggregator.GetEvent<NextFrameEvent>().Subscribe(NextFrame);
-            EventAggregator.GetEvent<PreviousFrameEvent>().Subscribe(PreviousFrame);
+            EventAggregator.GetEvent<PreviousFrameEvent>().Subscribe(PreviousFrameHandler);
             EventAggregator.GetEvent<PlayEvent>().Subscribe(Play);
             EventAggregator.GetEvent<PauseEvent>().Subscribe(Pause);
             EventAggregator.GetEvent<StopEvent>().Subscribe(Stop);
@@ -53,6 +53,11 @@ namespace CubeProject.Modules.Editor.ViewModels
 
             EventAggregator.GetEvent<CopyContentEvent>().Subscribe(CopyContent);
             EventAggregator.GetEvent<PasteContentEvent>().Subscribe(PasteContent);
+
+            EventAggregator.GetEvent<GotoEvent>().Subscribe(GotoFrame);
+            EventAggregator.GetEvent<BatchChangeDurationEvent>().Subscribe(BatchChangeDuration);
+            EventAggregator.GetEvent<AboutEvent>().Subscribe(ShowAbout);
+            EventAggregator.GetEvent<ToggleGhostVisibilityEvent>().Subscribe(ToggleGhostVisibility);
 
         }
 
@@ -71,6 +76,26 @@ namespace CubeProject.Modules.Editor.ViewModels
             {
                 if (Equals(value, _currentFrame)) return;
                 _currentFrame = value;
+                OnPropertyChanged("PreviousFrame");
+                OnPropertyChanged();
+            }
+        }
+
+        public FrameViewModel PreviousFrame
+        {
+            get
+            {
+                var frameIndex = FrameViewModels.IndexOf(CurrentFrame) - 1;
+                return frameIndex >= 0 ? FrameViewModels[frameIndex] : null;
+            }
+        }
+
+        public bool IsGhostVisible
+        {
+            get { return _isGhostVisible; }
+            set
+            {
+                _isGhostVisible = value;
                 OnPropertyChanged();
             }
         }
@@ -150,6 +175,10 @@ namespace CubeProject.Modules.Editor.ViewModels
             {
                 SaveAnimationTo(Animation, CurrentFilePath);
                 EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("Saving complete.");
+            }
+            else
+            {
+                SaveAs(obj);
             }
         }
 
@@ -258,7 +287,7 @@ namespace CubeProject.Modules.Editor.ViewModels
                     // if we pressed STOP while waiting for the next frame, quit animating now
                     if (!_isPlaying) continue;
 
-                    Dispatcher.CurrentDispatcher.Invoke(() => NextFrame(0));
+                    Application.Current.Dispatcher.Invoke(() => NextFrame(0));
 
                 }
                 else
@@ -269,7 +298,7 @@ namespace CubeProject.Modules.Editor.ViewModels
             }
         }
 
-        private void PreviousFrame(int obj)
+        private void PreviousFrameHandler(int obj)
         {
             var currentFrameIndex = FrameViewModels.IndexOf(CurrentFrame);
             if(currentFrameIndex - 1 >= 0)
@@ -312,6 +341,60 @@ namespace CubeProject.Modules.Editor.ViewModels
             _clipBoardFrame = DeepCopy.Make(frame as Frame<byte>);
         }
 
+        private void GotoFrame(int obj)
+        {
+            var dialogResult = (GotoFrameViewModel)_dialogService.ShowDialog("Go to frame", Container.Resolve<GotoFrameViewModel>());
+            var newFrameNumber = dialogResult.FrameNumber ?? 0;
+            if (newFrameNumber - 1 >= FrameViewModels.Count || newFrameNumber - 1 < 0)
+            {
+                EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("[ERROR] Invalid frame number.");
+                return;
+            }
+
+            CurrentFrame = FrameViewModels[--newFrameNumber];
+            EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("[DEBUG] Frame jump successful.");
+        }
+
+        private void BatchChangeDuration(int obj)
+        {
+            var dialogViewModel = Container.Resolve<BatchChangeDurationViewModel>();
+            dialogViewModel.StartIndex = 1;
+            dialogViewModel.EndIndex = FrameViewModels.Count;
+
+            var dialogResult = (BatchChangeDurationViewModel)_dialogService.ShowDialog("Batch change duration", dialogViewModel);
+
+            if (dialogResult.StartIndex - 1 >= FrameViewModels.Count || dialogResult.StartIndex - 1 < 0 ||
+                dialogResult.EndIndex - 1 >= FrameViewModels.Count || dialogResult.EndIndex - 1 < 0 ||
+                dialogResult.StartIndex > dialogResult.EndIndex)
+            {
+                EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("[ERROR] Invalid interval.");
+                return;
+            }
+
+            if (dialogResult.Duration < 0)
+            {
+                EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("[ERROR] Invalid duration.");
+                return;
+            }
+
+            for (int i = dialogResult.StartIndex - 1; i <= dialogResult.EndIndex - 1; i++)
+            {
+                FrameViewModels[i].Duration = dialogResult.Duration;
+            }
+
+            EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("[DEBUG] Batch duration change succesful.");
+        }
+
+        private void ShowAbout(int obj)
+        {
+            _dialogService.ShowMessage("PixelMatrixEditor - 2014 \nTamas Santa (thomas.felis@gmail.com) \n\nSpecial thanks to: \nDante Hardy", "About");
+        }
+
+        private void ToggleGhostVisibility(bool obj)
+        {
+            IsGhostVisible = !IsGhostVisible;
+        }
+
         #region Private State
 
         private Animation _animation;
@@ -328,6 +411,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private FrameViewModel _clipBoardFVM = null;
         private Frame<byte> _clipBoardFrame = null;
+        private bool _isGhostVisible = false;
 
         #endregion
 

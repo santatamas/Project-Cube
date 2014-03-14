@@ -16,13 +16,13 @@ namespace CubeProject.Modules.Editor.ViewModels
                 ColorDepth.Onebit,
                 ColorDepth.GrayScale
             };
-            _selectedColorDepth = _avaliableColorDepths[0];
+            _selectedColorDepth = _avaliableColorDepths[1];
         }
 
         private List<ColorDepth> _avaliableColorDepths;
         private ColorDepth _selectedColorDepth;
-        private short _frameWidth = 50;
-        private short _frameHeight = 50;
+        private short _frameWidth = 72;
+        private short _frameHeight = 72;
 
         public List<ColorDepth> AvaliableColorDepths
         {

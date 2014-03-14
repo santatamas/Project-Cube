@@ -4,10 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:CubeProject.Modules.Editor.Views"
+        xmlns:converters="clr-namespace:CubeProject.Modules.Editor.Converters"
         mc:Ignorable="d" >
-    
+    <UserControl.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <DockPanel LastChildFill="True">
         <views:AnimationView DockPanel.Dock="Bottom" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}, Path=ActualWidth}" DataContext="{Binding}" />
-        <views:PixelMatrixView x:Name="MatrixView" HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding CurrentFrame}" />
-    </DockPanel>
+        <Grid Background="#FF7D8C73">
+            <views:PixelMatrixView x:Name="MatrixView" HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding CurrentFrame}" />
+            <views:PixelMatrixView IsHitTestVisible="False" Opacity="0.3" 
+                                   CanDraw="False" ShowCursor="False" ShowGrid="False" 
+                                   x:Name="PreviousMatrixView" 
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                   DataContext="{Binding PreviousFrame}" 
+                                   Visibility="{Binding Path=DataContext.IsGhostVisible, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}, Mode=FindAncestor}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </Grid>
+     </DockPanel>
 </UserControl>

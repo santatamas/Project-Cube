@@ -44,9 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RendererSettings.cs" />
+    <Compile Include="Renderers\GridRenderer.cs" />
+    <Compile Include="Renderers\CursorRenderer.cs" />
     <Compile Include="Renderers\MatrixRenderer.cs" />
     <Compile Include="PixelCoordinate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderers\RendererBase.cs" />
     <Compile Include="Utilities\UnsafeToolkit.cs" />
   </ItemGroup>
   <ItemGroup>

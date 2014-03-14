@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using CubeProject.Infrastructure.UI;
@@ -25,6 +26,19 @@ namespace CubeProject.Modules.Editor.Views
         {
             this.dragMgr = new ListViewDragDropManager<FrameViewModel>(AnimListView);
             this.dragMgr.ProcessDrop += dragMgr_ProcessDrop;
+            (e.NewValue as INotifyPropertyChanged).PropertyChanged += AnimationView_PropertyChanged;
+        }
+
+        void AnimationView_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != "CurrentFrame") return;
+
+            if (Dispatcher.CheckAccess())
+            {
+                var mainViewModel = sender as MainViewModel;
+                if (mainViewModel != null)
+                    AnimListView.ScrollIntoView(mainViewModel.CurrentFrame);
+            }
         }
 
         void dragMgr_ProcessDrop(object sender, ProcessDropEventArgs<FrameViewModel> e)

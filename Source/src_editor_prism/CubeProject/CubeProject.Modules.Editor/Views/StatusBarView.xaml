@@ -6,6 +6,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StatusBar>
-        <StatusBarItem Content="{Binding ActiveStatusMessage}" />
+        <StatusBarItem HorizontalAlignment="Left" Content="{Binding ActiveStatusMessage}" />
+        <StatusBarItem HorizontalAlignment="Right" Content="{Binding PointerLocationMessage}" />
     </StatusBar>
 </UserControl>

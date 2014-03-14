@@ -6,6 +6,12 @@
     <Window.InputBindings>
         <KeyBinding Modifiers="Ctrl" Key="C" Command="{Binding CopyCommand}" />
         <KeyBinding Modifiers="Ctrl" Key="V" Command="{Binding PasteCommand}" />
+
+        <KeyBinding Modifiers="Ctrl" Key="O" Command="{Binding OpenCommand}" />
+        <KeyBinding Modifiers="Ctrl" Key="N" Command="{Binding NewCommand}" />
+        <KeyBinding Modifiers="Ctrl" Key="S" Command="{Binding SaveCommand}" />
+        
+        <KeyBinding Modifiers="Ctrl" Key="G" Command="{Binding GotoCommand}" />
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>

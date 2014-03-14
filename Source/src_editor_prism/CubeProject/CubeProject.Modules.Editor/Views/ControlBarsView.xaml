@@ -16,12 +16,23 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <MenuItem Header="File">
-                <MenuItem Header="New" Command="{Binding Path=NewCommand}"></MenuItem>
-                <MenuItem Header="Open..." Command="{Binding Path=OpenCommand}"></MenuItem>
-                <MenuItem Header="Save" Command="{Binding Path=SaveCommand}"></MenuItem>
+                <MenuItem Header="New" InputGestureText="Ctrl+N" Command="{Binding Path=NewCommand}"></MenuItem>
+                <MenuItem Header="Open..." InputGestureText="Ctrl+O" Command="{Binding Path=OpenCommand}"></MenuItem>
+                <MenuItem Header="Save" InputGestureText="Ctrl+S" Command="{Binding Path=SaveCommand}"></MenuItem>
                 <MenuItem Header="SaveAs..." Command="{Binding Path=SaveAsCommand}"></MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="Close" Command="{Binding Path=CloseCommand}"></MenuItem>
+                <MenuItem Header="Exit" InputGestureText="Alt+F4" Command="{Binding Path=CloseCommand}"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Copy" InputGestureText="Ctrl+C" Command="{Binding Path=CopyCommand}"></MenuItem>
+                <MenuItem Header="Paste" InputGestureText="Ctrl+V" Command="{Binding Path=PasteCommand}"></MenuItem>
+                <MenuItem Header="Goto Frame..." IsEnabled="True" InputGestureText="Ctrl+G" Command="{Binding Path=GotoCommand}"></MenuItem>
+                <MenuItem Header="Batch">
+                    <MenuItem IsEnabled="True" Header="Change duration..." Command="{Binding Path=BatchChangeDurationCommand}"></MenuItem>
+                </MenuItem>            
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="About" IsEnabled="True" Command="{Binding Path=AboutCommand}"></MenuItem>
             </MenuItem>
         </Menu>
 
@@ -43,6 +54,9 @@
                 </ComboBox>
                 <Separator></Separator>
                 <ContentControl regions:RegionManager.RegionName="{x:Static constants:RegionNames.PlayerControlRegion}"></ContentControl>
+                <Separator></Separator>
+                <Button Content="Toggle #" Command="{Binding Path=ToggleGridCommand}"></Button>
+                <Button Margin="10,0,0,0" Content="Toggle Ghost" Command="{Binding Path=ToggleGhostCommand}"></Button>
             </ToolBar>
         </ToolBarTray>
     </Grid>

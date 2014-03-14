@@ -23,6 +23,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
             EventAggregator.GetEvent<BrushSizeChangedEvent>().Subscribe(BrushSizeChanged);
             EventAggregator.GetEvent<ShadeChangedEvent>().Subscribe(ShadeChanged);
+            EventAggregator.GetEvent<ToggleGridVisibilityEvent>().Subscribe(ToggleGridVisibility);
 
             EventAggregator.GetEvent<RequestBrushSizeEvent>().Publish(0);
             EventAggregator.GetEvent<RequestShadeEvent>().Publish(0);
@@ -34,6 +35,16 @@ namespace CubeProject.Modules.Editor.ViewModels
             get { return _settings; }
         }
 
+        public bool IsGridVisible
+        {
+            get { return _isGridVisible; }
+            set
+            {
+                _isGridVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
         public IFrame<byte> Frame
         {
             get { return _frame; }
@@ -42,6 +53,7 @@ namespace CubeProject.Modules.Editor.ViewModels
                 _frame = value;
                 if (value != null)
                 {
+                    _tempCursorFrame = new byte[_frame.Width,_frame.Height];
                     _settings = new RendererSettings()
                     {
                         ColorDepth = _frame.ColorDepth,
@@ -53,6 +65,8 @@ namespace CubeProject.Modules.Editor.ViewModels
                         SizeY = _frame.Height
                     };
                     MatrixRenderer = new MatrixRenderer(_settings);
+                    GridRenderer = new GridRenderer(_settings);
+                    CursorRenderer = new CursorRenderer(_settings);
                 }
                 OnPropertyChanged();
             }
@@ -75,12 +89,47 @@ namespace CubeProject.Modules.Editor.ViewModels
             }
         }
 
+        public BitmapSource RenderedGridSource
+        {
+            get
+            {
+                return GridRenderer.Render(null,0,0);
+            }
+        }
+        public BitmapSource RenderedCursorSource
+        {
+            get
+            {
+                return _renderedCursorSource;
+            }
+            set
+            {
+                _renderedCursorSource = value;
+                OnPropertyChanged();
+            }
+        }
+
         private MatrixRenderer MatrixRenderer { get; set; }
+        private CursorRenderer CursorRenderer { get; set; }
+        private GridRenderer GridRenderer
+        {
+            get { return _gridRenderer; }
+            set
+            {
+                _gridRenderer = value;
+                OnPropertyChanged("RenderedGridSource");
+            }
+        }
 
         public Int16 Duration {
             get
             {
                 return Frame.Duration;
+            }
+            set
+            {
+                Frame.Duration = value;
+                OnPropertyChanged();
             }
         }
         #endregion
@@ -210,6 +259,11 @@ namespace CubeProject.Modules.Editor.ViewModels
             }
         }
 
+        private void ToggleGridVisibility(bool obj)
+        {
+            IsGridVisible = !IsGridVisible;
+        }
+
         #region Private State
 
         private int _brushSize = 0;
@@ -224,14 +278,52 @@ namespace CubeProject.Modules.Editor.ViewModels
         private DelegateCommand<object> _pasteCommand;
 
         private IDialogService _dialogService;
+        private GridRenderer _gridRenderer;
+        private bool _isGridVisible = true;
+        private BitmapSource _renderedCursorSource;
+        private byte[,] _tempCursorFrame;
 
         #endregion
         #endregion
 
-        internal void ReportMouseAtLocation(Point realLocation)
+        private PixelCoordinate _previousCoordinate;
+        internal void RenderCursorAtLocation(Point realLocation)
         {
             PixelCoordinate coordinate = GetCoordinateFromLocation(realLocation);
-            EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish(coordinate.X + " X " + coordinate.Y);
+            if (coordinate.X == _previousCoordinate.X && coordinate.Y == _previousCoordinate.Y) return;
+
+            _previousCoordinate = coordinate;
+
+            // Clear temp frame
+            for (int i = 0; i < _frame.Width; i++)
+            {
+                for (int j = 0; j < _frame.Height; j++)
+                {
+                    _tempCursorFrame[i, j] = 0;
+                }
+            }
+
+            if (_brushSize == 1)
+            {
+                _tempCursorFrame[coordinate.X, coordinate.Y] = 254;
+                RenderedCursorSource = CursorRenderer.Render(_tempCursorFrame, _frame.Width, _frame.Height);
+            }
+            else
+            {
+                // iterate through the selected pixel, and it's surrounding area
+                for (int i = (coordinate.X - _brushSize / 2); i <= (coordinate.X + _brushSize / 2); i++)
+                {
+                    for (int j = (coordinate.Y - _brushSize / 2); j <= (coordinate.Y + _brushSize / 2); j++)
+                    {
+                        // checking boundaries
+                        if (i >= Settings.SizeX || j >= Settings.SizeY || i < 0 || j < 0) continue;
+                        _tempCursorFrame[i, j] = 254;
+                    }
+                }
+                RenderedCursorSource = CursorRenderer.Render(_tempCursorFrame, _frame.Width, _frame.Height);
+            }
+
+            EventAggregator.GetEvent<PointerLocationChangedEvent>().Publish(coordinate.X + " X " + coordinate.Y);
         }
 
         internal void TurnOnPixelsAtArea(Point realLocation)
@@ -244,6 +336,19 @@ namespace CubeProject.Modules.Editor.ViewModels
         {
             TogglePixelAtArea(realLocation, _brushSize, ToggleMode.Off, _brushShade);
             ReDraw();
+        }
+
+        internal void ClearCursor()
+        {
+            // Clear temp frame
+            for (int i = 0; i < _frame.Width; i++)
+            {
+                for (int j = 0; j < _frame.Height; j++)
+                {
+                    _tempCursorFrame[i, j] = 0;
+                }
+            }
+            RenderedCursorSource = CursorRenderer.Render(_tempCursorFrame, _frame.Width, _frame.Height);
         }
     }
 }

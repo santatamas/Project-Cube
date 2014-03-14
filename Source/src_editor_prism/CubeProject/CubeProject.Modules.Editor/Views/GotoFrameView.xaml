@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="CubeProject.Modules.Editor.Views.GotoFrameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             FocusManager.FocusedElement="{Binding ElementName=frameNumberTextbox}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" MinWidth="100"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Frame number:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+        <TextBox Name="frameNumberTextbox" Grid.Row="0" Grid.Column="1" Text="{Binding FrameNumber, Mode=TwoWay}"></TextBox>
+    </Grid>
+</UserControl>

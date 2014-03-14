@@ -3,9 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" ResizeMode="NoResize" SizeToContent="WidthAndHeight"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <ContentPresenter x:Name="DialogPresenter" Content="{Binding .}">
+             mc:Ignorable="d" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
 
-    </ContentPresenter>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" MinWidth="100"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <ContentPresenter Grid.Row="0" Grid.ColumnSpan="2" x:Name="DialogPresenter" Content="{Binding .}">
+
+        </ContentPresenter>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Grid.Column="1">
+            <Button Content="Cancel" Width="75" Margin="5" IsCancel="True"></Button>
+            <Button Content="Ok" Width="75" Margin="5" IsDefault="True" Command="{Binding OkCommand}"></Button>
+        </StackPanel>
+    </Grid>  
 </Window>

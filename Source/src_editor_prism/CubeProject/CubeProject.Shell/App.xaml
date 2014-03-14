@@ -11,5 +11,11 @@
         <DataTemplate DataType="{x:Type viewModels:ChangeDurationViewModel}" >
             <views:ChangeDurationView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:GotoFrameViewModel}" >
+            <views:GotoFrameView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:BatchChangeDurationViewModel}" >
+            <views:BatchChangeDurationView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

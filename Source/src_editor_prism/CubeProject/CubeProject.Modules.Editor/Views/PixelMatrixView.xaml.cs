@@ -16,6 +16,26 @@ namespace CubeProject.Modules.Editor.Views
             set { _canDraw = value; }
         }
 
+        public bool ShowGrid
+        {
+            get { return _showGrid; }
+            set
+            {
+                _showGrid = value;
+                gridImage.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        public bool ShowCursor
+        {
+            get { return _showCursor; }
+            set
+            {
+                _showCursor = value;
+                cursorImage.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
         public PixelMatrixView()
         {
             InitializeComponent();
@@ -29,6 +49,8 @@ namespace CubeProject.Modules.Editor.Views
 
         private FrameViewModel _viewModel;
         private bool _canDraw = true;
+        private bool _showGrid;
+        private bool _showCursor;
 
         #region EventHandlers
         private void MainScreen_OnMouseUp(object sender, MouseButtonEventArgs e)
@@ -80,8 +102,18 @@ namespace CubeProject.Modules.Editor.Views
                 _viewModel.TurnOffPixelsAtArea(realLocation);
             }
 
-            _viewModel.ReportMouseAtLocation(realLocation);
+            _viewModel.RenderCursorAtLocation(realLocation);
         }
         #endregion
+
+        private void MainScreen_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (_viewModel == null || !CanDraw)
+            {
+                e.Handled = false;
+                return;
+            }
+            _viewModel.ClearCursor();
+        }
     }
 }

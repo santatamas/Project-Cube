@@ -59,6 +59,10 @@
     <Compile Include="Enums\LogLevel.cs" />
     <Compile Include="Enums\ToggleMode.cs" />
     <Compile Include="Events\AppState\CopyContentEvent.cs" />
+    <Compile Include="Events\AppState\BatchChangeDurationEvent.cs" />
+    <Compile Include="Events\AppState\AboutEvent.cs" />
+    <Compile Include="Events\AppState\PointerLocationChangedEvent.cs" />
+    <Compile Include="Events\AppState\GotoEvent.cs" />
     <Compile Include="Events\AppState\PasteContentEvent.cs" />
     <Compile Include="Events\AppState\PasteEvent.cs" />
     <Compile Include="Events\AppState\CopyEvent.cs" />
@@ -78,6 +82,8 @@
     <Compile Include="Events\AppState\RequestShadeEvent.cs" />
     <Compile Include="Events\AppState\SaveAnimationAsEvent.cs" />
     <Compile Include="Events\AppState\SaveAnimationEvent.cs" />
+    <Compile Include="Events\ToolBar\ToggleGhostVisibilityEvent.cs" />
+    <Compile Include="Events\ToolBar\ToggleGridVisibilityEvent.cs" />
     <Compile Include="Events\ToolBar\ShadeChangedEvent.cs" />
     <Compile Include="Events\AppState\StatusBarMessageChangeEvent.cs" />
     <Compile Include="Interfaces\IBinarySerializer.cs" />
@@ -95,6 +101,7 @@
     <Compile Include="Interfaces\IStatusBarViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\DragAdorner.cs" />
+    <Compile Include="UI\ItemsControlExtensions.cs" />
     <Compile Include="UI\ListViewDragDropManager.cs" />
     <Compile Include="UI\MouseUtilities.cs" />
     <Compile Include="Utility\DeepCopy.cs" />

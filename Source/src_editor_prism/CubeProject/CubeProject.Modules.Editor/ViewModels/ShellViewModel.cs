@@ -11,6 +11,10 @@ namespace CubeProject.Modules.Editor.ViewModels
     {
         private DelegateCommand<object> _copyCommand;
         private DelegateCommand<object> _pasteCommand;
+        private DelegateCommand<object> _saveCommand;
+        private DelegateCommand<object> _gotoCommand;
+        private DelegateCommand<object> _newCommand;
+        private DelegateCommand<object> _openCommand;
 
         public ShellViewModel(IUnityContainer container, IEventAggregator aggregator) : base(container, aggregator)
         {
@@ -24,7 +28,39 @@ namespace CubeProject.Modules.Editor.ViewModels
         {
             get { return _pasteCommand ?? (_pasteCommand = new DelegateCommand<object>(PasteCommandHandler)); }
         }
+        public DelegateCommand<object> SaveCommand
+        {
+            get { return _saveCommand ?? (_saveCommand = new DelegateCommand<object>(SaveCommandHandler)); }
+        }
+        public DelegateCommand<object> GotoCommand
+        {
+            get { return _gotoCommand ?? (_gotoCommand = new DelegateCommand<object>(GotoCommandHandler)); }
+        }
+        public DelegateCommand<object> NewCommand
+        {
+            get { return _newCommand ?? (_newCommand = new DelegateCommand<object>(NewCommandHandler)); }
+        }
+        public DelegateCommand<object> OpenCommand
+        {
+            get { return _openCommand ?? (_openCommand = new DelegateCommand<object>(OpenCommandHandler)); }
+        }
 
+        private void OpenCommandHandler(object obj)
+        {
+            EventAggregator.GetEvent<OpenAnimationEvent>().Publish("");
+        }
+        private void NewCommandHandler(object obj)
+        {
+            EventAggregator.GetEvent<CreateNewAnimationEvent>().Publish("");
+        }
+        private void GotoCommandHandler(object obj)
+        {
+            EventAggregator.GetEvent<GotoEvent>().Publish(0);
+        }
+        private void SaveCommandHandler(object obj)
+        {
+            EventAggregator.GetEvent<SaveAnimationEvent>().Publish("");
+        }
         private void CopyCommandHandler(object obj)
         {
             EventAggregator.GetEvent<CopyEvent>().Publish(0);

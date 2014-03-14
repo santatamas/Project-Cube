@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CubeProject.Graphics.Utilities;
@@ -14,7 +12,7 @@ namespace CubeProject.Graphics.Renderers
     /// Before use, please provide a preconfigured <see cref="CubeProject.Graphics.RendererSettings"/> object.
     /// </summary>
     /// <seealso cref="CubeProject.Graphics.RendererSettings"/>
-    public class MatrixRenderer
+    public class MatrixRenderer : RendererBase
     {
         #region Construction
         /// <summary>
@@ -22,81 +20,10 @@ namespace CubeProject.Graphics.Renderers
         /// </summary>
         /// <param name="settings">The settings.</param>
         /// /// <seealso cref="CubeProject.Graphics.RendererSettings"/>
-        public MatrixRenderer(RendererSettings settings)
+        public MatrixRenderer(RendererSettings settings) : base(settings)
         {
-            _settings = settings;
-            InitializeRenderSource();
         }
 
-        #endregion
-
-        #region Private
-
-        private void InitializeRenderSource()
-        {
-            Format = PixelFormats.Bgra32;
-            var section = CreateFileMapping(INVALID_HANDLE_VALUE, IntPtr.Zero, PAGE_READWRITE, 0, Count, null);
-            _map = MapViewOfFile(section, FILE_MAP_ALL_ACCESS, 0, 0, Count);
-            _page0 = System.Windows.Interop.Imaging.CreateBitmapSourceFromMemorySection(section, Settings.ScreenWidth, Settings.ScreenHeight, Format, Stride, 0) as InteropBitmap;
-        }
-
-        #region Private State
-        private uint Count
-        {
-            get
-            {
-                return (uint)(Settings.ScreenWidth * Settings.ScreenHeight * (Format.BitsPerPixel / 8));
-            }
-        }
-
-        private int Stride
-        {
-            get { return (Settings.ScreenWidth * Format.BitsPerPixel / 8); }
-        }
-
-        private PixelFormat Format { get; set; }
-
-
-        /// <summary>
-        /// Gets the RendererSettings.
-        /// </summary>
-        /// <value>
-        /// The RendererSettings.
-        /// </value>
-        public RendererSettings Settings
-        {
-            get { return _settings; }
-        }
-
-        private InteropBitmap _page0;
-        private IntPtr _map;
-
-        #region InterOp Calls
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern IntPtr CreateFileMapping(IntPtr hFile,
-        IntPtr lpFileMappingAttributes,
-        uint flProtect,
-        uint dwMaximumSizeHigh,
-        uint dwMaximumSizeLow,
-        string lpName);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        static extern IntPtr MapViewOfFile(IntPtr hFileMappingObject,
-        uint dwDesiredAccess,
-        uint dwFileOffsetHigh,
-        uint dwFileOffsetLow,
-        uint dwNumberOfBytesToMap);
-        #endregion
-
-        uint FILE_MAP_ALL_ACCESS = 0xF001F;
-        uint PAGE_READWRITE = 0x04;
-        IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
-
-        private Color _pixelOnBrush = Color.FromRgb(53, 53, 53);
-
-        private RendererSettings _settings;
-
-        #endregion
         #endregion
 
         #region Public
@@ -108,7 +35,7 @@ namespace CubeProject.Graphics.Renderers
         /// <param name="sizeY">The size y.</param>
         /// <returns>A memory-mapped BitmapSource</returns>
         /// <exception cref="System.ArgumentException">Renderer called with invalid frame size!</exception>
-        public unsafe BitmapSource Render(byte[,] frame, int sizeX, int sizeY)
+        public override unsafe BitmapSource Render(byte[,] frame, int sizeX, int sizeY)
         {
             if (sizeX != Settings.SizeX || sizeY != Settings.SizeY)
                 throw new ArgumentException("Renderer called with invalid frame size!");

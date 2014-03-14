@@ -3,13 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="clr-namespace:CubeProject.Modules.Editor.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Border Background="#FF7D8C73" CornerRadius="1" BorderBrush="DarkGreen" BorderThickness="1">
-        <Image x:Name="MainScreen" SnapsToDevicePixels="True" UseLayoutRounding="True" 
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
+    </UserControl.Resources>
+    <Border CornerRadius="1" BorderBrush="DarkOliveGreen" BorderThickness="1">
+        <Grid >
+            <Image SnapsToDevicePixels="True" UseLayoutRounding="True" x:Name="gridImage" Visibility="{Binding IsGridVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
+               Source="{Binding Path=RenderedGridSource, Mode=OneWay}">
+            </Image>
+            <Image SnapsToDevicePixels="True" UseLayoutRounding="True" x:Name="cursorImage"
+               Source="{Binding Path=RenderedCursorSource, Mode=OneWay}">
+            </Image>
+            <Image x:Name="MainScreen" SnapsToDevicePixels="True" UseLayoutRounding="True" 
                Source="{Binding Path=RenderedSource, Mode=OneWay}"
                MouseUp="MainScreen_OnMouseUp" 
-               MouseMove="MainScreen_OnMouseMove">
-        </Image>
+               MouseMove="MainScreen_OnMouseMove"
+                   MouseLeave="MainScreen_OnMouseLeave">
+            </Image>
+        </Grid>
     </Border>
 </UserControl>
