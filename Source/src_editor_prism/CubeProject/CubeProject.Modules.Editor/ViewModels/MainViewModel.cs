@@ -65,8 +65,6 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         #region Properties
 
-        private readonly IDialogService _dialogService;
-
         public string CurrentFilePath { get; set; }
 
         public FrameViewModel CurrentFrame
@@ -127,8 +125,20 @@ namespace CubeProject.Modules.Editor.ViewModels
             get { return _frameViewModels; }
             private set
             {
+                if (_frameViewModels != null)
+                    _frameViewModels.CollectionChanged -= _frameViewModels_CollectionChanged;
+
                 _frameViewModels = value;
+                _frameViewModels.CollectionChanged += _frameViewModels_CollectionChanged;
                 OnPropertyChanged();
+            }
+        }
+
+        void _frameViewModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            for (int i = 0; i < _frameViewModels.Count; i++)
+            {
+                _frameViewModels[i].Index = i + 1;
             }
         }
 
@@ -151,6 +161,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         private void CreateNew(object obj)
         {
             var dialogResult = (NewAnimationViewModel)_dialogService.ShowDialog("Create new animation", Container.Resolve<NewAnimationViewModel>());
+            if (!dialogResult.OkPressed) return;
             Animation = CreateNewAnimation(dialogResult.SelectedColorDepth, dialogResult.FrameWidth, dialogResult.FrameHeight);
             EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("New animation created.");
         }
@@ -189,6 +200,7 @@ namespace CubeProject.Modules.Editor.ViewModels
             if (dialogResult == DialogResult.Ok)
             {
                 SaveAnimationTo(Animation, filePath);
+                CurrentFilePath = filePath;
                 EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("Saving complete.");
             }
         }
@@ -412,6 +424,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         private FrameViewModel _clipBoardFVM = null;
         private Frame<byte> _clipBoardFrame = null;
         private bool _isGhostVisible = false;
+        private readonly IDialogService _dialogService;
 
         #endregion
 

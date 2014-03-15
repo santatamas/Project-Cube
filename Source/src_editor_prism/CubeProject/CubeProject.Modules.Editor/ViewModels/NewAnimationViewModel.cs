@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CubeProject.Infrastructure.BaseClasses;
 using CubeProject.Infrastructure.Enums;
 using Microsoft.Practices.Prism.Events;
@@ -50,6 +51,10 @@ namespace CubeProject.Modules.Editor.ViewModels
             set
             {
                 _frameWidth = value;
+                if (!ValidateRange(_frameWidth, 0, 100, "FrameWidth"))
+                {
+                    RemoveError("FrameWidth");
+                }
                 OnPropertyChanged();
             }
         }
@@ -59,8 +64,28 @@ namespace CubeProject.Modules.Editor.ViewModels
             set
             {
                 _frameHeight = value;
+                if (!ValidateRange(_frameHeight, 0, 100, "FrameHeight"))
+                {
+                    RemoveError("FrameHeight");
+                }
                 OnPropertyChanged();
             }
+        }
+
+        private bool ValidateRange(short valueToValidate, short minValue, short maxValue, string propertyName)
+        {
+            bool result = false;
+            if (valueToValidate <= minValue)
+            {
+                AddError(propertyName, String.Format("Width cannot be smaller or equal to {0}!", minValue));
+                result = true;
+            }
+            if (valueToValidate > maxValue)
+            {
+                AddError(propertyName, String.Format("Width cannot be grater than {0}!", maxValue));
+                result = true;
+            }
+            return result;
         }
     }
 }

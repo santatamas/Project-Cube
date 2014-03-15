@@ -17,5 +17,13 @@
         <DataTemplate DataType="{x:Type viewModels:BatchChangeDurationViewModel}" >
             <views:BatchChangeDurationView/>
         </DataTemplate>
+        <Style TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    <Setter Property="ToolTip.IsOpen" Value="true"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Application.Resources>
 </Application>

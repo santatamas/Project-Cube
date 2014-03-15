@@ -121,6 +121,16 @@ namespace CubeProject.Modules.Editor.ViewModels
             }
         }
 
+        public int Index
+        {
+            get { return _index; }
+            set
+            {
+                _index = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Int16 Duration {
             get
             {
@@ -287,6 +297,8 @@ namespace CubeProject.Modules.Editor.ViewModels
         #endregion
 
         private PixelCoordinate _previousCoordinate;
+        private int _index;
+
         internal void RenderCursorAtLocation(Point realLocation)
         {
             PixelCoordinate coordinate = GetCoordinateFromLocation(realLocation);

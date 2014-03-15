@@ -18,7 +18,10 @@ namespace CubeProject.Infrastructure.BaseClasses
         /// <param name="aggregator">The event aggregator.</param>
         public DialogViewModelBase(IUnityContainer container, IEventAggregator aggregator) : base(container, aggregator)
         {
+            _dialogService = container.Resolve<IDialogService>();
         }
+
+        private IDialogService _dialogService;
 
         /// <summary>
         /// Gets the ok command.
@@ -56,10 +59,19 @@ namespace CubeProject.Infrastructure.BaseClasses
         public event System.EventHandler OkExecuted;
         private DelegateCommand<object> _okCommand;
 
+        public bool OkPressed { get; private set; }
+
         private void Ok(object obj)
         {
+            if (!IsValid)
+            {
+                _dialogService.ShowMessage("There are still errors present!", "Error");
+                return;
+            }
+
             if (OkExecuted != null)
                 OkExecuted(this, new EventArgs());
+            OkPressed = true;
         }
     }
 }
