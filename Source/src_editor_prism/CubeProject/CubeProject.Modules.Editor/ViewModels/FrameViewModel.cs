@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using System.Windows.Media.TextFormatting;
-using CubeProject.Data.Entities;
 using CubeProject.Graphics;
 using CubeProject.Graphics.Renderers;
 using CubeProject.Infrastructure.BaseClasses;
@@ -271,7 +269,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private void ToggleGridVisibility(bool obj)
         {
-            IsGridVisible = !IsGridVisible;
+            IsGridVisible = obj;
         }
 
         #region Private State
@@ -317,6 +315,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
             if (_brushSize == 1)
             {
+                if (coordinate.X >= Settings.SizeX || coordinate.Y >= Settings.SizeY || coordinate.X < 0 || coordinate.Y < 0) return;
                 _tempCursorFrame[coordinate.X, coordinate.Y] = 254;
                 RenderedCursorSource = CursorRenderer.Render(_tempCursorFrame, _frame.Width, _frame.Height);
             }

@@ -166,7 +166,8 @@ namespace CubeProject.Modules.Editor.ViewModels
         }
         private void ToggleGrid(object obj)
         {
-            EventAggregator.GetEvent<ToggleGridVisibilityEvent>().Publish(true);
+            _gridEnabled = !_gridEnabled;
+            EventAggregator.GetEvent<ToggleGridVisibilityEvent>().Publish(_gridEnabled);
         }
 
         private void ToggleGhost(object obj)
@@ -201,7 +202,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private byte _selectedShadeLevel = 200;
         private int _selectedBrushSize = 1;
-
+        private bool _gridEnabled = true;
         
         #endregion
         #endregion
