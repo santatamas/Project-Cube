@@ -78,6 +78,9 @@ namespace CubeProject.Modules.Editor.Views
                 oldViewModel.Frame.Width == _viewModel.Frame.Width &&
                 oldViewModel.Frame.Width == _viewModel.Frame.Height) return;
 
+            if(_gridRenderer != null) _gridRenderer.Dispose();
+            if(_cursorRenderer != null) _cursorRenderer.Dispose();
+
             _gridRenderer = new GridRenderer(_viewModel.Settings);
             _cursorRenderer = new CursorRenderer(_viewModel.Settings);
             gridImage.Source = _gridRenderer.Render(null, 0, 0);

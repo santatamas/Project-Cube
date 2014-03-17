@@ -70,6 +70,10 @@ namespace CubeProject.Graphics.Renderers
         protected IntPtr _section;
 
         #region InterOp Calls
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool UnmapViewOfFile(IntPtr hMap);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool CloseHandle(IntPtr hHandle);
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]
         public static extern bool DeleteObject(IntPtr hObject);
 
@@ -97,6 +101,7 @@ namespace CubeProject.Graphics.Renderers
 
         protected RendererSettings _settings;
         private bool disposed;
+        private object _lockObject = new object();
 
         #endregion
         #endregion
@@ -123,18 +128,30 @@ namespace CubeProject.Graphics.Renderers
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            lock (LockObject)
             {
                 if (disposing)
                 {
-                    // Dispose managed resources.
+                    // free managed resources
                 }
-                DeleteObject(_map);
-                DeleteObject(_section);
-                // There are no unmanaged resources to release, but
-                // if we add them, they need to be released here.
+                // free native resources if there are any.
+                if (_map != IntPtr.Zero)
+                {
+                    UnmapViewOfFile(_map);
+                    _map = IntPtr.Zero;
+                }
+                if (_section != IntPtr.Zero)
+                {
+                    CloseHandle(_section);
+                    _section = IntPtr.Zero;
+                }
             }
-            disposed = true;
+        }
+
+        private object LockObject
+        {
+            get { return _lockObject; }
+            set { _lockObject = value; }
         }
     }
 }

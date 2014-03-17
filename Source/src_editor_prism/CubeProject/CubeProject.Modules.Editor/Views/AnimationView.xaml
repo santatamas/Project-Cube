@@ -7,7 +7,7 @@
         <converters:ListViewIndexConverter x:Key="ListViewIndexConverter"></converters:ListViewIndexConverter>
         <Color x:Key="ControlLightColor">White</Color>
         <Color x:Key="BorderMediumColor">#FF888888</Color>
-        <Style x:Key="{x:Type ListView}" TargetType="ListView">
+        <!--<Style x:Key="{x:Type ListView}" TargetType="ListView">
             <Setter Property="SnapsToDevicePixels" Value="true" />
             <Setter Property="OverridesDefaultStyle" Value="true" />
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
@@ -50,12 +50,20 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+        </Style>-->
     </UserControl.Resources>
-    <ListView x:Name="AnimListView" ItemsSource="{Binding Path=FrameViewModels}" SelectedItem="{Binding Path=CurrentFrame, Mode=TwoWay}" SelectionMode="Single" >
+    <ListView VirtualizingPanel.IsContainerVirtualizable="True"
+              VirtualizingPanel.IsVirtualizing="True"
+              VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
+              VirtualizingPanel.VirtualizationMode="Recycling"
+              x:Name="AnimListView" 
+              ItemsSource="{Binding Path=FrameViewModels}" 
+              SelectedItem="{Binding Path=CurrentFrame, Mode=TwoWay}" 
+              SelectionMode="Single"
+              ScrollViewer.CanContentScroll="True">
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel VirtualizationMode="Recycling" Orientation="Horizontal" />
+                <VirtualizingStackPanel Orientation="Horizontal" />
             </ItemsPanelTemplate>
         </ListView.ItemsPanel>
         <ListView.ItemTemplate>

@@ -129,15 +129,15 @@ namespace CubeProject.Modules.Editor.ViewModels
                     _frameViewModels.CollectionChanged -= _frameViewModels_CollectionChanged;
 
 
-                if (_frameViewModels != null)
-                {
-                    foreach (var frameViewModel in _frameViewModels)
-                    {
-                        frameViewModel.MatrixRenderer.Dispose();
-                    }
-                    // I might be going to hell from doing this...
-                    GC.Collect();
-                }
+                //if (_frameViewModels != null)
+                //{
+                //    foreach (var frameViewModel in _frameViewModels)
+                //    {
+                //        frameViewModel.MatrixRenderer.Dispose();
+                //    }
+                //    // I might be going to hell from doing this...
+                //    GC.Collect();
+                //}
 
                 _frameViewModels = value;
                 _frameViewModels.CollectionChanged += _frameViewModels_CollectionChanged;
@@ -356,7 +356,6 @@ namespace CubeProject.Modules.Editor.ViewModels
             if (model == null) return;
 
             model.Frame = _clipBoardFrame;
-            model.ReDraw();
         }
 
         private void CopyContent(object frame)
