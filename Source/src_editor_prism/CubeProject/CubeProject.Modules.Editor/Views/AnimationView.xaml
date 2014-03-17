@@ -55,7 +55,7 @@
     <ListView x:Name="AnimListView" ItemsSource="{Binding Path=FrameViewModels}" SelectedItem="{Binding Path=CurrentFrame, Mode=TwoWay}" SelectionMode="Single" >
         <ListView.ItemsPanel>
             <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal" />
+                <VirtualizingStackPanel VirtualizationMode="Recycling" Orientation="Horizontal" />
             </ItemsPanelTemplate>
         </ListView.ItemsPanel>
         <ListView.ItemTemplate>
