@@ -16,26 +16,6 @@ namespace CubeProject.Modules.Editor.Views
             set { _canDraw = value; }
         }
 
-        public bool ShowGrid
-        {
-            get { return _showGrid; }
-            set
-            {
-                _showGrid = value;
-                gridImage.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-            }
-        }
-
-        public bool ShowCursor
-        {
-            get { return _showCursor; }
-            set
-            {
-                _showCursor = value;
-                cursorImage.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-            }
-        }
-
         public PixelMatrixView()
         {
             InitializeComponent();
@@ -49,11 +29,9 @@ namespace CubeProject.Modules.Editor.Views
 
         private FrameViewModel _viewModel;
         private bool _canDraw = true;
-        private bool _showGrid;
-        private bool _showCursor;
 
         #region EventHandlers
-        private void MainScreen_OnMouseUp(object sender, MouseButtonEventArgs e)
+        public void HandleMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (_viewModel == null || !CanDraw)
             {
@@ -61,7 +39,7 @@ namespace CubeProject.Modules.Editor.Views
                 return;
             }
 
-            var realLocation = GetRelativelLocation(e.GetPosition((Image)sender));
+            var realLocation = GetRelativelLocation(e.GetPosition((IInputElement)sender));
 
             if (e.ChangedButton == MouseButton.Left)
             {
@@ -82,7 +60,7 @@ namespace CubeProject.Modules.Editor.Views
             return realLocation;
         }
 
-        private void MainScreen_OnMouseMove(object sender, MouseEventArgs e)
+        public void HandleMouseMove(object sender, MouseEventArgs e)
         {
             if (_viewModel == null || !CanDraw)
             {
@@ -90,7 +68,7 @@ namespace CubeProject.Modules.Editor.Views
                 return;
             }
 
-            var realLocation = GetRelativelLocation(e.GetPosition((Image)sender));
+            var realLocation = GetRelativelLocation(e.GetPosition((IInputElement)sender));
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -101,19 +79,7 @@ namespace CubeProject.Modules.Editor.Views
             {
                 _viewModel.TurnOffPixelsAtArea(realLocation);
             }
-
-            _viewModel.RenderCursorAtLocation(realLocation);
         }
         #endregion
-
-        private void MainScreen_OnMouseLeave(object sender, MouseEventArgs e)
-        {
-            if (_viewModel == null || !CanDraw)
-            {
-                e.Handled = false;
-                return;
-            }
-            _viewModel.ClearCursor();
-        }
     }
 }

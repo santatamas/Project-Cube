@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using CubeProject.Graphics.Utilities;
-using CubeProject.Infrastructure.Enums;
 
 namespace CubeProject.Graphics.Renderers
 {
@@ -14,7 +11,7 @@ namespace CubeProject.Graphics.Renderers
     /// Before use, please provide a preconfigured <see cref="CubeProject.Graphics.RendererSettings"/> object.
     /// </summary>
     /// <seealso cref="CubeProject.Graphics.RendererSettings"/>
-    public abstract class RendererBase
+    public abstract class RendererBase : IDisposable
     {
         #region Construction
         /// <summary>
@@ -35,9 +32,9 @@ namespace CubeProject.Graphics.Renderers
         private void InitializeRenderSource()
         {
             Format = PixelFormats.Bgra32;
-            var section = CreateFileMapping(INVALID_HANDLE_VALUE, IntPtr.Zero, PAGE_READWRITE, 0, Count, null);
-            _map = MapViewOfFile(section, FILE_MAP_ALL_ACCESS, 0, 0, Count);
-            _page0 = System.Windows.Interop.Imaging.CreateBitmapSourceFromMemorySection(section, Settings.ScreenWidth, Settings.ScreenHeight, Format, Stride, 0) as InteropBitmap;
+            _section = CreateFileMapping(INVALID_HANDLE_VALUE, IntPtr.Zero, PAGE_READWRITE, 0, Count, null);
+            _map = MapViewOfFile(_section, FILE_MAP_ALL_ACCESS, 0, 0, Count);
+            _page0 = System.Windows.Interop.Imaging.CreateBitmapSourceFromMemorySection(_section, Settings.ScreenWidth, Settings.ScreenHeight, Format, Stride, 0) as InteropBitmap;
         }
 
         #region Private State
@@ -70,8 +67,12 @@ namespace CubeProject.Graphics.Renderers
 
         protected InteropBitmap _page0;
         protected IntPtr _map;
+        protected IntPtr _section;
 
         #region InterOp Calls
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
+
         [DllImport("kernel32.dll", SetLastError = true)]
         static extern IntPtr CreateFileMapping(IntPtr hFile,
         IntPtr lpFileMappingAttributes,
@@ -95,6 +96,7 @@ namespace CubeProject.Graphics.Renderers
         protected Color _pixelOnBrush = Color.FromRgb(53, 53, 53);
 
         protected RendererSettings _settings;
+        private bool disposed;
 
         #endregion
         #endregion
@@ -112,5 +114,27 @@ namespace CubeProject.Graphics.Renderers
         public abstract unsafe BitmapSource Render(byte[,] frame, int sizeX, int sizeY);
 
         #endregion
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    // Dispose managed resources.
+                }
+                DeleteObject(_map);
+                DeleteObject(_section);
+                // There are no unmanaged resources to release, but
+                // if we add them, they need to be released here.
+            }
+            disposed = true;
+        }
     }
 }

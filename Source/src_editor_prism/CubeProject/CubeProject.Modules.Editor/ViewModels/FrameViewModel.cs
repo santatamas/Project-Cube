@@ -51,7 +51,6 @@ namespace CubeProject.Modules.Editor.ViewModels
                 _frame = value;
                 if (value != null)
                 {
-                    _tempCursorFrame = new byte[_frame.Width,_frame.Height];
                     _settings = new RendererSettings()
                     {
                         ColorDepth = _frame.ColorDepth,
@@ -63,8 +62,6 @@ namespace CubeProject.Modules.Editor.ViewModels
                         SizeY = _frame.Height
                     };
                     MatrixRenderer = new MatrixRenderer(_settings);
-                    GridRenderer = new GridRenderer(_settings);
-                    CursorRenderer = new CursorRenderer(_settings);
                 }
                 OnPropertyChanged();
             }
@@ -87,37 +84,7 @@ namespace CubeProject.Modules.Editor.ViewModels
             }
         }
 
-        public BitmapSource RenderedGridSource
-        {
-            get
-            {
-                return GridRenderer.Render(null,0,0);
-            }
-        }
-        public BitmapSource RenderedCursorSource
-        {
-            get
-            {
-                return _renderedCursorSource;
-            }
-            set
-            {
-                _renderedCursorSource = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private MatrixRenderer MatrixRenderer { get; set; }
-        private CursorRenderer CursorRenderer { get; set; }
-        private GridRenderer GridRenderer
-        {
-            get { return _gridRenderer; }
-            set
-            {
-                _gridRenderer = value;
-                OnPropertyChanged("RenderedGridSource");
-            }
-        }
+        public MatrixRenderer MatrixRenderer { get; private set; }
 
         public int Index
         {
@@ -159,6 +126,16 @@ namespace CubeProject.Modules.Editor.ViewModels
         public DelegateCommand<object> PasteCommand
         {
             get { return _pasteCommand ?? (_pasteCommand = new DelegateCommand<object>(PasteCommandHandler)); }
+        }
+
+        public int BrushSize
+        {
+            get { return _brushSize; }
+        }
+
+        public byte BrushShade
+        {
+            get { return _brushShade; }
         }
 
         #endregion
@@ -286,80 +263,21 @@ namespace CubeProject.Modules.Editor.ViewModels
         private DelegateCommand<object> _pasteCommand;
 
         private IDialogService _dialogService;
-        private GridRenderer _gridRenderer;
         private bool _isGridVisible = true;
-        private BitmapSource _renderedCursorSource;
-        private byte[,] _tempCursorFrame;
-
-        #endregion
-        #endregion
-
-        private PixelCoordinate _previousCoordinate;
         private int _index;
-
-        internal void RenderCursorAtLocation(Point realLocation)
-        {
-            PixelCoordinate coordinate = GetCoordinateFromLocation(realLocation);
-            if (coordinate.X == _previousCoordinate.X && coordinate.Y == _previousCoordinate.Y) return;
-
-            _previousCoordinate = coordinate;
-
-            // Clear temp frame
-            for (int i = 0; i < _frame.Width; i++)
-            {
-                for (int j = 0; j < _frame.Height; j++)
-                {
-                    _tempCursorFrame[i, j] = 0;
-                }
-            }
-
-            if (_brushSize == 1)
-            {
-                if (coordinate.X >= Settings.SizeX || coordinate.Y >= Settings.SizeY || coordinate.X < 0 || coordinate.Y < 0) return;
-                _tempCursorFrame[coordinate.X, coordinate.Y] = 254;
-                RenderedCursorSource = CursorRenderer.Render(_tempCursorFrame, _frame.Width, _frame.Height);
-            }
-            else
-            {
-                // iterate through the selected pixel, and it's surrounding area
-                for (int i = (coordinate.X - _brushSize / 2); i <= (coordinate.X + _brushSize / 2); i++)
-                {
-                    for (int j = (coordinate.Y - _brushSize / 2); j <= (coordinate.Y + _brushSize / 2); j++)
-                    {
-                        // checking boundaries
-                        if (i >= Settings.SizeX || j >= Settings.SizeY || i < 0 || j < 0) continue;
-                        _tempCursorFrame[i, j] = 254;
-                    }
-                }
-                RenderedCursorSource = CursorRenderer.Render(_tempCursorFrame, _frame.Width, _frame.Height);
-            }
-
-            EventAggregator.GetEvent<PointerLocationChangedEvent>().Publish(coordinate.X + " X " + coordinate.Y);
-        }
+        #endregion
+        #endregion
 
         internal void TurnOnPixelsAtArea(Point realLocation)
         {
-            TogglePixelAtArea(realLocation, _brushSize, ToggleMode.On, _brushShade);
+            TogglePixelAtArea(realLocation, BrushSize, ToggleMode.On, BrushShade);
             ReDraw();
         }
 
         internal void TurnOffPixelsAtArea(Point realLocation)
         {
-            TogglePixelAtArea(realLocation, _brushSize, ToggleMode.Off, _brushShade);
+            TogglePixelAtArea(realLocation, BrushSize, ToggleMode.Off, BrushShade);
             ReDraw();
-        }
-
-        internal void ClearCursor()
-        {
-            // Clear temp frame
-            for (int i = 0; i < _frame.Width; i++)
-            {
-                for (int j = 0; j < _frame.Height; j++)
-                {
-                    _tempCursorFrame[i, j] = 0;
-                }
-            }
-            RenderedCursorSource = CursorRenderer.Render(_tempCursorFrame, _frame.Width, _frame.Height);
         }
     }
 }

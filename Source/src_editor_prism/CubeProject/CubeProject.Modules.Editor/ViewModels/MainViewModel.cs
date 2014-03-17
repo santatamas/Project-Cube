@@ -128,6 +128,17 @@ namespace CubeProject.Modules.Editor.ViewModels
                 if (_frameViewModels != null)
                     _frameViewModels.CollectionChanged -= _frameViewModels_CollectionChanged;
 
+
+                if (_frameViewModels != null)
+                {
+                    foreach (var frameViewModel in _frameViewModels)
+                    {
+                        frameViewModel.MatrixRenderer.Dispose();
+                    }
+                    // I might be going to hell from doing this...
+                    GC.Collect();
+                }
+
                 _frameViewModels = value;
                 _frameViewModels.CollectionChanged += _frameViewModels_CollectionChanged;
                 OnPropertyChanged();

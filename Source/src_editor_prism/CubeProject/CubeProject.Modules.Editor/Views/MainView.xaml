@@ -11,14 +11,21 @@
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
         <views:AnimationView DockPanel.Dock="Bottom" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}, Path=ActualWidth}" DataContext="{Binding}" />
-        <Grid Background="#FF7D8C73">
-            <views:PixelMatrixView x:Name="MatrixView" HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding CurrentFrame}" />
-            <views:PixelMatrixView IsHitTestVisible="False" Opacity="0.3" 
-                                   CanDraw="False" ShowCursor="False" ShowGrid="False" 
+        <Grid Background="#FF7D8C73" >
+            <Grid HorizontalAlignment="Center" IsHitTestVisible="True"
+                  VerticalAlignment="Center" Background="Transparent"
+                  MouseMove="UIElement_OnMouseMove" Panel.ZIndex="5000"
+                  MouseLeave="UIElement_OnMouseLeave"
+                  MouseUp="UIElement_OnMouseUp">
+                <views:EditorFeatureView x:Name="FeatureView" DataContext="{Binding CurrentFrame}" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" ></views:EditorFeatureView>
+                <views:PixelMatrixView x:Name="MatrixView" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Center" DataContext="{Binding CurrentFrame}" />
+                <views:PixelMatrixView IsHitTestVisible="False" Opacity="0.3" 
+                                   CanDraw="False" 
                                    x:Name="PreviousMatrixView" 
                                    HorizontalAlignment="Center" VerticalAlignment="Center" 
                                    DataContext="{Binding PreviousFrame}" 
                                    Visibility="{Binding Path=DataContext.IsGhostVisible, RelativeSource={RelativeSource AncestorType={x:Type views:MainView}, Mode=FindAncestor}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </Grid>
         </Grid>
-     </DockPanel>
+    </DockPanel>
 </UserControl>
