@@ -24,8 +24,8 @@ namespace CubeProject.Modules.Editor.Views
 
         void AnimationView_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            //this.dragMgr = new ListViewDragDropManager<FrameViewModel>(AnimListView);
-            //this.dragMgr.ProcessDrop += dragMgr_ProcessDrop;
+            this.dragMgr = new ListViewDragDropManager<FrameViewModel>(AnimListView);
+            this.dragMgr.ProcessDrop += dragMgr_ProcessDrop;
             (e.NewValue as INotifyPropertyChanged).PropertyChanged += AnimationView_PropertyChanged;
         }
 

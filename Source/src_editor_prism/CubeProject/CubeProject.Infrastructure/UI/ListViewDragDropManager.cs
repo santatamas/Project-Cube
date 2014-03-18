@@ -504,7 +504,7 @@ namespace CubeProject.Infrastructure.UI
                 for (int i = 0; i < this.listView.Items.Count; ++i)
                 {
                     ListViewItem item = this.GetListViewItem(i);
-                    if (this.IsMouseOver(item))
+                    if (item != null && this.IsMouseOver(item))
                     {
                         index = i;
                         break;
