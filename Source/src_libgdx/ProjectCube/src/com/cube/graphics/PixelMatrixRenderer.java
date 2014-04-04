@@ -82,6 +82,7 @@ public class PixelMatrixRenderer extends Actor {
 		Gdx.gl.glDisable(GL10.GL_BLEND);
 		batch.begin();
 		font.draw(batch, Integer.toString(Gdx.graphics.getFramesPerSecond()), 10, 20);
+		batch.end();
 
 	}
 

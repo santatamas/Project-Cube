@@ -36,6 +36,7 @@ public class LoadingScreen implements Screen {
 		CubeGame.AssetManager.load("data/eat_icon_off.png", Texture.class);
 		CubeGame.AssetManager.load("data/eat_icon_on.png", Texture.class);
 		CubeGame.AssetManager.load("data/switch_effect.wav", Sound.class);
+		CubeGame.AssetManager.load("data/segment_14.fnt", BitmapFont.class);
 	}
 	
 	@Override

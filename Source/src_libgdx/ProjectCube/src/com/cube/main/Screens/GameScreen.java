@@ -10,6 +10,7 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cube.data.Animation;
+import com.cube.graphics.LCDTextRenderer;
 import com.cube.graphics.PixelMatrixRenderer;
 import com.cube.main.CubeGame;
 import com.cube.main.Elements.TwoStateIcon;
@@ -19,6 +20,7 @@ public class GameScreen implements Screen, GestureListener {
 	Stage _stage;
 	PixelMatrixRenderer _matrixRenderer;
 	TwoStateIcon _eatIcon;
+	LCDTextRenderer _textRenderer;
 	float _width;
 	float _height;
 	boolean _rendering = true;
@@ -30,17 +32,13 @@ public class GameScreen implements Screen, GestureListener {
 	{
 		_width = Gdx.graphics.getWidth();
 		_height = Gdx.graphics.getHeight();
-
-		/*OrthographicCamera camera = new OrthographicCamera();
-		camera.setToOrtho(false);*/
-		
 		_stage = new Stage(_width, _height, true);
-		//_stage.setCamera(camera);
-		
-		
+
 		_matrixRenderer = new PixelMatrixRenderer(_stage);
+		_textRenderer = new LCDTextRenderer();
 		//_eatIcon = new TwoStateIcon("data/eat_icon_off.png", "data/eat_icon_on.png");
-		_stage.addActor(_matrixRenderer);	
+		_stage.addActor(_matrixRenderer);
+		_stage.addActor(_textRenderer);
 		//_stage.addActor(_eatIcon);
 		_switchSound = CubeGame.AssetManager.get("data/switch_effect.wav");
 		_matrixRenderer.get_animations().add((Animation) CubeGame.AssetManager.get("data/dante_animation.pma"));
