@@ -1,0 +1,19 @@
+
+button_rect.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+button_rect_normal
+  rotate: false
+  xy: 1, 1
+  size: 101, 28
+  orig: 101, 28
+  offset: 0, 0
+  index: -1
+button_rect_pressed
+  rotate: false
+  xy: 104, 1
+  size: 101, 28
+  orig: 101, 28
+  offset: 0, 0
+  index: -1

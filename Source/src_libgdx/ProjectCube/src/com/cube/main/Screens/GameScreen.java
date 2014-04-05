@@ -5,10 +5,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.cube.data.Animation;
 import com.cube.graphics.LCDTextRenderer;
 import com.cube.graphics.PixelMatrixRenderer;
@@ -26,14 +32,20 @@ public class GameScreen implements Screen, GestureListener {
 	boolean _rendering = true;
 	Sound _switchSound;
 	Music _bgMusic;
-	
+	TextureAtlas _buttonRoundAtlas;
+	TextureAtlas _buttonRectAtlas;
+	Skin _buttonRoundSkin; 
+	Skin _buttonRectSkin; 
+    Button _buttonRound; 
+    Button _buttonRect; 
 	
 	public GameScreen()
 	{
 		_width = Gdx.graphics.getWidth();
 		_height = Gdx.graphics.getHeight();
 		_stage = new Stage(_width, _height, true);
-
+		Gdx.input.setInputProcessor(_stage);
+		
 		_matrixRenderer = new PixelMatrixRenderer(_stage);
 		_textRenderer = new LCDTextRenderer();
 		//_eatIcon = new TwoStateIcon("data/eat_icon_off.png", "data/eat_icon_on.png");
@@ -41,6 +53,35 @@ public class GameScreen implements Screen, GestureListener {
 		_stage.addActor(_textRenderer);
 		//_stage.addActor(_eatIcon);
 		_switchSound = CubeGame.AssetManager.get("data/switch_effect.wav");
+		
+		_buttonRoundAtlas = CubeGame.AssetManager.get("data/button_round.atlas", TextureAtlas.class);
+		_buttonRectAtlas = CubeGame.AssetManager.get("data/button_rect.atlas", TextureAtlas.class);
+		_buttonRoundSkin = new Skin();
+        _buttonRoundSkin.addRegions(_buttonRoundAtlas);
+        
+        _buttonRectSkin = new Skin();
+        _buttonRectSkin.addRegions(_buttonRectAtlas);
+		
+        ButtonStyle style = new ButtonStyle(); //** Button properties **//
+        style.up = _buttonRoundSkin.getDrawable("button_round_normal");
+        style.down = _buttonRoundSkin.getDrawable("button_round_pressed");
+        
+        _buttonRound = new Button(style); //** Button text and style **//
+        _buttonRound.setPosition(100, 100); //** Button location **//
+        _buttonRound.setHeight(116); //** Button Height **//
+        _buttonRound.setWidth(116); //** Button Width **//
+        _buttonRound.addListener(new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                    Gdx.app.log("my app", "Pressed"); //** Usually used to start Game, etc. **//
+                    return true;
+            }
+                    public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                        Gdx.app.log("my app", "Released");
+                }
+            });
+            
+            _stage.addActor(_buttonRound);
+		
 		_matrixRenderer.get_animations().add((Animation) CubeGame.AssetManager.get("data/dante_animation.pma"));
 		//_bgMusic = Gdx.audio.newMusic(Gdx.files.internal("data/bg_music.mp3"));
 		//_bgMusic.play();
@@ -61,7 +102,7 @@ public class GameScreen implements Screen, GestureListener {
 
 	@Override
 	public void show() {
-		Gdx.input.setInputProcessor(new GestureDetector(this));
+		//Gdx.input.setInputProcessor(new GestureDetector(this));
 	}
 
 	@Override 

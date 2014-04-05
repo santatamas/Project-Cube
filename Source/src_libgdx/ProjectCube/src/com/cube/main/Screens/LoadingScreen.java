@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.cube.data.Animation;
 import com.cube.data.AnimationLoader;
 import com.cube.main.CubeGame;
@@ -37,6 +38,8 @@ public class LoadingScreen implements Screen {
 		CubeGame.AssetManager.load("data/eat_icon_on.png", Texture.class);
 		CubeGame.AssetManager.load("data/switch_effect.wav", Sound.class);
 		CubeGame.AssetManager.load("data/segment_14.fnt", BitmapFont.class);
+		CubeGame.AssetManager.load("data/button_round.atlas", TextureAtlas.class);
+		CubeGame.AssetManager.load("data/button_rect.atlas", TextureAtlas.class);
 	}
 	
 	@Override

@@ -1,6 +1,5 @@
 package com.cube.graphics;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -14,8 +13,6 @@ public class LCDTextRenderer extends Actor {
 	
 	public LCDTextRenderer() {
 		_font = CubeGame.AssetManager.get("data/segment_14.fnt", BitmapFont.class);
-		
-		//_font.scale(3);
 	}
 	
 	@Override
