@@ -131,6 +131,7 @@
     <Compile Include="UI\ListViewDragDropManager.cs" />
     <Compile Include="UI\MouseUtilities.cs" />
     <Compile Include="Utility\DeepCopy.cs" />
+    <Compile Include="Utility\StreamUtility.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

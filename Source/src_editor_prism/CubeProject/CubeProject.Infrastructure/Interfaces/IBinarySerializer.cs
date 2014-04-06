@@ -10,8 +10,8 @@ namespace CubeProject.Infrastructure.Interfaces
     /// <typeparam name="T"></typeparam>
     public interface IBinarySerializer<T>
     {
-        Stream Serialize(T data);
-        T Deserialize(Stream stream);
+        byte[] Serialize(T data);
+        T Deserialize(byte[] stream);
         bool SupportsFileVersion(FileVersion version);
     }
 }

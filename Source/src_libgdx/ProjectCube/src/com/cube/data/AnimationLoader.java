@@ -1,6 +1,7 @@
 package com.cube.data;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
@@ -20,7 +21,14 @@ public class AnimationLoader extends AsynchronousAssetLoader<Animation, Animatio
 	@Override
 	public void loadAsync (AssetManager manager, String fileName, FileHandle file, AnimationParameter parameter) {
 		try {
-			animation = AnimationSerializer.Deserialize(file);
+			String extension = "";
+			int i = fileName.lastIndexOf('.');
+			if (i > 0) {
+			    extension = fileName.substring(i+1);
+			}
+			
+			boolean isCompressed = extension.equals("pmz");
+			animation = AnimationSerializer.Deserialize(file,isCompressed);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

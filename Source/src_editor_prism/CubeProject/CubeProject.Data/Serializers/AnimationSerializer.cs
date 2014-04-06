@@ -17,7 +17,7 @@ namespace CubeProject.Data.Serializers
         /// </summary>
         /// <param name="data">The Animation.</param>
         /// <returns></returns>
-        public Stream Serialize(Animation data)
+        public virtual byte[] Serialize(Animation data)
         {
             MemoryStream ms = new MemoryStream();
             BinaryWriter bw = new BinaryWriter(ms);
@@ -52,7 +52,9 @@ namespace CubeProject.Data.Serializers
                     }
                 }
             }
-            return ms;
+            byte[] result = ms.ToArray();
+            ms.Close();
+            return result;
 
         }
 
@@ -62,9 +64,9 @@ namespace CubeProject.Data.Serializers
         /// <param name="stream">The stream.</param>
         /// <returns>An Animation object.</returns>
         /// <exception cref="System.NotSupportedException">File Version not supported!</exception>
-        public Animation Deserialize(Stream stream)
+        public virtual Animation Deserialize(byte[] data)
         {
-            BinaryReader br = new BinaryReader(stream);
+            BinaryReader br = new BinaryReader(new MemoryStream(data));
             Animation result = new Animation();
 
             // Get File version - 1 byte

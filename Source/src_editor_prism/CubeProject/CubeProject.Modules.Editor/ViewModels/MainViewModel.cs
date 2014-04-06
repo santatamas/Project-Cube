@@ -181,11 +181,12 @@ namespace CubeProject.Modules.Editor.ViewModels
         {
             Stream fileStream;
             string filePath;
-            var dialogResult = _dialogService.ShowOpenFileDialog("Pixel Matrix Animation (*.pma)|*.pma|All files (*.*)|*.*", out fileStream, out filePath);
+            var dialogResult = _dialogService.ShowOpenFileDialog("Pixel Matrix Animation (*.pma)|*.pma|Zipped Pixel Matrix Animation (*.pmz)|*.pmz|All files (*.*)|*.*", out fileStream, out filePath);
             if (dialogResult == DialogResult.Ok)
             {
-                var serializer = new AnimationSerializer();             
-                Animation = serializer.Deserialize(fileStream);
+                var isCompressed = Path.GetExtension(filePath) == ".pmz";
+                var serializer = isCompressed ? new ZippedAnimationSerializer() : new AnimationSerializer();
+                Animation = serializer.Deserialize(StreamUtility.ToByteArray(fileStream));
                 CurrentFilePath = filePath;
                 EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("Animation loaded.");
             }
@@ -207,7 +208,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         private void SaveAs(object obj)
         {
             string filePath;
-            var dialogResult = _dialogService.ShowSaveFileDialog("Pixel Matrix Animation (*.pma)|*.pma|All files (*.*)|*.*","untitled.pma", out filePath);
+            var dialogResult = _dialogService.ShowSaveFileDialog("Pixel Matrix Animation (*.pma)|*.pma|Zipped Pixel Matrix Animation (*.pmz)|*.pmz|All files (*.*)|*.*", "untitled.pma", out filePath);
             if (dialogResult == DialogResult.Ok)
             {
                 SaveAnimationTo(Animation, filePath);
@@ -218,16 +219,14 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private void SaveAnimationTo(Animation animation, string path)
         {
-            var serializer = new AnimationSerializer();
+            var isCompressed = Path.GetExtension(path) == ".pmz";
+            var serializer = isCompressed ? new ZippedAnimationSerializer() : new AnimationSerializer();
             animation.Frames = FrameViewModels.Select(fvm => (Frame<byte>)fvm.Frame).ToList();
-            using (var animStream = serializer.Serialize(animation))
-            {
-                animStream.Position = 0;
+            var animData = serializer.Serialize(animation);
 
-                using (var fs = File.Create(path))
-                {
-                    animStream.CopyTo(fs);
-                }
+            using (var fs = File.Create(path))
+            {
+                fs.Write(animData, 0, animData.Length);
             }
         }
 
@@ -262,7 +261,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
             for (int i = 0; i < 5; i++)
             {
-                animation.Frames.Add(new Frame<byte>(frameWidth, frameHeight){Duration = 500});
+                animation.Frames.Add(new Frame<byte>(frameWidth, frameHeight) { Duration = 500 });
             }
 
             _currentAnimationFrameWidth = frameWidth;
@@ -306,7 +305,7 @@ namespace CubeProject.Modules.Editor.ViewModels
                 if (FrameViewModels.Count > currentFrameIndex + 1)
                 {
                     Thread.Sleep(FrameViewModels[currentFrameIndex].Frame.Duration);
-                    
+
                     // if we pressed STOP while waiting for the next frame, quit animating now
                     if (!_isPlaying) continue;
 
@@ -324,7 +323,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         private void PreviousFrameHandler(int obj)
         {
             var currentFrameIndex = FrameViewModels.IndexOf(CurrentFrame);
-            if(currentFrameIndex - 1 >= 0)
+            if (currentFrameIndex - 1 >= 0)
                 CurrentFrame = FrameViewModels[currentFrameIndex - 1];
         }
 
@@ -340,7 +339,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         private void Paste(int obj)
         {
             var index = FrameViewModels.IndexOf(CurrentFrame);
-            FrameViewModels.Insert(index+1, CreateFrameViewModel(DeepCopy.Make(_clipBoardFVM.Frame)));
+            FrameViewModels.Insert(index + 1, CreateFrameViewModel(DeepCopy.Make(_clipBoardFVM.Frame)));
         }
 
         private void Copy(int obj)

@@ -1,9 +1,11 @@
 package com.cube.data;
 
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.util.zip.GZIPInputStream;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.LittleEndianInputStream;
@@ -11,10 +13,20 @@ import com.cube.common.ColorDepth;
 
 public class AnimationSerializer {
 
-	public static Animation Deserialize(FileHandle file) throws IOException {
+	public static Animation Deserialize(FileHandle file, boolean isCompressed) throws IOException {
 
 		InputStream fs = file.read();
-		LittleEndianInputStream  br = new LittleEndianInputStream(fs);
+		LittleEndianInputStream  br;
+		if(isCompressed)
+		{
+			GZIPInputStream zis = new GZIPInputStream(new BufferedInputStream(fs));
+			br = new LittleEndianInputStream(zis);
+		}
+		else
+		{
+			br = new LittleEndianInputStream(fs);
+		}
+		
 		Animation result = new Animation();
 		// Get File version - 1 byte
 		byte version = br.readByte();

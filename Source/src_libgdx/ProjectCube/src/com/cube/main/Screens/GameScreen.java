@@ -62,7 +62,7 @@ public class GameScreen implements Screen, GestureListener {
 
 	private void InitializeActors(Stage stage) {
 		_matrixRenderer = new PixelMatrixRenderer(_stage);
-		_matrixRenderer.get_animations().add((Animation) CubeGame.AssetManager.get("data/dante_animation.pma"));
+		_matrixRenderer.get_animations().add((Animation) CubeGame.AssetManager.get("data/zippedAnim.pmz"));
 		
 		_textRenderer = new LCDTextRenderer();
 		_eatIcon = new TwoStateIcon("data/cake_icon_off.png", "data/cake_icon_on.png");
