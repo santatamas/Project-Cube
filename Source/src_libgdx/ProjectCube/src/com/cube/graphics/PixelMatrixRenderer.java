@@ -27,6 +27,8 @@ public class PixelMatrixRenderer extends Actor {
 		_parentStage = stage;
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont();
+		setHeight(720);
+		setWidth(720);
 	}
 
 	@Override
@@ -69,12 +71,12 @@ public class PixelMatrixRenderer extends Actor {
 
 				if (currentPixelValue == 0) {
 					shapeRenderer.setColor(116 / 255f, 129 / 255f, 107 / 255f, 0.3f);
-					shapeRenderer.rect(i * 10, j * 10, 8, 8);
+					shapeRenderer.rect(getX() + i * 10, getY() + j * 10, 8, 8);
 					continue;
 				}
 
 				shapeRenderer.setColor(53 / 255f, 53 / 255f, 53 / 255f, currentPixelValue / 255f);
-				shapeRenderer.rect(i * 10, j * 10, 8, 8);
+				shapeRenderer.rect(getX() + i * 10, getY() + j * 10, 8, 8);
 			}
 		}
 
@@ -82,7 +84,7 @@ public class PixelMatrixRenderer extends Actor {
 		Gdx.gl.glDisable(GL10.GL_BLEND);
 		batch.begin();
 		font.draw(batch, Integer.toString(Gdx.graphics.getFramesPerSecond()), 10, 20);
-		batch.end();
+		//batch.end();
 
 	}
 

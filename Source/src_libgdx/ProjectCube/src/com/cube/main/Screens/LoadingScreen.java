@@ -31,15 +31,29 @@ public class LoadingScreen implements Screen {
 	}
 	
 	private void LoadPrimaryAssets() {	
+		
+		Texture.setEnforcePotImages(false);
+		
 		CubeGame.AssetManager.setLoader(Animation.class, new AnimationLoader(new InternalFileHandleResolver()));
+		// animations
 		CubeGame.AssetManager.load("data/demo_animation.pma", Animation.class);
 		CubeGame.AssetManager.load("data/dante_animation.pma", Animation.class);
+		
+		//textures
 		CubeGame.AssetManager.load("data/eat_icon_off.png", Texture.class);
 		CubeGame.AssetManager.load("data/eat_icon_on.png", Texture.class);
+		CubeGame.AssetManager.load("data/cake_icon_off.png", Texture.class);
+		CubeGame.AssetManager.load("data/cake_icon_on.png", Texture.class);		
+		CubeGame.AssetManager.load("data/buttons_bg.png", Texture.class);
+		
+		//sounds
 		CubeGame.AssetManager.load("data/switch_effect.wav", Sound.class);
+		
+		//others
 		CubeGame.AssetManager.load("data/segment_14.fnt", BitmapFont.class);
 		CubeGame.AssetManager.load("data/button_round.atlas", TextureAtlas.class);
 		CubeGame.AssetManager.load("data/button_rect.atlas", TextureAtlas.class);
+		
 	}
 	
 	@Override

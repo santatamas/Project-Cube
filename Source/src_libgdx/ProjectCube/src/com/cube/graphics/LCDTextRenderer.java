@@ -13,15 +13,16 @@ public class LCDTextRenderer extends Actor {
 	
 	public LCDTextRenderer() {
 		_font = CubeGame.AssetManager.get("data/segment_14.fnt", BitmapFont.class);
+		setHeight(_font.getWrappedBounds(str, 720).height);
+		setWidth(_font.getWrappedBounds(str, 720).width);
 	}
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
-		batch.begin();
 		_font.setColor(116 / 255f, 129 / 255f, 107 / 255f, 0.5f);
-		_font.draw(batch, str, 22, 800);
+		_font.draw(batch, str, getX(), getY() + getHeight());
 		_font.setColor(53 / 255f, 53 / 255f, 53 / 255f, 255 / 255f);
-		_font.draw(batch, str2, 22, 800);
+		_font.draw(batch, str2, getX(), getY() + getHeight());
 
 	}
 	
