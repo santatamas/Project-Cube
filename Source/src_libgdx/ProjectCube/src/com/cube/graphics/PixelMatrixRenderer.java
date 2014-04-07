@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.cube.common.VirtualScreen;
 import com.cube.data.Animation;
 import com.cube.data.Frame;
 
@@ -22,13 +23,16 @@ public class PixelMatrixRenderer extends Actor {
 	private int[][] _screenBuffer = new int[72][72];
 	private List<Animation> _animations = new ArrayList<Animation>();
 	private float _totalTime = 0;
+	private float _virtualPixelSize = 0;
 
 	public PixelMatrixRenderer(Stage stage) {
 		_parentStage = stage;
 		shapeRenderer = new ShapeRenderer();
 		font = new BitmapFont();
-		setHeight(720);
-		setWidth(720);
+		setHeight(stage.getWidth());
+		setWidth(stage.getWidth());
+		
+		_virtualPixelSize = stage.getWidth() / 72;
 	}
 
 	@Override
@@ -71,12 +75,12 @@ public class PixelMatrixRenderer extends Actor {
 
 				if (currentPixelValue == 0) {
 					shapeRenderer.setColor(116 / 255f, 129 / 255f, 107 / 255f, 0.3f);
-					shapeRenderer.rect(getX() + i * 10, getY() + j * 10, 8, 8);
+					shapeRenderer.rect(getX() + VirtualScreen.GetRealWidth(i) * _virtualPixelSize, getY() + VirtualScreen.GetRealHeight(j)* _virtualPixelSize, _virtualPixelSize * 0.8f, _virtualPixelSize * 0.8f);
 					continue;
 				}
 
 				shapeRenderer.setColor(53 / 255f, 53 / 255f, 53 / 255f, currentPixelValue / 255f);
-				shapeRenderer.rect(getX() + i * 10, getY() + j * 10, 8, 8);
+				shapeRenderer.rect(getX() + VirtualScreen.GetRealWidth(i)* _virtualPixelSize, getY() + VirtualScreen.GetRealHeight(j)* _virtualPixelSize, _virtualPixelSize * 0.8f, _virtualPixelSize * 0.8f);
 			}
 		}
 

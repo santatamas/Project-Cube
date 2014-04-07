@@ -3,6 +3,7 @@ package com.cube.graphics;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.cube.common.VirtualScreen;
 import com.cube.main.CubeGame;
 
 public class LCDTextRenderer extends Actor {
@@ -13,8 +14,8 @@ public class LCDTextRenderer extends Actor {
 	
 	public LCDTextRenderer() {
 		_font = CubeGame.AssetManager.get("data/segment_14.fnt", BitmapFont.class);
-		setHeight(_font.getWrappedBounds(str, 720).height);
-		setWidth(_font.getWrappedBounds(str, 720).width);
+		setHeight(_font.getWrappedBounds(str, VirtualScreen.GetRealWidth(720)).height);
+		setWidth(_font.getWrappedBounds(str, VirtualScreen.GetRealWidth(720)).width);
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ package com.cube.main.Elements;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.cube.common.VirtualScreen;
 import com.cube.main.CubeGame;
 
 public class RectButton extends Button {
@@ -21,8 +22,8 @@ public class RectButton extends Button {
         _style.down = _skin.getDrawable("button_rect_pressed");
         
         setStyle(_style);
-        setHeight(28);
-        setWidth(101);
+        setHeight(VirtualScreen.GetRealHeight(28));
+        setWidth(VirtualScreen.GetRealWidth(101));
 	}
 	
 }

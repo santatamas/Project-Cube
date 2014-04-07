@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.cube.common.VirtualScreen;
 import com.cube.main.CubeGame;
 
 public class TwoStateIcon extends Actor {
@@ -17,8 +18,8 @@ public class TwoStateIcon extends Actor {
 	{
 		_txStateA = CubeGame.AssetManager.get(stateA, Texture.class);
 		_txStateB = CubeGame.AssetManager.get(stateB, Texture.class);
-		setHeight(74);
-		setWidth(74);
+		setHeight(VirtualScreen.GetRealHeight(74));
+		setWidth(VirtualScreen.GetRealWidth(74));
 		_currentState = _txStateA;
 	}
 	
@@ -37,6 +38,6 @@ public class TwoStateIcon extends Actor {
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
-		batch.draw(_currentState, getX(),getY(),74,74);
+		batch.draw(_currentState, getX(),getY(),VirtualScreen.GetRealWidth(74),VirtualScreen.GetRealHeight(74));
 	}
 }

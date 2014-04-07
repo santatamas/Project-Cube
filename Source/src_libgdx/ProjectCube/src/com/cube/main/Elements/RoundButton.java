@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.cube.common.VirtualScreen;
 import com.cube.main.CubeGame;
 
 public class RoundButton extends Button {
@@ -24,8 +25,8 @@ public class RoundButton extends Button {
         _style.down = _skin.getDrawable("button_round_pressed");
         
         setStyle(_style);
-        setHeight(116);
-        setWidth(116);
+        setHeight(VirtualScreen.GetRealHeight(116));
+        setWidth(VirtualScreen.GetRealWidth(116));
 	}
 	
 //	_buttonRound.addListener(new InputListener() {

@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.cube.common.VirtualScreen;
 import com.cube.data.Animation;
 import com.cube.graphics.LCDTextRenderer;
 import com.cube.graphics.PixelMatrixRenderer;
@@ -40,12 +41,10 @@ public class GameScreen implements Screen, GestureListener {
     Table _layoutRoot;
     Table _iconLayout;
     Table _controlLayout;
-	
+
 	public GameScreen()
 	{
-		_width = Gdx.graphics.getWidth();
-		_height = Gdx.graphics.getHeight();
-		_stage = new Stage(_width, _height, true);
+		_stage = new Stage(VirtualScreen.ScreenWidth, VirtualScreen.ScreenHeight, true);
 		Gdx.input.setInputProcessor(_stage);
 
 		LoadResources();
@@ -78,31 +77,31 @@ public class GameScreen implements Screen, GestureListener {
 		_layoutRoot.debug();
 		_layoutRoot.setFillParent(true);
 		_layoutRoot.top();	
-		_layoutRoot.row().padTop(20).padBottom(20);
+		_layoutRoot.row().padTop(VirtualScreen.GetRealHeight(20)).padBottom(VirtualScreen.GetRealHeight(20));
 		
 		for(int i = 0;i<5;i++) {
 			TwoStateIcon icon = new TwoStateIcon("data/cake_icon_off.png", "data/cake_icon_on.png");
 			_layoutRoot.add(icon).expandX();
 		}
-		_layoutRoot.row().padBottom(20);
+		_layoutRoot.row().padBottom(VirtualScreen.GetRealHeight(20));
 		_layoutRoot.add(_matrixRenderer).colspan(5);
-		_layoutRoot.row().padBottom(15);
+		_layoutRoot.row().padBottom(VirtualScreen.GetRealHeight(15));
 		_layoutRoot.add(_textRenderer).colspan(5);
 		_layoutRoot.row();
 		_layoutRoot.add(new LCDTextRenderer()).colspan(5);
 		_layoutRoot.row();
 		
 		_controlLayout = new Table();
-		_controlLayout.setHeight(260);
-		_controlLayout.setWidth(720);
+		_controlLayout.setHeight(VirtualScreen.GetRealHeight(260));
+		_controlLayout.setWidth(VirtualScreen.GetRealWidth(720));
 		_controlLayout.debug();
 		_controlLayout.setFillParent(false);
 		_controlLayout.setBackground(new TextureRegionDrawable(new TextureRegion(CubeGame.AssetManager.get("data/buttons_bg.png", Texture.class))));
 		_controlLayout.row().expandX();
-		_controlLayout.add(_buttonSelect).padLeft(25);
-		_controlLayout.add(_buttonStart).padRight(35);
+		_controlLayout.add(_buttonSelect).padLeft(VirtualScreen.GetRealWidth(25));
+		_controlLayout.add(_buttonStart).padRight(VirtualScreen.GetRealWidth(35));
 		_controlLayout.add(_buttonB);
-		_controlLayout.add(_buttonA).padBottom(70);
+		_controlLayout.add(_buttonA).padBottom(VirtualScreen.GetRealHeight(70));
 		
 		_layoutRoot.addActor(_controlLayout);
 		
