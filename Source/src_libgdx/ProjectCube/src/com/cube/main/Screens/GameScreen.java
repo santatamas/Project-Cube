@@ -1,5 +1,9 @@
 package com.cube.main.Screens;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -16,7 +20,10 @@ import com.cube.common.VirtualScreen;
 import com.cube.data.Animation;
 import com.cube.graphics.LCDTextRenderer;
 import com.cube.graphics.PixelMatrixRenderer;
+import com.cube.graphics.Point;
 import com.cube.main.CubeGame;
+import com.cube.main.Elements.Ball;
+import com.cube.main.Elements.FPSDisplay;
 import com.cube.main.Elements.RectButton;
 import com.cube.main.Elements.RoundButton;
 import com.cube.main.Elements.TwoStateIcon;
@@ -37,10 +44,12 @@ public class GameScreen implements Screen, GestureListener {
     RoundButton _buttonB; 
     RectButton _buttonStart; 
     RectButton _buttonSelect;
+    FPSDisplay _fpsDisplay;
     
     Table _layoutRoot;
     Table _iconLayout;
     Table _controlLayout;
+    
 
 	public GameScreen()
 	{
@@ -61,7 +70,19 @@ public class GameScreen implements Screen, GestureListener {
 
 	private void InitializeActors(Stage stage) {
 		_matrixRenderer = new PixelMatrixRenderer(_stage);
-		_matrixRenderer.get_animations().add((Animation) CubeGame.AssetManager.get("data/zippedAnim.pmz"));
+		
+		Ball ball;
+		Random rnd = new Random();
+		for(int i = 1;i<10;i++)
+		{
+			ball = new Ball();
+			ball.X = rnd.nextInt(60);
+			ball.Y = rnd.nextInt(60);
+			ball.directionX = rnd.nextBoolean() ? 1 : -1;
+			ball.directionY = rnd.nextBoolean() ? 1 : -1;
+			
+			_matrixRenderer.get_actors().add(ball);
+		}
 		
 		_textRenderer = new LCDTextRenderer();
 		_eatIcon = new TwoStateIcon("data/cake_icon_off.png", "data/cake_icon_on.png");
@@ -69,6 +90,7 @@ public class GameScreen implements Screen, GestureListener {
 		_buttonB = new RoundButton();
 		_buttonStart = new RectButton();
 		_buttonSelect = new RectButton();
+		_fpsDisplay = new FPSDisplay();
 	}
 
 	private void InitializeLayout(Stage stage) {
@@ -78,7 +100,7 @@ public class GameScreen implements Screen, GestureListener {
 		_layoutRoot.setFillParent(true);
 		_layoutRoot.top();	
 		_layoutRoot.row().padTop(VirtualScreen.GetRealHeight(20)).padBottom(VirtualScreen.GetRealHeight(20));
-		
+		 
 		for(int i = 0;i<5;i++) {
 			TwoStateIcon icon = new TwoStateIcon("data/cake_icon_off.png", "data/cake_icon_on.png");
 			_layoutRoot.add(icon).expandX();
@@ -98,10 +120,14 @@ public class GameScreen implements Screen, GestureListener {
 		_controlLayout.setFillParent(false);
 		_controlLayout.setBackground(new TextureRegionDrawable(new TextureRegion(CubeGame.AssetManager.get("data/buttons_bg.png", Texture.class))));
 		_controlLayout.row().expandX();
+		
+		
 		_controlLayout.add(_buttonSelect).padLeft(VirtualScreen.GetRealWidth(25));
 		_controlLayout.add(_buttonStart).padRight(VirtualScreen.GetRealWidth(35));
 		_controlLayout.add(_buttonB);
 		_controlLayout.add(_buttonA).padBottom(VirtualScreen.GetRealHeight(70));
+		_controlLayout.row().expandX();
+		_controlLayout.add(_fpsDisplay);
 		
 		_layoutRoot.addActor(_controlLayout);
 		
@@ -120,6 +146,7 @@ public class GameScreen implements Screen, GestureListener {
 		_stage.act(delta);
 		_stage.draw();
 		Table.drawDebug(_stage);
+		
 	}
 
 	@Override

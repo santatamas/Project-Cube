@@ -39,6 +39,7 @@ public class LoadingScreen implements Screen {
 		CubeGame.AssetManager.load("data/demo_animation.pma", Animation.class);
 		CubeGame.AssetManager.load("data/dante_animation.pma", Animation.class);
 		CubeGame.AssetManager.load("data/zippedAnim.pmz", Animation.class);
+		CubeGame.AssetManager.load("data/ball.pmz", Animation.class);
 		
 		//textures
 		CubeGame.AssetManager.load("data/eat_icon_off.png", Texture.class);

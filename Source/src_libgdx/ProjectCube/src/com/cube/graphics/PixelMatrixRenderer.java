@@ -1,7 +1,10 @@
 package com.cube.graphics;
 
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,53 +16,107 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.cube.common.VirtualScreen;
 import com.cube.data.Animation;
 import com.cube.data.Frame;
+import com.cube.main.Elements.Ball;
+import com.cube.main.Elements.PixelActor;
 
 public class PixelMatrixRenderer extends Actor {
 
+	public static int Width = 72;
+	public static int Height = 72;
+	
 	private ShapeRenderer shapeRenderer;
-	private BitmapFont font;
+	
 	private Stage _parentStage;
 
-	private int[][] _screenBuffer = new int[72][72];
-	private List<Animation> _animations = new ArrayList<Animation>();
+	private int[][] _screenBuffer = new int[Width][Height];
+	private List<PixelActor> _actors = new ArrayList<PixelActor>();
 	private float _totalTime = 0;
 	private float _virtualPixelSize = 0;
 
 	public PixelMatrixRenderer(Stage stage) {
 		_parentStage = stage;
 		shapeRenderer = new ShapeRenderer();
-		font = new BitmapFont();
 		setHeight(stage.getWidth());
 		setWidth(stage.getWidth());
 		
-		_virtualPixelSize = stage.getWidth() / 72;
+		_virtualPixelSize = stage.getWidth() / Width;
 	}
 
 	@Override
 	public void act(float delta) {
 
+		ResetBuffer();
+		UpdateBalls(delta);		
+		
+		Point currentActorLocation;
+		PixelActor actor;
 		// do first time load to buffer
-		for (int i = 0; i < _animations.size(); i++) {
-			Animation anim = _animations.get(i);
-
+		for (int i = 0; i < _actors.size(); i++) {
+			actor = _actors.get(i);
+ 
 			// update animation state
-			anim.act(delta);
-
+			actor.act(delta);
 			// get current frame and update buffer
-			Frame frame = anim.getCurrentFrame();
-			short frameWidth = frame.get_width();
-			short frameHeight = frame.get_height();
-			int[][] frameData = frame.get_data();
+			int[][] frame = actor.getCurrentFrame();
+			short frameWidth = (short) frame.length;
+			short frameHeight = (short) frame[0].length;
+			
 			for (int x = 0; x < frameWidth; x++) {
 				for (int y = 0; y < frameHeight; y++) {
 					// TODO: array size check
-					_screenBuffer[x][y] = frameData[x][y];
+					
+					if(x + actor.X >= Width) continue;
+					if(x + actor.X < 0) continue;
+					if(y + actor.Y >= Height) continue;
+					if(y + actor.Y < 0) continue;
+					
+					_screenBuffer[x + actor.X][y + actor.Y] = frame[x][y];
 				}
 			}
 		}
 
 		_totalTime += delta;
 		super.act(delta);
+	}
+
+	float _totalDelta = 0;
+	Random _rnd = new Random();
+	private void UpdateBalls(float delta) {
+		_totalDelta += delta * 100;
+		if(_totalDelta >= 10)
+		{
+			Ball actor;
+			Point loc;
+			for (int i = 0; i < _actors.size(); i++)
+			{
+				actor = (Ball)_actors.get(i);
+				actor.X+= actor.directionX;
+				actor.Y+= actor.directionY;
+				
+				if(actor.X == Width - actor.get_width())
+					actor.directionX = -1;
+				
+				if(actor.Y == Height - actor.get_height())
+					actor.directionY = -1;
+				
+				if(actor.X < 0)
+					actor.directionX = 1;
+				
+				if(actor.Y < 0)
+					actor.directionY = 1;
+			}
+			
+			_totalDelta = 0;
+		}
+	}
+
+	private void ResetBuffer() {
+		for (int x = 0; x < Width; x++) {
+			for (int y = 0; y < Height; y++) {
+				_screenBuffer[x][y] = 0;
+			}
+		}
+		
 	}
 
 	@Override
@@ -69,8 +126,8 @@ public class PixelMatrixRenderer extends Actor {
 		Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 		shapeRenderer.begin(ShapeType.Filled);
 
-		for (int i = 0; i < 72; i++) {
-			for (int j = 0; j < 72; j++) {
+		for (int i = 0; i < Width; i++) {
+			for (int j = 0; j < Height; j++) {
 				int currentPixelValue = _screenBuffer[i][71 - j];
 
 				if (currentPixelValue == 0) {
@@ -87,16 +144,12 @@ public class PixelMatrixRenderer extends Actor {
 		shapeRenderer.end();
 		Gdx.gl.glDisable(GL10.GL_BLEND);
 		batch.begin();
-		font.draw(batch, Integer.toString(Gdx.graphics.getFramesPerSecond()), 10, 20);
-		//batch.end();
-
 	}
 
-	public List<Animation> get_animations() {
-		return _animations;
+	public List<PixelActor> get_actors() {
+		return _actors;
 	}
-
-	public void set_animations(List<Animation> _animations) {
-		this._animations = _animations;
+	public void set_actors(List<PixelActor> actors) {
+		this._actors = actors;
 	}
 }

@@ -40,7 +40,7 @@ public class Animation {
 	}
 
 	public void act(float delta) {
-		_elapsedTime += delta * 1000;
+		_elapsedTime += delta * 100;
 		if (_elapsedTime >= _currentFrameDuration) {
 			_elapsedTime = 0;
 		
