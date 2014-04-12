@@ -85,6 +85,7 @@ public class GameScreen implements Screen, GestureListener {
 		}
 		
 		_textRenderer = new LCDTextRenderer();
+		_textRenderer.DirectionLeftToRight = false;
 		_eatIcon = new TwoStateIcon("data/cake_icon_off.png", "data/cake_icon_on.png");
 		_buttonA = new RoundButton();
 		_buttonB = new RoundButton();
@@ -145,7 +146,7 @@ public class GameScreen implements Screen, GestureListener {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		_stage.act(delta);
 		_stage.draw();
-		Table.drawDebug(_stage);
+		//Table.drawDebug(_stage);
 		
 	}
 
