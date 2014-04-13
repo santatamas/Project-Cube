@@ -1,10 +1,9 @@
 package com.cube.main.Screens;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -13,14 +12,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.cube.common.GameInputProcessor;
 import com.cube.common.VirtualScreen;
-import com.cube.data.Animation;
 import com.cube.graphics.LCDTextRenderer;
 import com.cube.graphics.PixelMatrixRenderer;
-import com.cube.graphics.Point;
 import com.cube.main.CubeGame;
 import com.cube.main.Elements.Ball;
 import com.cube.main.Elements.FPSDisplay;
@@ -34,6 +34,7 @@ public class GameScreen implements Screen, GestureListener {
 	PixelMatrixRenderer _matrixRenderer;
 	TwoStateIcon _eatIcon;
 	LCDTextRenderer _textRenderer;
+	LCDTextRenderer _textRenderer2;
 	float _width;
 	float _height;
 	boolean _rendering = true;
@@ -50,17 +51,20 @@ public class GameScreen implements Screen, GestureListener {
     Table _iconLayout;
     Table _controlLayout;
     
-
+    GameInputProcessor _inputProcessor;
+    
 	public GameScreen()
 	{
+		_inputProcessor = new GameInputProcessor();
 		_stage = new Stage(VirtualScreen.ScreenWidth, VirtualScreen.ScreenHeight, true);
-		Gdx.input.setInputProcessor(_stage);
-
+		
+		InputMultiplexer multiplexer = new InputMultiplexer(_stage, _inputProcessor);
+        Gdx.input.setInputProcessor(multiplexer);
+		
 		LoadResources();
 		InitializeActors(_stage);
 		InitializeLayout(_stage);
 	}
-	
 
 	private void LoadResources() {
 		_switchSound = CubeGame.AssetManager.get("data/switch_effect.wav");
@@ -86,12 +90,61 @@ public class GameScreen implements Screen, GestureListener {
 		
 		_textRenderer = new LCDTextRenderer();
 		_textRenderer.DirectionLeftToRight = false;
+		_textRenderer2 = new LCDTextRenderer();
 		_eatIcon = new TwoStateIcon("data/cake_icon_off.png", "data/cake_icon_on.png");
 		_buttonA = new RoundButton();
+		_buttonA.addListener(new InputListener() {
+	        public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+	                Gdx.app.log("my app", " A Pressed"); //** Usually used to start Game, etc. **//
+	                HandleButtonA();
+	                return true;
+	        }
+	        });
 		_buttonB = new RoundButton();
+		_buttonB.addListener(new InputListener() {
+	        public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+	                Gdx.app.log("my app", "B Pressed"); //** Usually used to start Game, etc. **//
+	                HandleButtonB();
+	                return true;
+	        }
+	        });
 		_buttonStart = new RectButton();
+		_buttonStart.addListener(new InputListener() {
+	        public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+	                Gdx.app.log("my app", "Start Pressed"); //** Usually used to start Game, etc. **//
+	                HandleButtonStart();
+	                return true;
+	        }
+	        });
 		_buttonSelect = new RectButton();
+		_buttonSelect.addListener(new InputListener() {
+	        public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+	                Gdx.app.log("my app", "Select Pressed"); //** Usually used to start Game, etc. **//
+	                HandleButtonSelect();
+	                return true;
+	        }
+	        });
 		_fpsDisplay = new FPSDisplay();
+	}
+
+	protected void HandleButtonSelect() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void HandleButtonStart() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void HandleButtonB() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void HandleButtonA() {
+		_matrixRenderer.IsInverted = !_matrixRenderer.IsInverted;
+		
 	}
 
 	private void InitializeLayout(Stage stage) {
@@ -111,7 +164,7 @@ public class GameScreen implements Screen, GestureListener {
 		_layoutRoot.row().padBottom(VirtualScreen.GetRealHeight(15));
 		_layoutRoot.add(_textRenderer).colspan(5);
 		_layoutRoot.row();
-		_layoutRoot.add(new LCDTextRenderer()).colspan(5);
+		_layoutRoot.add(_textRenderer2).colspan(5);
 		_layoutRoot.row();
 		
 		_controlLayout = new Table();

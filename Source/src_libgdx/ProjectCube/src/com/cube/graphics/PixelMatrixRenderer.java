@@ -23,6 +23,7 @@ public class PixelMatrixRenderer extends Actor {
 
 	public static int Width = 72;
 	public static int Height = 72;
+	public boolean IsInverted = false;
 	
 	private ShapeRenderer shapeRenderer;
 	
@@ -70,7 +71,8 @@ public class PixelMatrixRenderer extends Actor {
 					if(y + actor.Y >= Height) continue;
 					if(y + actor.Y < 0) continue;
 					
-					_screenBuffer[x + actor.X][y + actor.Y] = frame[x][y];
+					if(frame[x][y] != 0)
+						_screenBuffer[x + actor.X][y + actor.Y] = frame[x][y];
 				}
 			}
 		}
@@ -129,7 +131,10 @@ public class PixelMatrixRenderer extends Actor {
 		for (int i = 0; i < Width; i++) {
 			for (int j = 0; j < Height; j++) {
 				int currentPixelValue = _screenBuffer[i][71 - j];
-
+				if(IsInverted)
+					currentPixelValue = 255 - currentPixelValue;
+				
+				
 				if (currentPixelValue == 0) {
 					shapeRenderer.setColor(116 / 255f, 129 / 255f, 107 / 255f, 0.3f);
 					shapeRenderer.rect(getX() + VirtualScreen.GetRealWidth(i) * _virtualPixelSize, getY() + VirtualScreen.GetRealHeight(j)* _virtualPixelSize, _virtualPixelSize * 0.8f, _virtualPixelSize * 0.8f);
