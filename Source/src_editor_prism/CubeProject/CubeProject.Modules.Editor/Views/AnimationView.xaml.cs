@@ -71,5 +71,6 @@ namespace CubeProject.Modules.Editor.Views
         {
             e.Effects = DragDropEffects.Move;
         }
+
     }
 }

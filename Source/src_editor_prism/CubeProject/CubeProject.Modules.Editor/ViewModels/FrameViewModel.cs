@@ -6,6 +6,7 @@ using CubeProject.Infrastructure.Interfaces;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
+using CubeProject.Infrastructure.Enums;
 
 namespace CubeProject.Modules.Editor.ViewModels
 {
@@ -120,6 +121,12 @@ namespace CubeProject.Modules.Editor.ViewModels
             get { return _pasteCommand ?? (_pasteCommand = new DelegateCommand<object>(PasteCommandHandler)); }
         }
 
+        public DelegateCommand<object> ExportImageCommand
+        {
+            get { return _exportImageCommand ?? (_exportImageCommand = new DelegateCommand<object>(ExportImageCommandHandler)); }
+        }
+
+
         public int BrushSize
         {
             get { return _brushSize; }
@@ -133,6 +140,16 @@ namespace CubeProject.Modules.Editor.ViewModels
         #endregion
 
         #region Private
+        private void ExportImageCommandHandler(object obj)
+        {
+            string filePath;
+            var dialogResult = _dialogService.ShowSaveFileDialog("Image (*.bmp)|*.bmp", "untitled.bmp", out filePath);
+            if (dialogResult == DialogResult.Ok)
+            {
+                
+                EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("Export complete.");
+            }
+        }
 
         private void CopyCommandHandler(object obj)
         {
@@ -186,10 +203,12 @@ namespace CubeProject.Modules.Editor.ViewModels
         private DelegateCommand<object> _changeDurationCommand;
         private DelegateCommand<object> _copyCommand;
         private DelegateCommand<object> _pasteCommand;
+        private DelegateCommand<object> _exportImageCommand;
 
         private IDialogService _dialogService;
         private bool _isGridVisible = true;
         private int _index;
+
         #endregion
         #endregion    
     }

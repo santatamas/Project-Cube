@@ -42,10 +42,7 @@ namespace CubeProject.Data.Tests
         public void TestAnimationSerialization()
         {
             AnimationSerializer serializer = new AnimationSerializer();
-            Stream contentStream = serializer.Serialize(_animation);
-
-            contentStream.Position = 0;
-
+            byte[] contentStream = serializer.Serialize(_animation);
             Animation result = serializer.Deserialize(contentStream);
 
             // pretty poor validation, but it'll do.
