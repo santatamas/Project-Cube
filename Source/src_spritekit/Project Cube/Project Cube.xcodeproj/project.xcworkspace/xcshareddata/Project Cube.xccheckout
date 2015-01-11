@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9CA2A43A-DBC3-46B6-B85B-0EC712A85DEA</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Project Cube</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>05556AA5003A1CA1870BE50F67E50C9AB22E0D8D</key>
+		<string>https://github.com/santatamas/project-cube.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Source/src_spritekit/Project Cube/Project Cube.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>05556AA5003A1CA1870BE50F67E50C9AB22E0D8D</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/santatamas/project-cube.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>05556AA5003A1CA1870BE50F67E50C9AB22E0D8D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>05556AA5003A1CA1870BE50F67E50C9AB22E0D8D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>project-cube</string>
+		</dict>
+	</array>
+</dict>
+</plist>
