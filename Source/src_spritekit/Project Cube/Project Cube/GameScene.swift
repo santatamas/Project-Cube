@@ -9,37 +9,45 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
     override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
-        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-        myLabel.text = "Hello, World!";
-        myLabel.fontSize = 65;
-        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
-        
-        self.addChild(myLabel)
+        self.scaleMode = SKSceneScaleMode.ResizeFill
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        /* Called when a touch begins */
+    func RenderRandomMatrixSprite() {
+        UIGraphicsBeginImageContext(CGSizeMake(500, 500))
+        var ctx:CGContextRef = UIGraphicsGetCurrentContext()
         
-        for touch: AnyObject in touches {
-            let location = touch.locationInNode(self)
+        for var i = 1; i < 50; i++ {
+            for var j = 1; j < 50; j++ {
             
-            let sprite = SKSpriteNode(imageNamed:"Spaceship")
+            UIColor(red:GetRandomFloat(),green:GetRandomFloat(),blue:GetRandomFloat(),alpha:1.0).setFill()
+            CGContextFillRect(ctx, CGRectMake(CGFloat(i*7), CGFloat(j*7), 5, 5));
             
-            sprite.xScale = 0.5
-            sprite.yScale = 0.5
-            sprite.position = location
-            
-            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-            
-            sprite.runAction(SKAction.repeatActionForever(action))
-            
-            self.addChild(sprite)
-        }
+        }}
+
+        var textureImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        var texture:SKTexture = SKTexture(image: textureImage)
+        texture.filteringMode = SKTextureFilteringMode.Nearest
+        var bg:SKSpriteNode = SKSpriteNode(texture: texture)
+
+        bg.position = CGPoint(x: 250, y: 250)
+        self.addChild(bg)
     }
+    
+    func GetRandomFloat() -> CGFloat{
+        let arc4randoMax:Double = 0x100000000
+        let upper = 255.0
+        let lower = 0.0
+        return CGFloat((Double(arc4random()) / arc4randoMax) * (upper - lower) + lower) / 255.0
+    }
+
    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
+        self.removeAllChildren()
+        RenderRandomMatrixSprite()
     }
 }
