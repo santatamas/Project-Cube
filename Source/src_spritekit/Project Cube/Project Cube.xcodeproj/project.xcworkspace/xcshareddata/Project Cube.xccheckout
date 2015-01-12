@@ -12,6 +12,10 @@
 	<dict>
 		<key>05556AA5003A1CA1870BE50F67E50C9AB22E0D8D</key>
 		<string>https://github.com/santatamas/project-cube.git</string>
+		<key>6ACBD9B75A9AF01FED3B43D5A1DC054996850174</key>
+		<string>https://github.com/nicklockwood/GZIP.git</string>
+		<key>82DF43EF5CA016D15C41E0AF1AF686E9973475B7</key>
+		<string>https://github.com/pixelglow/zipzap.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Source/src_spritekit/Project Cube/Project Cube.xcodeproj</string>
@@ -19,6 +23,10 @@
 	<dict>
 		<key>05556AA5003A1CA1870BE50F67E50C9AB22E0D8D</key>
 		<string>../../../../..</string>
+		<key>6ACBD9B75A9AF01FED3B43D5A1DC054996850174</key>
+		<string>../../../../../Source/src_spritekit/Libraries/GZIP/</string>
+		<key>82DF43EF5CA016D15C41E0AF1AF686E9973475B7</key>
+		<string>../../../../../../../zipzap</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/santatamas/project-cube.git</string>
@@ -32,9 +40,25 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>6ACBD9B75A9AF01FED3B43D5A1DC054996850174</string>
+			<key>IDESourceControlWCCName</key>
+			<string>GZIP</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>05556AA5003A1CA1870BE50F67E50C9AB22E0D8D</string>
 			<key>IDESourceControlWCCName</key>
 			<string>project-cube</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>82DF43EF5CA016D15C41E0AF1AF686E9973475B7</string>
+			<key>IDESourceControlWCCName</key>
+			<string>zipzap</string>
 		</dict>
 	</array>
 </dict>

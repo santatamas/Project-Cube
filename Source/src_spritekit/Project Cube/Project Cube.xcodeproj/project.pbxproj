@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E9B39CC81A6333CA00088ED0 /* AnimationSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B39CC71A6333CA00088ED0 /* AnimationSerializer.swift */; };
+		E9B39CFC1A63450E00088ED0 /* GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B39CFB1A63450E00088ED0 /* GZIP.m */; };
+		E9B39CFE1A63454100088ED0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B39CFD1A63454100088ED0 /* libz.dylib */; };
 		E9CB953B1A62E22B009DB63B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB953A1A62E22B009DB63B /* AppDelegate.swift */; };
 		E9CB953D1A62E22B009DB63B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = E9CB953C1A62E22B009DB63B /* GameScene.sks */; };
 		E9CB953F1A62E22B009DB63B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB953E1A62E22B009DB63B /* GameScene.swift */; };
@@ -28,6 +31,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E9B39CC71A6333CA00088ED0 /* AnimationSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationSerializer.swift; sourceTree = "<group>"; };
+		E9B39CE31A633DEE00088ED0 /* Project Cube-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Project Cube-Bridging-Header.h"; sourceTree = "<group>"; };
+		E9B39CFA1A63450E00088ED0 /* GZIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GZIP.h; path = ../Libraries/GZIP/GZIP/GZIP.h; sourceTree = "<group>"; };
+		E9B39CFB1A63450E00088ED0 /* GZIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GZIP.m; path = ../Libraries/GZIP/GZIP/GZIP.m; sourceTree = "<group>"; };
+		E9B39CFD1A63454100088ED0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E9CB95351A62E22B009DB63B /* Project Cube.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Project Cube.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9CB95391A62E22B009DB63B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9CB953A1A62E22B009DB63B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9B39CFE1A63454100088ED0 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,9 +69,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E9B39CC61A63339100088ED0 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				E9B39CC71A6333CA00088ED0 /* AnimationSerializer.swift */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
 		E9CB952C1A62E22B009DB63B = {
 			isa = PBXGroup;
 			children = (
+				E9B39CFD1A63454100088ED0 /* libz.dylib */,
+				E9B39CFA1A63450E00088ED0 /* GZIP.h */,
+				E9B39CFB1A63450E00088ED0 /* GZIP.m */,
 				E9CB95371A62E22B009DB63B /* Project Cube */,
 				E9CB95511A62E22B009DB63B /* Project CubeTests */,
 				E9CB95361A62E22B009DB63B /* Products */,
@@ -81,6 +101,7 @@
 		E9CB95371A62E22B009DB63B /* Project Cube */ = {
 			isa = PBXGroup;
 			children = (
+				E9B39CC61A63339100088ED0 /* Data */,
 				E9CB953A1A62E22B009DB63B /* AppDelegate.swift */,
 				E9CB953C1A62E22B009DB63B /* GameScene.sks */,
 				E9CB953E1A62E22B009DB63B /* GameScene.swift */,
@@ -89,6 +110,7 @@
 				E9CB95451A62E22B009DB63B /* Images.xcassets */,
 				E9CB95471A62E22B009DB63B /* LaunchScreen.xib */,
 				E9CB95381A62E22B009DB63B /* Supporting Files */,
+				E9B39CE31A633DEE00088ED0 /* Project Cube-Bridging-Header.h */,
 			);
 			path = "Project Cube";
 			sourceTree = "<group>";
@@ -219,8 +241,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9B39CFC1A63450E00088ED0 /* GZIP.m in Sources */,
 				E9CB953F1A62E22B009DB63B /* GameScene.swift in Sources */,
 				E9CB95411A62E22B009DB63B /* GameViewController.swift in Sources */,
+				E9B39CC81A6333CA00088ED0 /* AnimationSerializer.swift in Sources */,
 				E9CB953B1A62E22B009DB63B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,9 +370,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Project Cube/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Project Cube/Project Cube-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USER_HEADER_SEARCH_PATHS = /zipzap;
 			};
 			name = Debug;
 		};
@@ -356,9 +385,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Project Cube/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Project Cube/Project Cube-Bridging-Header.h";
+				USER_HEADER_SEARCH_PATHS = /zipzap;
 			};
 			name = Release;
 		};
@@ -415,6 +448,7 @@
 				E9CB955A1A62E22B009DB63B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E9CB955B1A62E22B009DB63B /* Build configuration list for PBXNativeTarget "Project CubeTests" */ = {
 			isa = XCConfigurationList;
@@ -423,6 +457,7 @@
 				E9CB955D1A62E22B009DB63B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
