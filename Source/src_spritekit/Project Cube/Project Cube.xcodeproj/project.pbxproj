@@ -18,6 +18,11 @@
 		E9CB95461A62E22B009DB63B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9CB95451A62E22B009DB63B /* Images.xcassets */; };
 		E9CB95491A62E22B009DB63B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9CB95471A62E22B009DB63B /* LaunchScreen.xib */; };
 		E9CB95551A62E22B009DB63B /* Project_CubeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CB95541A62E22B009DB63B /* Project_CubeTests.swift */; };
+		E9D7341B1A65CCD000F1676C /* Sticky_weightlift.pma in Resources */ = {isa = PBXBuildFile; fileRef = E9D7341A1A65CCD000F1676C /* Sticky_weightlift.pma */; };
+		E9D7341D1A65CCEA00F1676C /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D7341C1A65CCEA00F1676C /* Animation.swift */; };
+		E9D7341F1A65CD5800F1676C /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D7341E1A65CD5800F1676C /* Frame.swift */; };
+		E9D734211A65D15900F1676C /* ColorDepth.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D734201A65D15900F1676C /* ColorDepth.swift */; };
+		E9D734231A65DA0900F1676C /* BinaryDataScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D734221A65DA0900F1676C /* BinaryDataScanner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +53,11 @@
 		E9CB954E1A62E22B009DB63B /* Project CubeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Project CubeTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9CB95531A62E22B009DB63B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9CB95541A62E22B009DB63B /* Project_CubeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project_CubeTests.swift; sourceTree = "<group>"; };
+		E9D7341A1A65CCD000F1676C /* Sticky_weightlift.pma */ = {isa = PBXFileReference; lastKnownFileType = file; name = Sticky_weightlift.pma; path = ../../../../Assets/Animations/Sticky_weightlift.pma; sourceTree = "<group>"; };
+		E9D7341C1A65CCEA00F1676C /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		E9D7341E1A65CD5800F1676C /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
+		E9D734201A65D15900F1676C /* ColorDepth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorDepth.swift; sourceTree = "<group>"; };
+		E9D734221A65DA0900F1676C /* BinaryDataScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BinaryDataScanner.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +83,10 @@
 			isa = PBXGroup;
 			children = (
 				E9B39CC71A6333CA00088ED0 /* AnimationSerializer.swift */,
+				E9D7341C1A65CCEA00F1676C /* Animation.swift */,
+				E9D7341E1A65CD5800F1676C /* Frame.swift */,
+				E9D734201A65D15900F1676C /* ColorDepth.swift */,
+				E9D734221A65DA0900F1676C /* BinaryDataScanner.swift */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -101,6 +115,7 @@
 		E9CB95371A62E22B009DB63B /* Project Cube */ = {
 			isa = PBXGroup;
 			children = (
+				E9D734181A65CC6300F1676C /* Assets */,
 				E9B39CC61A63339100088ED0 /* Data */,
 				E9CB953A1A62E22B009DB63B /* AppDelegate.swift */,
 				E9CB953C1A62E22B009DB63B /* GameScene.sks */,
@@ -138,6 +153,22 @@
 				E9CB95531A62E22B009DB63B /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E9D734181A65CC6300F1676C /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				E9D734191A65CC6F00F1676C /* Animations */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		E9D734191A65CC6F00F1676C /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				E9D7341A1A65CCD000F1676C /* Sticky_weightlift.pma */,
+			);
+			name = Animations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9CB95491A62E22B009DB63B /* LaunchScreen.xib in Resources */,
+				E9D7341B1A65CCD000F1676C /* Sticky_weightlift.pma in Resources */,
 				E9CB95461A62E22B009DB63B /* Images.xcassets in Resources */,
 				E9CB953D1A62E22B009DB63B /* GameScene.sks in Resources */,
 				E9CB95441A62E22B009DB63B /* Main.storyboard in Resources */,
@@ -245,7 +277,11 @@
 				E9CB953F1A62E22B009DB63B /* GameScene.swift in Sources */,
 				E9CB95411A62E22B009DB63B /* GameViewController.swift in Sources */,
 				E9B39CC81A6333CA00088ED0 /* AnimationSerializer.swift in Sources */,
+				E9D734231A65DA0900F1676C /* BinaryDataScanner.swift in Sources */,
+				E9D7341F1A65CD5800F1676C /* Frame.swift in Sources */,
+				E9D7341D1A65CCEA00F1676C /* Animation.swift in Sources */,
 				E9CB953B1A62E22B009DB63B /* AppDelegate.swift in Sources */,
+				E9D734211A65D15900F1676C /* ColorDepth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

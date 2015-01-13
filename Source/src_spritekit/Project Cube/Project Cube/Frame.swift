@@ -1,0 +1,18 @@
+//
+//  Frame.swift
+//  Project Cube
+//
+//  Created by Tamas Santa on 13/01/15.
+//  Copyright (c) 2015 Tamas Santa. All rights reserved.
+//
+
+import Foundation
+
+class Frame {
+    
+    var Depth: ColorDepth = ColorDepth.GrayScale
+    var Width: Int16 = 0
+    var Height: Int16 = 0
+    var Duration: Int16 = 0
+    var Data: [[Int8]] = [[]]
+}
