@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E91008601A67330B00501E49 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910085F1A67330B00501E49 /* Actor.swift */; };
+		E91008631A67333400501E49 /* PixelMatrixRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91008621A67333400501E49 /* PixelMatrixRenderer.swift */; };
+		E91008651A67336300501E49 /* TwoStateIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91008641A67336300501E49 /* TwoStateIcon.swift */; };
+		E91008681A6733D700501E49 /* ball.pmz in Resources */ = {isa = PBXBuildFile; fileRef = E91008661A6733D700501E49 /* ball.pmz */; };
+		E91008691A6733D700501E49 /* zippedAnim.pmz in Resources */ = {isa = PBXBuildFile; fileRef = E91008671A6733D700501E49 /* zippedAnim.pmz */; };
+		E910086C1A6733F800501E49 /* dante_animation.pma in Resources */ = {isa = PBXBuildFile; fileRef = E910086A1A6733F800501E49 /* dante_animation.pma */; };
+		E910086D1A6733F800501E49 /* demo_animation.pma in Resources */ = {isa = PBXBuildFile; fileRef = E910086B1A6733F800501E49 /* demo_animation.pma */; };
+		E91008731A67342D00501E49 /* cake_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = E910086F1A67342D00501E49 /* cake_icon_off.png */; };
+		E91008741A67342D00501E49 /* cake_icon_on.png in Resources */ = {isa = PBXBuildFile; fileRef = E91008701A67342D00501E49 /* cake_icon_on.png */; };
+		E91008751A67342D00501E49 /* eat_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = E91008711A67342D00501E49 /* eat_icon_off.png */; };
+		E91008761A67342D00501E49 /* eat_icon_on.png in Resources */ = {isa = PBXBuildFile; fileRef = E91008721A67342D00501E49 /* eat_icon_on.png */; };
+		E91008791A67345100501E49 /* switch_effect.wav in Resources */ = {isa = PBXBuildFile; fileRef = E91008781A67345100501E49 /* switch_effect.wav */; };
+		E910087B1A67352700501E49 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910087A1A67352700501E49 /* Ball.swift */; };
 		E9B39CC81A6333CA00088ED0 /* AnimationSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B39CC71A6333CA00088ED0 /* AnimationSerializer.swift */; };
 		E9B39CFC1A63450E00088ED0 /* GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B39CFB1A63450E00088ED0 /* GZIP.m */; };
 		E9B39CFE1A63454100088ED0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B39CFD1A63454100088ED0 /* libz.dylib */; };
@@ -36,6 +49,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E910085F1A67330B00501E49 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
+		E91008621A67333400501E49 /* PixelMatrixRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PixelMatrixRenderer.swift; sourceTree = "<group>"; };
+		E91008641A67336300501E49 /* TwoStateIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoStateIcon.swift; sourceTree = "<group>"; };
+		E91008661A6733D700501E49 /* ball.pmz */ = {isa = PBXFileReference; lastKnownFileType = file; name = ball.pmz; path = "../../../src_libgdx/ProjectCube-android/assets/data/ball.pmz"; sourceTree = "<group>"; };
+		E91008671A6733D700501E49 /* zippedAnim.pmz */ = {isa = PBXFileReference; lastKnownFileType = file; name = zippedAnim.pmz; path = "../../../src_libgdx/ProjectCube-android/assets/data/zippedAnim.pmz"; sourceTree = "<group>"; };
+		E910086A1A6733F800501E49 /* dante_animation.pma */ = {isa = PBXFileReference; lastKnownFileType = file; name = dante_animation.pma; path = "../../../src_libgdx/ProjectCube-android/assets/data/dante_animation.pma"; sourceTree = "<group>"; };
+		E910086B1A6733F800501E49 /* demo_animation.pma */ = {isa = PBXFileReference; lastKnownFileType = file; name = demo_animation.pma; path = "../../../src_libgdx/ProjectCube-android/assets/data/demo_animation.pma"; sourceTree = "<group>"; };
+		E910086F1A67342D00501E49 /* cake_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cake_icon_off.png; path = "../../../src_libgdx/ProjectCube-android/assets/data/cake_icon_off.png"; sourceTree = "<group>"; };
+		E91008701A67342D00501E49 /* cake_icon_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cake_icon_on.png; path = "../../../src_libgdx/ProjectCube-android/assets/data/cake_icon_on.png"; sourceTree = "<group>"; };
+		E91008711A67342D00501E49 /* eat_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = eat_icon_off.png; path = "../../../src_libgdx/ProjectCube-android/assets/data/eat_icon_off.png"; sourceTree = "<group>"; };
+		E91008721A67342D00501E49 /* eat_icon_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = eat_icon_on.png; path = "../../../src_libgdx/ProjectCube-android/assets/data/eat_icon_on.png"; sourceTree = "<group>"; };
+		E91008781A67345100501E49 /* switch_effect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = switch_effect.wav; path = "../../../src_libgdx/ProjectCube-android/assets/data/switch_effect.wav"; sourceTree = "<group>"; };
+		E910087A1A67352700501E49 /* Ball.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
 		E9B39CC71A6333CA00088ED0 /* AnimationSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationSerializer.swift; sourceTree = "<group>"; };
 		E9B39CE31A633DEE00088ED0 /* Project Cube-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Project Cube-Bridging-Header.h"; sourceTree = "<group>"; };
 		E9B39CFA1A63450E00088ED0 /* GZIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GZIP.h; path = ../Libraries/GZIP/GZIP/GZIP.h; sourceTree = "<group>"; };
@@ -79,6 +105,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E910085E1A6732E500501E49 /* Elements */ = {
+			isa = PBXGroup;
+			children = (
+				E910085F1A67330B00501E49 /* Actor.swift */,
+				E91008641A67336300501E49 /* TwoStateIcon.swift */,
+				E910087A1A67352700501E49 /* Ball.swift */,
+			);
+			name = Elements;
+			sourceTree = "<group>";
+		};
+		E91008611A67332300501E49 /* Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				E91008621A67333400501E49 /* PixelMatrixRenderer.swift */,
+			);
+			name = Graphics;
+			sourceTree = "<group>";
+		};
+		E910086E1A67340100501E49 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				E910086F1A67342D00501E49 /* cake_icon_off.png */,
+				E91008701A67342D00501E49 /* cake_icon_on.png */,
+				E91008711A67342D00501E49 /* eat_icon_off.png */,
+				E91008721A67342D00501E49 /* eat_icon_on.png */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
+		E91008771A67343200501E49 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				E91008781A67345100501E49 /* switch_effect.wav */,
+			);
+			name = Sound;
+			sourceTree = "<group>";
+		};
 		E9B39CC61A63339100088ED0 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +178,8 @@
 		E9CB95371A62E22B009DB63B /* Project Cube */ = {
 			isa = PBXGroup;
 			children = (
+				E91008611A67332300501E49 /* Graphics */,
+				E910085E1A6732E500501E49 /* Elements */,
 				E9D734181A65CC6300F1676C /* Assets */,
 				E9B39CC61A63339100088ED0 /* Data */,
 				E9CB953A1A62E22B009DB63B /* AppDelegate.swift */,
@@ -158,6 +223,8 @@
 		E9D734181A65CC6300F1676C /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E91008771A67343200501E49 /* Sound */,
+				E910086E1A67340100501E49 /* Icons */,
 				E9D734191A65CC6F00F1676C /* Animations */,
 			);
 			name = Assets;
@@ -166,6 +233,10 @@
 		E9D734191A65CC6F00F1676C /* Animations */ = {
 			isa = PBXGroup;
 			children = (
+				E910086A1A6733F800501E49 /* dante_animation.pma */,
+				E910086B1A6733F800501E49 /* demo_animation.pma */,
+				E91008661A6733D700501E49 /* ball.pmz */,
+				E91008671A6733D700501E49 /* zippedAnim.pmz */,
 				E9D7341A1A65CCD000F1676C /* Sticky_weightlift.pma */,
 			);
 			name = Animations;
@@ -251,10 +322,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E91008691A6733D700501E49 /* zippedAnim.pmz in Resources */,
+				E910086D1A6733F800501E49 /* demo_animation.pma in Resources */,
+				E91008761A67342D00501E49 /* eat_icon_on.png in Resources */,
+				E91008681A6733D700501E49 /* ball.pmz in Resources */,
+				E91008751A67342D00501E49 /* eat_icon_off.png in Resources */,
+				E91008791A67345100501E49 /* switch_effect.wav in Resources */,
+				E910086C1A6733F800501E49 /* dante_animation.pma in Resources */,
 				E9CB95491A62E22B009DB63B /* LaunchScreen.xib in Resources */,
 				E9D7341B1A65CCD000F1676C /* Sticky_weightlift.pma in Resources */,
 				E9CB95461A62E22B009DB63B /* Images.xcassets in Resources */,
 				E9CB953D1A62E22B009DB63B /* GameScene.sks in Resources */,
+				E91008731A67342D00501E49 /* cake_icon_off.png in Resources */,
+				E91008741A67342D00501E49 /* cake_icon_on.png in Resources */,
 				E9CB95441A62E22B009DB63B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,7 +353,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E910087B1A67352700501E49 /* Ball.swift in Sources */,
 				E9B39CFC1A63450E00088ED0 /* GZIP.m in Sources */,
+				E91008651A67336300501E49 /* TwoStateIcon.swift in Sources */,
 				E9CB953F1A62E22B009DB63B /* GameScene.swift in Sources */,
 				E9CB95411A62E22B009DB63B /* GameViewController.swift in Sources */,
 				E9B39CC81A6333CA00088ED0 /* AnimationSerializer.swift in Sources */,
@@ -282,6 +364,8 @@
 				E9D7341D1A65CCEA00F1676C /* Animation.swift in Sources */,
 				E9CB953B1A62E22B009DB63B /* AppDelegate.swift in Sources */,
 				E9D734211A65D15900F1676C /* ColorDepth.swift in Sources */,
+				E91008631A67333400501E49 /* PixelMatrixRenderer.swift in Sources */,
+				E91008601A67330B00501E49 /* Actor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
