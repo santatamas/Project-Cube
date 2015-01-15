@@ -10,36 +10,27 @@ import Foundation
 
 class Actor {
     
+    var Location: Point = Point(x: 0,y: 0)
+    var Animations: Array<Animation> = Array<Animation>()
+    var CurrentAnimation:Animation = Animation()
     
-    
-    /*
-    //private Point _location = new Point(0,0);
-    public int X = 0;
-    public int Y = 0;
-    protected List<Animation> _animations = new ArrayList<Animation>();
-    Animation _currentAnimation;
-    
-    public abstract void LoadAnimations();
-    
-    public void act(float delta) {
-    if(_currentAnimation == null) return;
-    
-    _currentAnimation.act(delta);
+    func Act(delta:Float) {
+        CurrentAnimation.Act(delta)
     }
     
-    public int[][] getCurrentFrame() {
-    return _currentAnimation == null ? null :_currentAnimation.getCurrentFrame().get_data();
+    func GetCurrentFrameData() -> [[Int]] {
+        return CurrentAnimation.GetCurrentFrame().Data
     }
     
-    public int get_width() {
-    if(_currentAnimation == null) return 0;
-    return _currentAnimation.getCurrentFrame().get_width();
+    func GetCurrentFrame() -> Frame {
+        return CurrentAnimation.GetCurrentFrame()
     }
-    public int get_height() {
-    if(_currentAnimation == null) return 0;
-    return _currentAnimation.getCurrentFrame().get_height();
-    }
-
     
-    */
+    func GetCurrentWidth() -> Int {
+        return CurrentAnimation.GetCurrentFrame().Width
+    }
+    
+    func GetCurrentHeight() -> Int {
+        return CurrentAnimation.GetCurrentFrame().Height
+    }
 }

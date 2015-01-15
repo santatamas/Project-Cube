@@ -13,7 +13,7 @@ class Animation {
     var Depth: ColorDepth = ColorDepth.GrayScale
     var ElapsedTime: Float = 0
     var CurrentFrameIndex: Int = 0
-    var CurrentFrameDuration: Int16 = 0
+    var CurrentFrameDuration: Int = 0
     
     var Frames: Array<Frame> {
         get {
@@ -41,8 +41,8 @@ class Animation {
     }
     
     func Act(delta: Float) {
-        ElapsedTime += delta * 100;
-        if ElapsedTime >= Float(CurrentFrameDuration)
+        ElapsedTime += delta;
+        if ElapsedTime >= Float(CurrentFrameDuration * 500)
         {
             ElapsedTime = 0
             CurrentFrameIndex = CurrentFrameIndex < (_frames.count - 1) ? (CurrentFrameIndex + 1) : 0

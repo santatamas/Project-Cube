@@ -10,144 +10,138 @@ import Foundation
 import SpriteKit
 
 class PixelMatrixRenderer: SKSpriteNode {
-    /*
     
-    public static int Width = 72;
-    public static int Height = 72;
-    public boolean IsInverted = false;
+    var IsInverted: Bool = false
+    private let _width: Int = 50
+    private let _height: Int = 50
+    private var _screenBuffer : [[Int]] = [[Int]](count: 50, repeatedValue: [Int](count: 50, repeatedValue: 0))
+    private var _actors: Array<Actor> = [
+        Ball(location: Point(x: 5, y: 10)),
+        Ball(location: Point(x: 0, y: 0)),
+        Ball(location: Point(x: 20, y: 12))
+    ]
+    private var _totalDelta: Float = 0
     
-    private ShapeRenderer shapeRenderer;
-    
-    private Stage _parentStage;
-    
-    private int[][] _screenBuffer = new int[Width][Height];
-    private List<PixelActor> _actors = new ArrayList<PixelActor>();
-    private float _totalTime = 0;
-    private float _virtualPixelSize = 0;
-    
-    public PixelMatrixRenderer(Stage stage) {
-    _parentStage = stage;
-    shapeRenderer = new ShapeRenderer();
-    setHeight(stage.getWidth());
-    setWidth(stage.getWidth());
-    
-    _virtualPixelSize = stage.getWidth() / Width;
+    func Act(delta: Float) {
+        if(_totalDelta >= 30000)
+        {
+            ResetBuffer()
+            UpdateBalls(delta)
+            RefreshScreenBuffer(delta)
+            self.texture = RenderTexture()
+            _totalDelta = 0;
+        }
+        _totalDelta += delta
     }
     
-    @Override
-    public void act(float delta) {
-    
-    ResetBuffer();
-    UpdateBalls(delta);
-    
-    Point currentActorLocation;
-    PixelActor actor;
-    // do first time load to buffer
-    for (int i = 0; i < _actors.size(); i++) {
-    actor = _actors.get(i);
-    
-    // update animation state
-    actor.act(delta);
-    // get current frame and update buffer
-    int[][] frame = actor.getCurrentFrame();
-    short frameWidth = (short) frame.length;
-    short frameHeight = (short) frame[0].length;
-    
-    for (int x = 0; x < frameWidth; x++) {
-				for (int y = 0; y < frameHeight; y++) {
-    // TODO: array size check
-    
-    if(x + actor.X >= Width) continue;
-    if(x + actor.X < 0) continue;
-    if(y + actor.Y >= Height) continue;
-    if(y + actor.Y < 0) continue;
-    
-    if(frame[x][y] != 0)
-    _screenBuffer[x + actor.X][y + actor.Y] = frame[x][y];
-				}
-    }
-    }
-    
-    _totalTime += delta;
-    super.act(delta);
-    }
-    
-    float _totalDelta = 0;
-    Random _rnd = new Random();
-    private void UpdateBalls(float delta) {
-    _totalDelta += delta * 100;
-    if(_totalDelta >= 10)
+    func RenderTexture() -> SKTexture
     {
-    Ball actor;
-    Point loc;
-    for (int i = 0; i < _actors.size(); i++)
-    {
-				actor = (Ball)_actors.get(i);
-				actor.X+= actor.directionX;
-				actor.Y+= actor.directionY;
-				
-				if(actor.X == Width - actor.get_width())
-    actor.directionX = -1;
-				
-				if(actor.Y == Height - actor.get_height())
-    actor.directionY = -1;
-				
-				if(actor.X < 0)
-    actor.directionX = 1;
-				
-				if(actor.Y < 0)
-    actor.directionY = 1;
+        UIGraphicsBeginImageContext(CGSizeMake(500, 500))
+        var ctx:CGContextRef = UIGraphicsGetCurrentContext()
+        
+        for var i = 1; i < _width; i++ {
+            for var j = 1; j < _height; j++ {
+                
+                var currentPixelValue:Int = Int(_screenBuffer[i][_height - 1 - j])
+                if(IsInverted)
+                {
+                    currentPixelValue = 255 - currentPixelValue
+                }
+                
+                if (currentPixelValue == 0)
+                {
+                    UIColor(red:116 / 255,green:129 / 255,blue:107 / 255,alpha:0.3).setFill()
+                }
+                else
+                {
+                    UIColor(red:53 / 255,green:53 / 255,blue:53 / 255,alpha: CGFloat(currentPixelValue) / 255).setFill()
+                }
+                CGContextFillRect(ctx, CGRectMake(CGFloat(i*7), CGFloat(j*7), 5, 5));
+            }}
+        
+        var textureImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        var texture:SKTexture = SKTexture(image: textureImage)
+        texture.filteringMode = SKTextureFilteringMode.Nearest
+        
+        return texture
     }
     
-    _totalDelta = 0;
-    }
-    }
-    
-    private void ResetBuffer() {
-    for (int x = 0; x < Width; x++) {
-    for (int y = 0; y < Height; y++) {
-				_screenBuffer[x][y] = 0;
-    }
+    func GetRandomFloat() -> CGFloat{
+        let arc4randoMax:Double = 0x100000000
+        let upper = 255.0
+        let lower = 0.0
+        return CGFloat((Double(arc4random()) / arc4randoMax) * (upper - lower) + lower) / 255.0
     }
     
+    func RefreshScreenBuffer(delta:Float) {
+        var currentActorLocation: Point
+        var actor: Actor
+        
+        // do first time load to buffer
+        for var i = 0; i < _actors.count;i++
+        {
+            actor = _actors[i]
+            
+            // update animation state
+            actor.Act(delta)
+            
+            // get current frame and update buffer
+            var frame = actor.GetCurrentFrame()
+            
+            for var x = 0; x < frame.Width; x++
+            {
+                for var y = 0; y < frame.Height; y++
+                {
+                    if(x + actor.Location.X >= _width) {continue}
+                    if(x + actor.Location.X < 0) {continue}
+                    if(y + actor.Location.Y >= _height) {continue}
+                    if(y + actor.Location.Y < 0) {continue}
+                    
+                    if(frame.Data[x][y] != 0)
+                    {
+                        _screenBuffer[x + actor.Location.X][y + actor.Location.Y] = frame.Data[x][y]
+                    }
+                }
+            }
+        }
     }
     
-    @Override
-    public void draw(SpriteBatch batch, float parentAlpha) {
-    batch.end();
-    Gdx.gl.glEnable(GL10.GL_BLEND);
-    Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-    shapeRenderer.begin(ShapeType.Filled);
-    
-    for (int i = 0; i < Width; i++) {
-    for (int j = 0; j < Height; j++) {
-				int currentPixelValue = _screenBuffer[i][71 - j];
-				if(IsInverted)
-    currentPixelValue = 255 - currentPixelValue;
-				
-				
-				if (currentPixelValue == 0) {
-    shapeRenderer.setColor(116 / 255f, 129 / 255f, 107 / 255f, 0.3f);
-    shapeRenderer.rect(getX() + VirtualScreen.GetRealWidth(i) * _virtualPixelSize, getY() + VirtualScreen.GetRealHeight(j)* _virtualPixelSize, _virtualPixelSize * 0.8f, _virtualPixelSize * 0.8f);
-    continue;
-				}
-    
-				shapeRenderer.setColor(53 / 255f, 53 / 255f, 53 / 255f, currentPixelValue / 255f);
-				shapeRenderer.rect(getX() + VirtualScreen.GetRealWidth(i)* _virtualPixelSize, getY() + VirtualScreen.GetRealHeight(j)* _virtualPixelSize, _virtualPixelSize * 0.8f, _virtualPixelSize * 0.8f);
-    }
-    }
-    
-    shapeRenderer.end();
-    Gdx.gl.glDisable(GL10.GL_BLEND);
-    batch.begin();
-    }
-    
-    public List<PixelActor> get_actors() {
-    return _actors;
-    }
-    public void set_actors(List<PixelActor> actors) {
-    this._actors = actors;
+    func UpdateBalls(delta:Float) {
+
+        var actor:Ball
+        var loc:Point
+            
+        for var i = 0; i < _actors.count; i++
+        {
+            actor = _actors[i] as Ball
+            actor.Location.X += actor.directionX
+            actor.Location.Y += actor.directionY
+                
+            if(actor.Location.X == _width - actor.GetCurrentWidth())
+            {
+                actor.directionX = -1;
+            }
+
+            if(actor.Location.Y == _height - actor.GetCurrentHeight())
+            {
+                actor.directionY = -1;
+            }
+
+            if(actor.Location.X < 0)
+            {
+                actor.directionX = 1;
+            }
+
+            if(actor.Location.Y < 0)
+            {
+                actor.directionY = 1;
+            }
+        }
     }
     
-    */
+    func ResetBuffer() {
+        _screenBuffer = [[Int]](count: 72, repeatedValue: [Int](count: 72, repeatedValue: 0))
+    }
 }

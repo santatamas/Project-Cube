@@ -11,13 +11,10 @@ import Foundation
 
 class AnimationSerializer {
     
-    func ReadZip(){
-        
-        var filePath:NSString = NSString(string: "")
+    func ReadZip(filePath:NSString) -> NSData? {
+
         var data:NSData? = NSFileManager.defaultManager().contentsAtPath(filePath)
-        var unzippedData:NSData? = data?.gunzippedData()
-        
-        
+        return data?.gunzippedData()
     }
     
     func Deserialize(animationData: NSData) -> Animation {
@@ -45,7 +42,7 @@ class AnimationSerializer {
         
         var frame:Frame
         
-        var data: [[Int8]]
+        var data: [[Int]]
         // Iterate through the frames and add them to Animation
 
         for var frameIndex:UInt16 = 0;frameIndex < noFrames;frameIndex++ {
@@ -58,16 +55,17 @@ class AnimationSerializer {
             var height:UInt16 = binaryScanner.read16()!
             
             frame = Frame()
-            frame.Width = Int16(width)
-            frame.Height = Int16(height)
-            frame.Duration = Int16(duration)
+            frame.Width = Int(width)
+            frame.Height = Int(height)
+            frame.Duration = Int(duration)
             frame.Depth = result.Depth
             
             // Fill pixel data
-            data = [[]]
+            data = [[Int]](count: frame.Width, repeatedValue: [Int](count: frame.Height, repeatedValue: 0))
             for var i:Int = 0;i < Int(frame.Width); i++ {
                 for var j:Int = 0;j < Int(frame.Height); j++ {
-                    data[i][j] = Int8(binaryScanner.readByte()!)
+                    var temp: UInt8? = binaryScanner.readByte()!
+                    data[i][j] = Int(temp!)
                 }
             }
             frame.Data = data

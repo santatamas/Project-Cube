@@ -83,25 +83,4 @@ class BinaryDataScanner {
         return read()
     }
     
-    func readNullTerminatedString() -> String? {
-        var string:String? = nil
-        var tCurrent = UnsafePointer<UInt8>(current)
-        var count: Int = 0
-        
-        // scan
-        while (remaining > 0 && tCurrent.memory != 0) {
-            remaining -= 1
-            count += 1
-            tCurrent = tCurrent.successor()
-        }
-        
-        // create string if available
-        if (remaining > 0 && tCurrent.memory == 0) {
-            string = NSString(bytes: current, length: count, encoding: encoding) as String
-            current = UnsafePointer<()>(tCurrent.successor())
-            remaining -= 1
-        }
-        
-        return string
-    }
 }
