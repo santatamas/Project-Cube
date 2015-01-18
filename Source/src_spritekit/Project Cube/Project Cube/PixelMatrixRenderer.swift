@@ -23,7 +23,7 @@ class PixelMatrixRenderer: SKSpriteNode {
     private var _totalDelta: Float = 0
     
     func Act(delta: Float) {
-        if(_totalDelta >= 30000)
+        if(_totalDelta >= 0.100) // frame limiter (calculation)
         {
             ResetBuffer()
             UpdateBalls(delta)
@@ -50,7 +50,7 @@ class PixelMatrixRenderer: SKSpriteNode {
                 
                 if (currentPixelValue == 0)
                 {
-                    UIColor(red:116 / 255,green:129 / 255,blue:107 / 255,alpha:0.3).setFill()
+                    UIColor(red:116 / 255,green:129 / 255,blue:107 / 255,alpha:0.5).setFill()
                 }
                 else
                 {
@@ -142,6 +142,6 @@ class PixelMatrixRenderer: SKSpriteNode {
     }
     
     func ResetBuffer() {
-        _screenBuffer = [[Int]](count: 72, repeatedValue: [Int](count: 72, repeatedValue: 0))
+        _screenBuffer = [[Int]](count: 50, repeatedValue: [Int](count: 50, repeatedValue: 0))
     }
 }
