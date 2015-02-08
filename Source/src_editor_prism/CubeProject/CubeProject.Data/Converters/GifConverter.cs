@@ -1,42 +1,68 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CubeProject.Data.Entities;
 
 namespace CubeProject.Data.Converters
 {
-    public class GifConverter
+    public static class GifConverter
     {
-        public Animation Convert(byte[] fileData)
+        public static Animation Convert(byte[] fileData)
         {
-            try
+            //try
+            //{
+            MemoryStream bitmapStream = new MemoryStream(fileData);
+            GifBitmapDecoder gifDecoder = new GifBitmapDecoder(bitmapStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+            Animation result = new Animation();
+
+
+            BitmapSource source = new RenderTargetBitmap(
+                50, 50,
+                gifDecoder.Frames[0].DpiX, gifDecoder.Frames[0].DpiY,
+                PixelFormats.Pbgra32);
+            BitmapSource prevFrame = null;
+            FrameInfo prevInfo = null;
+            foreach (var rawFrame in gifDecoder.Frames)
             {
-                MemoryStream bitmapStream = new MemoryStream(fileData);
-                GifBitmapDecoder gifDecoder = new GifBitmapDecoder(bitmapStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-                Animation result = new Animation();
+                var info = GetFrameInfo(rawFrame);
+                var frame = MakeFrame(
+                    source,
+                    rawFrame, info,
+                    prevFrame, prevInfo);
 
-                foreach (var frame in gifDecoder.Frames)
+                var animFrame = new Frame<byte>((short)frame.PixelWidth, (short)frame.PixelHeight);
+                var pixels = GetPixels(frame);
+
+                animFrame.Duration = (short)info.Delay.Milliseconds;
+                prevFrame = frame;
+                prevInfo = info;
+
+                for (int i = 0; i < frame.PixelHeight; i++)
                 {
-                    var animFrame = new Frame<byte>((short)frame.PixelWidth, (short)frame.PixelHeight);
-                    var pixels = GetPixels(frame);
-
-                    for (int i = 0; i < frame.PixelHeight; i++)
+                    for (int j = 0; j < frame.PixelWidth; j++)
                     {
-                        for (int j = 0; j < frame.PixelWidth; j++)
+                        try
                         {
                             animFrame[i, j] = GetFrameValueByColor(pixels[i, j]);
                         }
+                        catch (Exception)
+                        {
+                            //animFrame[i, j] = 0;
+                        }
+
                     }
-                    result.Frames.Add(animFrame);
                 }
-                return result;
+                result.Frames.Add(animFrame);
             }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Error during gif conversion.",ex);
-            }
+            return result;
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new InvalidOperationException("Error during gif conversion.",ex);
+            //}
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -48,7 +74,7 @@ namespace CubeProject.Data.Converters
             public byte Alpha;
         }
 
-        public PixelColor[,] GetPixels(BitmapSource source)
+        public static PixelColor[,] GetPixels(BitmapSource source)
         {
             if (source.Format != PixelFormats.Bgra32)
                 source = new FormatConvertedBitmap(source, PixelFormats.Bgra32, null, 0);
@@ -72,6 +98,123 @@ namespace CubeProject.Data.Converters
                     };
 
             return result;
+        }
+
+        private static BitmapSource MakeFrame(
+     BitmapSource fullImage,
+     BitmapSource rawFrame, FrameInfo frameInfo,
+     BitmapSource previousFrame, FrameInfo previousFrameInfo)
+        {
+            DrawingVisual visual = new DrawingVisual();
+            using (var context = visual.RenderOpen())
+            {
+                if (previousFrameInfo != null && previousFrame != null &&
+                    previousFrameInfo.DisposalMethod == FrameDisposalMethod.Combine)
+                {
+                    var fullRect = new Rect(0, 0, fullImage.PixelWidth, fullImage.PixelHeight);
+                    context.DrawImage(previousFrame, fullRect);
+                }
+
+                context.DrawImage(rawFrame, frameInfo.Rect);
+            }
+            var bitmap = new RenderTargetBitmap(
+                fullImage.PixelWidth, fullImage.PixelHeight,
+                fullImage.DpiX, fullImage.DpiY,
+                PixelFormats.Pbgra32);
+            bitmap.Render(visual);
+            return bitmap;
+        }
+
+        private class FrameInfo
+        {
+            public TimeSpan Delay { get; set; }
+            public FrameDisposalMethod DisposalMethod { get; set; }
+            public double Width { get; set; }
+            public double Height { get; set; }
+            public double Left { get; set; }
+            public double Top { get; set; }
+
+            public Rect Rect
+            {
+                get { return new Rect(Left, Top, Width, Height); }
+            }
+        }
+
+        private enum FrameDisposalMethod
+        {
+            Replace = 0,
+            Combine = 1,
+            RestoreBackground = 2,
+            RestorePrevious = 3
+        }
+
+        private static FrameInfo GetFrameInfo(BitmapFrame frame)
+        {
+            var frameInfo = new FrameInfo
+            {
+                Delay = TimeSpan.FromMilliseconds(100),
+                DisposalMethod = FrameDisposalMethod.Replace,
+                Width = frame.PixelWidth,
+                Height = frame.PixelHeight,
+                Left = 0,
+                Top = 0
+            };
+
+            BitmapMetadata metadata;
+            try
+            {
+                metadata = frame.Metadata as BitmapMetadata;
+                if (metadata != null)
+                {
+                    const string delayQuery = "/grctlext/Delay";
+                    const string disposalQuery = "/grctlext/Disposal";
+                    const string widthQuery = "/imgdesc/Width";
+                    const string heightQuery = "/imgdesc/Height";
+                    const string leftQuery = "/imgdesc/Left";
+                    const string topQuery = "/imgdesc/Top";
+
+                    var delay = metadata.GetQueryOrNull<ushort>(delayQuery);
+                    if (delay.HasValue)
+                        frameInfo.Delay = TimeSpan.FromMilliseconds(10 * delay.Value);
+
+                    var disposal = metadata.GetQueryOrNull<byte>(disposalQuery);
+                    if (disposal.HasValue)
+                        frameInfo.DisposalMethod = (FrameDisposalMethod)disposal.Value;
+
+                    var width = metadata.GetQueryOrNull<ushort>(widthQuery);
+                    if (width.HasValue)
+                        frameInfo.Width = width.Value;
+
+                    var height = metadata.GetQueryOrNull<ushort>(heightQuery);
+                    if (height.HasValue)
+                        frameInfo.Height = height.Value;
+
+                    var left = metadata.GetQueryOrNull<ushort>(leftQuery);
+                    if (left.HasValue)
+                        frameInfo.Left = left.Value;
+
+                    var top = metadata.GetQueryOrNull<ushort>(topQuery);
+                    if (top.HasValue)
+                        frameInfo.Top = top.Value;
+                }
+            }
+            catch (NotSupportedException)
+            {
+            }
+
+            return frameInfo;
+        }
+
+        private static T? GetQueryOrNull<T>(this BitmapMetadata metadata, string query)
+        where T : struct
+        {
+            if (metadata.ContainsQuery(query))
+            {
+                object value = metadata.GetQuery(query);
+                if (value != null)
+                    return (T)value;
+            }
+            return null;
         }
 
         private static byte GetFrameValueByColor(PixelColor colorBytes)

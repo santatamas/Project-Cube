@@ -25,7 +25,7 @@ namespace CubeProject.Data
                     serializer = new ZippedAnimationSerializer();
                     return serializer.Deserialize(animationData);
                 case ".gif":
-                    return new GifConverter().Convert(animationData);
+                    return GifConverter.Convert(animationData);
                 default:
                     throw new NotSupportedException(String.Format("AnimationFactory doesn't support {0}", fileExtension));
             }
