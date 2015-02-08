@@ -9,9 +9,9 @@ import com.cube.main.CubeGame;
 public class LCDTextRenderer extends Actor {
 
 	BitmapFont _font;
-	CharSequence _str = "#############";
-	CharSequence _str2 = "#Hello World#";
-	public boolean DirectionLeftToRight = true;
+    CharSequence _str = "#############";
+    CharSequence _str2 = "#Hello World#";
+    public boolean DirectionLeftToRight = true;
 	
 	public LCDTextRenderer() {
 		_font = CubeGame.AssetManager.get("data/segment_14.fnt", BitmapFont.class);
