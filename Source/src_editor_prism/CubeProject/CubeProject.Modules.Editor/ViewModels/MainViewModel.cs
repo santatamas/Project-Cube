@@ -15,6 +15,7 @@ using CubeProject.Infrastructure.Utility;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
+using CubeProject.Data;
 
 namespace CubeProject.Modules.Editor.ViewModels
 {
@@ -181,14 +182,23 @@ namespace CubeProject.Modules.Editor.ViewModels
         {
             Stream fileStream;
             string filePath;
-            var dialogResult = _dialogService.ShowOpenFileDialog("Pixel Matrix Animation (*.pma)|*.pma|Zipped Pixel Matrix Animation (*.pmz)|*.pmz|All files (*.*)|*.*", out fileStream, out filePath);
+            var dialogResult = _dialogService.ShowOpenFileDialog("Pixel Matrix Animation (*.pma)|*.pma|Zipped Pixel Matrix Animation (*.pmz)|*.pmz|Gif animation (*.gif)|*.gif|All files (*.*)|*.*", out fileStream, out filePath);
             if (dialogResult == DialogResult.Ok)
             {
-                var isCompressed = Path.GetExtension(filePath) == ".pmz";
-                var serializer = isCompressed ? new ZippedAnimationSerializer() : new AnimationSerializer();
-                Animation = serializer.Deserialize(StreamUtility.ToByteArray(fileStream));
-                CurrentFilePath = filePath;
-                EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("Animation loaded.");
+                try
+                {
+                    Animation = new AnimationFactory().CreateAnimation(StreamUtility.ToByteArray(fileStream), Path.GetExtension(filePath));
+                    CurrentFilePath = filePath;
+                    EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("Animation loaded.");
+                }
+                catch (NotSupportedException ex)
+                {
+                    EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("Cannot load animation (unsupported file type)");
+                }
+                catch (InvalidOperationException ex)
+                {
+                    EventAggregator.GetEvent<StatusBarMessageChangeEvent>().Publish("Cannot load animation (possible gif format error)");
+                }
             }
         }
 
