@@ -1,0 +1,35 @@
+<Character>
+	<Properties>
+		<CodeName>Kitty</CodeName>
+		<Species>Feline</Species>
+		<MinHealth>0</MinHealth>
+		<MaxHealth>100</MaxHealth>
+		<StartHealth>80</StartHealth>
+		<MinAge>0</MinAge>
+		<MaxAge>20</MaxAge>
+		<AgeLimit LifeState="NewBorn">1</AgeLimit>
+		<AgeLimit LifeState="Child">5</AgeLimit>
+		<AgeLimit LifeState="Adult">20</AgeLimit>
+	</Properties>
+	<Animations>
+		<AnimationGroup Name="Basics" LifeState="NewBorn">
+			<Animation Name="walk_left" Path="kitty_nb_walk_left.pmz" />
+			<Animation Name="walk_right" Path="kitty_nb_walk_right.pmz" />
+			<Animation Name="jump" Path="kitty_nb_jump.pmz" />
+			<Animation Name="sleep" Path="kitty_nb_sleep.pmz" />
+			<Animation Name="sit" Path="kitty_nb_sit.pmz" />
+			<Animation Name="stand" Path="kitty_nb_stand.pmz" />
+			<Animation Name="happy" Path="kitty_nb_happy.pmz" />
+			<Animation Name="sad" Path="kitty_nb_sad.pmz" />
+		</AnimationGroup>
+		<AnimationGroup Name="Interactions" LifeState="Child">
+			<Animation Name="play_with_ball" Path="kitty_nb_play_rod.pmz" />
+		</AnimationGroup>
+		<AnimationGroup Name="Interactions" LifeState="Adult">
+			<Animation Name="play_with_rod" Path="kitty_nb_play_rod.pmz" />
+			<Animation Name="play_with_mouse" Path="kitty_nb_play_mouse.pmz" />
+			<Animation Name="drink" Path="kitty_nb_drink.pmz" />
+			<Animation Name="eat" Path="kitty_nb_eat.pmz" />
+		</AnimationGroup>
+	</Animations>
+</Character>
