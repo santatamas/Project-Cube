@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CubeProject.Data.Entities;
+using CubeProject.Infrastructure.Enums;
 
 namespace CubeProject.Data.Converters
 {
@@ -17,6 +18,7 @@ namespace CubeProject.Data.Converters
                 MemoryStream bitmapStream = new MemoryStream(fileData);
                 GifBitmapDecoder gifDecoder = new GifBitmapDecoder(bitmapStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
                 Animation result = new Animation();
+                result.ColorDepth = ColorDepth.GrayScale;
 
                 // assume that first frame has the same dimension as the others
                 short frameWidth = (short)gifDecoder.Frames[0].PixelWidth;
@@ -34,6 +36,7 @@ namespace CubeProject.Data.Converters
                     var pixels = GetPixels(frame);
 
                     animFrame.Duration = (short)info.Delay.Milliseconds;
+                    animFrame.ColorDepth = ColorDepth.GrayScale;
                     prevFrame = frame;
                     prevInfo = info;
 

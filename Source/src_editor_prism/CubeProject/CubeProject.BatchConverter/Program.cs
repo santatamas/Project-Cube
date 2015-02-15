@@ -10,15 +10,18 @@ namespace CubeProject.BatchConverter
     {
         static void Main(string[] args)
         {
-            ValidateArguments(args);
+            //ValidateArguments(args);
 
-            if (IsDirectory(args[0]))
+            var source = @"\\psf\Home\Desktop\testGifs";
+            var destination = @"\\psf\Home\Desktop\destination";
+
+            if (IsDirectory(source))
             {
-                ConvertDirectoryContents(args[0], args[1]);
+                ConvertDirectoryContents(source, destination);
             }
             else
             {
-                ConvertFile(args[0], args[1]); 
+                ConvertFile(source, destination); 
             }
 
             Console.WriteLine("Conversion complete. Press any key to exit...");
@@ -39,7 +42,7 @@ namespace CubeProject.BatchConverter
 
             foreach (var directory in Directory.GetDirectories(sourcePath))
             {
-                ConvertDirectoryContents(directory, Path.Combine(destPath, Path.GetDirectoryName(directory)));
+                ConvertDirectoryContents(directory, Path.Combine(destPath, Path.GetFileName(directory)));
             }
         }
 
@@ -52,7 +55,7 @@ namespace CubeProject.BatchConverter
             }
 
             Console.WriteLine("Converting File:" + sourcePath);
-            string finalDestPath = destPath + Path.GetFileNameWithoutExtension(sourcePath) + ".pmz";
+            string finalDestPath = Path.Combine(destPath,Path.GetFileNameWithoutExtension(sourcePath) + ".pmz");
             byte[] fileData = File.ReadAllBytes(sourcePath);
             Animation anim = GifConverter.Convert(fileData);
             ZippedAnimationSerializer zas = new ZippedAnimationSerializer();
