@@ -13,8 +13,8 @@ namespace CubeProject.Data.Converters
     {
         public static Animation Convert(byte[] fileData)
         {
-            try
-            {
+            //try
+            //{
                 MemoryStream bitmapStream = new MemoryStream(fileData);
                 GifBitmapDecoder gifDecoder = new GifBitmapDecoder(bitmapStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
                 Animation result = new Animation();
@@ -35,14 +35,14 @@ namespace CubeProject.Data.Converters
                     var animFrame = new Frame<byte>((short)frame.PixelWidth, (short)frame.PixelHeight);
                     var pixels = GetPixels(frame);
 
-                    animFrame.Duration = (short)info.Delay.Milliseconds;
+                    animFrame.Duration = (short)info.Delay.TotalMilliseconds;
                     animFrame.ColorDepth = ColorDepth.GrayScale;
                     prevFrame = frame;
                     prevInfo = info;
 
-                    for (int i = 0; i < frame.PixelHeight; i++)
+                    for (int i = 0; i < frameWidth; i++)
                     {
-                        for (int j = 0; j < frame.PixelWidth; j++)
+                        for (int j = 0; j < frameHeight; j++)
                         {
                             animFrame[i, j] = GetFrameValueByColor(pixels[i, j]);
                         }
@@ -50,11 +50,11 @@ namespace CubeProject.Data.Converters
                     result.Frames.Add(animFrame);
                 }
                 return result;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Error during gif conversion.", ex);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new InvalidOperationException("Error during gif conversion.", ex);
+            //}
         }
 
         [StructLayout(LayoutKind.Sequential)]
