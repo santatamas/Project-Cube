@@ -182,7 +182,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         {
             Stream fileStream;
             string filePath;
-            var dialogResult = _dialogService.ShowOpenFileDialog("Pixel Matrix Animation (*.pma)|*.pma|Zipped Pixel Matrix Animation (*.pmz)|*.pmz|Gif animation (*.gif)|*.gif|All files (*.*)|*.*", out fileStream, out filePath);
+            var dialogResult = _dialogService.ShowOpenFileDialog("Zipped Pixel Matrix Animation (*.pmz)|*.pmz|Pixel Matrix Animation (*.pma)|*.pma|Gif animation (*.gif)|*.gif|All files (*.*)|*.*", out fileStream, out filePath);
             if (dialogResult == DialogResult.Ok)
             {
                 try
