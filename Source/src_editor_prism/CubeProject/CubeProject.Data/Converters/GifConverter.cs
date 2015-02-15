@@ -12,61 +12,50 @@ namespace CubeProject.Data.Converters
     {
         public static Animation Convert(byte[] fileData)
         {
-            //try
-            //{
-            MemoryStream bitmapStream = new MemoryStream(fileData);
-            GifBitmapDecoder gifDecoder = new GifBitmapDecoder(bitmapStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-            Animation result = new Animation();
-
-
-            BitmapSource source = new RenderTargetBitmap(
-                50, 50,
-                gifDecoder.Frames[0].DpiX, gifDecoder.Frames[0].DpiY,
-                PixelFormats.Pbgra32);
-            BitmapSource prevFrame = null;
-            FrameInfo prevInfo = null;
-            foreach (var rawFrame in gifDecoder.Frames)
+            try
             {
-                var info = GetFrameInfo(rawFrame);
-                var frame = MakeFrame(
-                    source,
-                    rawFrame, info,
-                    prevFrame, prevInfo);
+                MemoryStream bitmapStream = new MemoryStream(fileData);
+                GifBitmapDecoder gifDecoder = new GifBitmapDecoder(bitmapStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+                Animation result = new Animation();
 
-                var animFrame = new Frame<byte>((short)frame.PixelWidth, (short)frame.PixelHeight);
-                var pixels = GetPixels(frame);
+                // assume that first frame has the same dimension as the others
+                short frameWidth = (short)gifDecoder.Frames[0].PixelWidth;
+                short frameHeight = (short)gifDecoder.Frames[0].PixelHeight;
 
-                animFrame.Duration = (short)info.Delay.Milliseconds;
-                prevFrame = frame;
-                prevInfo = info;
-
-                for (int i = 0; i < frame.PixelHeight; i++)
+                BitmapSource source = new RenderTargetBitmap(frameWidth, frameHeight, gifDecoder.Frames[0].DpiX, gifDecoder.Frames[0].DpiY, PixelFormats.Pbgra32);
+                BitmapSource prevFrame = null;
+                FrameInfo prevInfo = null;
+                foreach (var rawFrame in gifDecoder.Frames)
                 {
-                    for (int j = 0; j < frame.PixelWidth; j++)
+                    var info = GetFrameInfo(rawFrame);
+                    var frame = MakeFrame(source, rawFrame, info, prevFrame, prevInfo);
+
+                    var animFrame = new Frame<byte>((short)frame.PixelWidth, (short)frame.PixelHeight);
+                    var pixels = GetPixels(frame);
+
+                    animFrame.Duration = (short)info.Delay.Milliseconds;
+                    prevFrame = frame;
+                    prevInfo = info;
+
+                    for (int i = 0; i < frame.PixelHeight; i++)
                     {
-                        try
+                        for (int j = 0; j < frame.PixelWidth; j++)
                         {
                             animFrame[i, j] = GetFrameValueByColor(pixels[i, j]);
                         }
-                        catch (Exception)
-                        {
-                            //animFrame[i, j] = 0;
-                        }
-
                     }
+                    result.Frames.Add(animFrame);
                 }
-                result.Frames.Add(animFrame);
+                return result;
             }
-            return result;
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw new InvalidOperationException("Error during gif conversion.",ex);
-            //}
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Error during gif conversion.", ex);
+            }
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct PixelColor
+        private struct PixelColor
         {
             public byte Blue;
             public byte Green;
@@ -74,7 +63,7 @@ namespace CubeProject.Data.Converters
             public byte Alpha;
         }
 
-        public static PixelColor[,] GetPixels(BitmapSource source)
+        private static PixelColor[,] GetPixels(BitmapSource source)
         {
             if (source.Format != PixelFormats.Bgra32)
                 source = new FormatConvertedBitmap(source, PixelFormats.Bgra32, null, 0);
@@ -100,10 +89,7 @@ namespace CubeProject.Data.Converters
             return result;
         }
 
-        private static BitmapSource MakeFrame(
-     BitmapSource fullImage,
-     BitmapSource rawFrame, FrameInfo frameInfo,
-     BitmapSource previousFrame, FrameInfo previousFrameInfo)
+        private static BitmapSource MakeFrame(BitmapSource fullImage, BitmapSource rawFrame, FrameInfo frameInfo, BitmapSource previousFrame, FrameInfo previousFrameInfo)
         {
             DrawingVisual visual = new DrawingVisual();
             using (var context = visual.RenderOpen())
