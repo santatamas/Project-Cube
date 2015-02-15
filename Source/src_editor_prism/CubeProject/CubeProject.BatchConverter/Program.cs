@@ -10,10 +10,10 @@ namespace CubeProject.BatchConverter
     {
         static void Main(string[] args)
         {
-            //ValidateArguments(args);
+            ValidateArguments(args);
 
-            var source = @"\\psf\Home\Desktop\testGifs";
-            var destination = @"\\psf\Home\Desktop\destination";
+            var source = args[0];//@"\\psf\Home\Desktop\testGifs";
+            var destination = args[1];//@"\\psf\Home\Desktop\destination";
 
             if (IsDirectory(source))
             {
