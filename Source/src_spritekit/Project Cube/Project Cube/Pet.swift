@@ -15,8 +15,6 @@ enum LifeState : String {
 }
 
 class Pet : Actor {
-
-    override init() {}
     
     var lifeState = LifeState.Newborn
     var codeName:String = ""
@@ -44,10 +42,12 @@ class Pet : Actor {
         let animCats = result["AnimationCategories"] as NSArray
         for (category) in animCats {
             let cat = category as NSDictionary
-            var result = Dictionary<String, Animation>()
+            var lifeState = LifeState(rawValue: category["@LifeState"] as String)
+            var categoryName = category["@Name"] as String
             
             // get animations
             let animations = category["Animations"] as NSArray
+            var result = Dictionary<String, Animation>()
             for (animationPhase) in animations {
                 let anim = animationPhase as NSDictionary
                 var path = anim["@Path"] as String
@@ -57,13 +57,12 @@ class Pet : Actor {
                 var filenameAndExtension = path.lastPathComponent
                 var fileName = filenameAndExtension.stringByDeletingPathExtension
                 var fileExt = filenameAndExtension.pathExtension
-                
                 var bundlePath = NSBundle.mainBundle().pathForResource(fileName, ofType: fileExt, inDirectory: directoryPath)
                 
                 var unzippedFile = serializer.ReadZip(bundlePath!)
                 result[name] = serializer.Deserialize(unzippedFile!)
             }
-            var lifeState = LifeState(rawValue: category["@LifeState"] as String)
+            
             animationDictionary[lifeState!] = result
         }
     }

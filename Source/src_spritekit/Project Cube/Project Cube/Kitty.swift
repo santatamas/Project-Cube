@@ -8,6 +8,7 @@
 
 import Foundation
 class Kitty: Pet {
+    
     init(location:Point) {
         super.init()
         
@@ -20,5 +21,7 @@ class Kitty: Pet {
         
         var configPath = NSBundle.mainBundle().pathForResource("kitty", ofType: "json", inDirectory: "Kitty")
         LoadAnimations(configPath!)
+        
+        CurrentAnimation = GetAnimation("stand")
     }
 }

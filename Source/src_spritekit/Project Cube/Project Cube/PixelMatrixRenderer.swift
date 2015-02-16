@@ -26,7 +26,7 @@ class PixelMatrixRenderer: SKSpriteNode {
         if(_totalDelta >= 0.100) // frame limiter (calculation)
         {
             ResetBuffer()
-            UpdateBalls(delta)
+            //UpdateBalls(delta)
             RefreshScreenBuffer(delta)
             self.texture = RenderTexture()
             _totalDelta = 0;
