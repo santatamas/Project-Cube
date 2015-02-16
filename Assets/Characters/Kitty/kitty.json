@@ -1,0 +1,105 @@
+{
+    "Properties": {
+        "CodeName": "Kitty",
+        "Species": "Feline",
+        "MinHealth": "0",
+        "MaxHealth": "100",
+        "StartHealth": "80",
+        "MinAge": "0",
+        "MaxAge": "999999",
+        "AgeLimit": [
+                     {
+                     "@LifeState": "NewBorn",
+                     "#text": "1"
+                     },
+                     {
+                     "@LifeState": "Child",
+                     "#text": "5"
+                     },
+                     {
+                     "@LifeState": "Adult",
+                     "#text": "20"
+                     }
+                     ]
+    },
+    "AnimationCategories": [
+                   {
+                   "@Name": "Basics",
+                   "@LifeState": "NewBorn",
+                   "Animations": [
+                                 {
+                                 "@Name": "walk_left",
+                                 "@Path": "Kitty/Animations/NewBorn/walk_left.pmz"
+                                 },
+                                 {
+                                 "@Name": "walk_right",
+                                 "@Path": "Kitty/Animations/NewBorn/walk_right.pmz"
+                                 },
+                                 {
+                                 "@Name": "sleep",
+                                 "@Path": "Kitty/Animations/NewBorn/sleep.pmz"
+                                 },
+                                 {
+                                 "@Name": "stand",
+                                 "@Path": "Kitty/Animations/NewBorn/stand.pmz"
+                                 },
+                                 {
+                                 "@Name": "happy",
+                                 "@Path": "Kitty/Animations/NewBorn/purr.pmz"
+                                 }
+                                 ]
+                   },
+                   {
+                   "@Name": "Basics",
+                   "@LifeState": "Child",
+                   "Animations": [
+                                 {
+                                 "@Name": "walk_left",
+                                 "@Path": "Kitty/Animations/Child/walk_left.pmz"
+                                 },
+                                 {
+                                 "@Name": "walk_right",
+                                 "@Path": "Kitty/Animations/Child/walk_right.pmz"
+                                 },
+                                 {
+                                 "@Name": "sleep",
+                                 "@Path": "Kitty/Animations/Child/sleep.pmz"
+                                 },
+                                 {
+                                 "@Name": "stand",
+                                 "@Path": "Kitty/Animations/Child/stand.pmz"
+                                 },
+                                 {
+                                 "@Name": "happy",
+                                 "@Path": "Kitty/Animations/Child/purr.pmz"
+                                 }
+                                 ]
+                   },
+                   {
+                   "@Name": "Basics",
+                   "@LifeState": "Adult",
+                   "Animations": [
+                                 {
+                                 "@Name": "walk_left",
+                                 "@Path": "Kitty/Animations/Adult/walk_left.pmz"
+                                 },
+                                 {
+                                 "@Name": "walk_right",
+                                 "@Path": "Kitty/Animations/Adult/walk_right.pmz"
+                                 },
+                                 {
+                                 "@Name": "sleep",
+                                 "@Path": "Kitty/Animations/Adult/sleep.pmz"
+                                 },
+                                 {
+                                 "@Name": "stand",
+                                 "@Path": "Kitty/Animations/Adult/stand.pmz"
+                                 },
+                                 {
+                                 "@Name": "happy",
+                                 "@Path": "Kitty/Animations/Adult/purr.pmz"
+                                 }
+                                 ]
+                   }
+                   ]
+}

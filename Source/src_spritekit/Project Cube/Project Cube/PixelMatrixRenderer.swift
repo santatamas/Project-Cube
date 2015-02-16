@@ -16,9 +16,9 @@ class PixelMatrixRenderer: SKSpriteNode {
     private let _height: Int = 50
     private var _screenBuffer : [[Int]] = [[Int]](count: 50, repeatedValue: [Int](count: 50, repeatedValue: 0))
     private var _actors: Array<Actor> = [
-        Ball(location: Point(x: 5, y: 10)),
-        Ball(location: Point(x: 0, y: 0)),
-        Ball(location: Point(x: 20, y: 12))
+        Kitty(location: Point(x: 5, y: 10)),
+        //Ball(location: Point(x: 0, y: 0)),
+        //Ball(location: Point(x: 20, y: 12))
     ]
     private var _totalDelta: Float = 0
     

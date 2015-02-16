@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E90435011A90C30000275185 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90435001A90C30000275185 /* Pet.swift */; };
+		E90435071A90C9BB00275185 /* Kitty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90435061A90C9BB00275185 /* Kitty.swift */; };
+		E90435741A91151800275185 /* Kitty in Resources */ = {isa = PBXBuildFile; fileRef = E90435731A91151800275185 /* Kitty */; };
 		E91008601A67330B00501E49 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910085F1A67330B00501E49 /* Actor.swift */; };
 		E91008631A67333400501E49 /* PixelMatrixRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91008621A67333400501E49 /* PixelMatrixRenderer.swift */; };
 		E91008651A67336300501E49 /* TwoStateIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91008641A67336300501E49 /* TwoStateIcon.swift */; };
@@ -56,6 +59,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E90435001A90C30000275185 /* Pet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
+		E90435061A90C9BB00275185 /* Kitty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Kitty.swift; sourceTree = "<group>"; };
+		E90435731A91151800275185 /* Kitty */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Kitty; path = ../../../../Assets/Characters/Kitty; sourceTree = "<group>"; };
 		E910085F1A67330B00501E49 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		E91008621A67333400501E49 /* PixelMatrixRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PixelMatrixRenderer.swift; sourceTree = "<group>"; };
 		E91008641A67336300501E49 /* TwoStateIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoStateIcon.swift; sourceTree = "<group>"; };
@@ -126,6 +132,8 @@
 				E91008641A67336300501E49 /* TwoStateIcon.swift */,
 				E910087A1A67352700501E49 /* Ball.swift */,
 				E9192BF11A6C2EB8004311F9 /* LCDTextRenderer.swift */,
+				E90435001A90C30000275185 /* Pet.swift */,
+				E90435061A90C9BB00275185 /* Kitty.swift */,
 			);
 			name = Actors;
 			sourceTree = "<group>";
@@ -264,6 +272,7 @@
 		E9D734181A65CC6300F1676C /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				E90435731A91151800275185 /* Kitty */,
 				E9192BEE1A6C2C53004311F9 /* Fonts */,
 				E91008771A67343200501E49 /* Sound */,
 				E910086E1A67340100501E49 /* Icons */,
@@ -373,6 +382,7 @@
 				E9E05DAB1A68571F00C968EE /* ball.pmz in Resources */,
 				E9E05DB81A68573C00C968EE /* cake_icon_on.png in Resources */,
 				E9192BF01A6C2C8A004311F9 /* Segment14.otf in Resources */,
+				E90435741A91151800275185 /* Kitty in Resources */,
 				E9E05DAF1A68571F00C968EE /* Sticky_char_types.pma in Resources */,
 				E9CB95491A62E22B009DB63B /* LaunchScreen.xib in Resources */,
 				E9E05DB01A68571F00C968EE /* Sticky_idle.pma in Resources */,
@@ -410,12 +420,14 @@
 				E9CB953F1A62E22B009DB63B /* GameScene.swift in Sources */,
 				E9E05DC01A685ADE00C968EE /* Point.swift in Sources */,
 				E9CB95411A62E22B009DB63B /* GameViewController.swift in Sources */,
+				E90435071A90C9BB00275185 /* Kitty.swift in Sources */,
 				E9B39CC81A6333CA00088ED0 /* AnimationSerializer.swift in Sources */,
 				E9D734231A65DA0900F1676C /* BinaryDataScanner.swift in Sources */,
 				E9D7341F1A65CD5800F1676C /* Frame.swift in Sources */,
 				E9D7341D1A65CCEA00F1676C /* Animation.swift in Sources */,
 				E9CB953B1A62E22B009DB63B /* AppDelegate.swift in Sources */,
 				E9D734211A65D15900F1676C /* ColorDepth.swift in Sources */,
+				E90435011A90C30000275185 /* Pet.swift in Sources */,
 				E91008631A67333400501E49 /* PixelMatrixRenderer.swift in Sources */,
 				E91008601A67330B00501E49 /* Actor.swift in Sources */,
 			);
