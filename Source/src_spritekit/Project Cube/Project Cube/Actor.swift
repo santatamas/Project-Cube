@@ -13,9 +13,11 @@ class Actor {
     var Location: Point = Point(x: 0,y: 0)
     var Animations: Array<Animation> = Array<Animation>()
     var CurrentAnimation:Animation = Animation()
+    var ElapsedTime: Float = 0
     
     func Act(delta:Float) {
         CurrentAnimation.Act(delta)
+        ElapsedTime += delta;
     }
     
     func GetCurrentFrameData() -> [[Int]] {

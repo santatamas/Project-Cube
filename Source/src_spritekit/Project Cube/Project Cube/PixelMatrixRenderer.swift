@@ -15,18 +15,18 @@ class PixelMatrixRenderer: SKSpriteNode {
     private let _width: Int = 50
     private let _height: Int = 50
     private var _screenBuffer : [[Int]] = [[Int]](count: 50, repeatedValue: [Int](count: 50, repeatedValue: 0))
-    private var _actors: Array<Actor> = [
-        Kitty(location: Point(x: 5, y: 10)),
-        //Ball(location: Point(x: 0, y: 0)),
-        //Ball(location: Point(x: 20, y: 12))
-    ]
+    private var _actors: Array<Actor> = []
     private var _totalDelta: Float = 0
+    
+    func AddActor(actor:Actor)
+    {
+        _actors.append(actor)
+    }
     
     func Act(delta: Float) {
         if(_totalDelta >= 0.100) // frame limiter (calculation)
         {
             ResetBuffer()
-            //UpdateBalls(delta)
             RefreshScreenBuffer(delta)
             self.texture = RenderTexture()
             _totalDelta = 0;
@@ -36,11 +36,22 @@ class PixelMatrixRenderer: SKSpriteNode {
     
     func RenderTexture() -> SKTexture
     {
-        UIGraphicsBeginImageContext(CGSizeMake(500, 500))
+        UIGraphicsBeginImageContext(CGSizeMake(self.frame.width, self.frame.height))
         var ctx:CGContextRef = UIGraphicsGetCurrentContext()
         
-        for var i = 1; i < _width; i++ {
-            for var j = 1; j < _height; j++ {
+        // Calculate render parameters - should be separated to a one-time init
+        var pixelSize: CGFloat = CGFloat((Int(self.frame.width) / _width) - 1) // make sure we can round up to 1 pixelspace
+        var spaceSize:CGFloat = 1
+        var virtualPixelSize: CGFloat = pixelSize + spaceSize
+        var offset: CGFloat = CGFloat(Int((self.frame.width - (virtualPixelSize * CGFloat(_width))) / 2))
+        
+        // #DEBUG - DRAW BACKGROUND
+        //UIColor(red:255 / 255,green:255 / 255,blue:255 / 255,alpha:1).setFill()
+        //CGContextFillRect(ctx, CGRectMake(0,0,self.frame.width, self.frame.height))
+        // #END
+        
+        for var i = 0; i < _width; i++ {
+            for var j = 0; j < _height; j++ {
                 
                 var currentPixelValue:Int = Int(_screenBuffer[i][_height - 1 - j])
                 if(IsInverted)
@@ -50,13 +61,19 @@ class PixelMatrixRenderer: SKSpriteNode {
                 
                 if (currentPixelValue == 0)
                 {
-                    UIColor(red:116 / 255,green:129 / 255,blue:107 / 255,alpha:0.5).setFill()
+                    UIColor(red:116 / 255,green:129 / 255,blue:107 / 255,alpha:0.2).setFill()
                 }
                 else
                 {
                     UIColor(red:53 / 255,green:53 / 255,blue:53 / 255,alpha: CGFloat(currentPixelValue) / 255).setFill()
                 }
-                CGContextFillRect(ctx, CGRectMake(CGFloat(i*7), CGFloat(j*7), 5, 5));
+                
+                CGContextFillRect(ctx,
+                                  CGRectMake(
+                                  CGFloat(i) * virtualPixelSize + offset,
+                                  CGFloat(j) * virtualPixelSize + offset,
+                                  pixelSize,
+                                  pixelSize));
             }}
         
         var textureImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -90,53 +107,22 @@ class PixelMatrixRenderer: SKSpriteNode {
             // get current frame and update buffer
             var frame = actor.GetCurrentFrame()
             
-            for var x = 0; x < frame.Width; x++
+            for var y = 0; y < frame.Height; y++
             {
-                for var y = 0; y < frame.Height; y++
+                for var x = 0; x < frame.Width; x++
                 {
                     if(x + actor.Location.X >= _width) {continue}
                     if(x + actor.Location.X < 0) {continue}
                     if(y + actor.Location.Y >= _height) {continue}
                     if(y + actor.Location.Y < 0) {continue}
                     
-                    if(frame.Data[x][y] != 0)
+                    var flippedYaxis = frame.Height - 1 - y
+                    
+                    if(frame.Data[x][flippedYaxis] != 0)
                     {
-                        _screenBuffer[x + actor.Location.X][y + actor.Location.Y] = frame.Data[x][y]
+                        _screenBuffer[x + actor.Location.X][y + actor.Location.Y] = frame.Data[x][flippedYaxis]
                     }
                 }
-            }
-        }
-    }
-    
-    func UpdateBalls(delta:Float) {
-
-        var actor:Ball
-        var loc:Point
-            
-        for var i = 0; i < _actors.count; i++
-        {
-            actor = _actors[i] as Ball
-            actor.Location.X += actor.directionX
-            actor.Location.Y += actor.directionY
-                
-            if(actor.Location.X == _width - actor.GetCurrentWidth())
-            {
-                actor.directionX = -1;
-            }
-
-            if(actor.Location.Y == _height - actor.GetCurrentHeight())
-            {
-                actor.directionY = -1;
-            }
-
-            if(actor.Location.X < 0)
-            {
-                actor.directionX = 1;
-            }
-
-            if(actor.Location.Y < 0)
-            {
-                actor.directionY = 1;
             }
         }
     }

@@ -24,4 +24,92 @@ class Kitty: Pet {
         
         CurrentAnimation = GetAnimation("stand")
     }
+    
+    var elapsedSeconds = 0
+    override func Act(delta: Float) {
+        super.Act(delta)
+ 
+        if(Int(ElapsedTime / 1000) == 1)
+        {
+            ElapsedTime = 0
+            elapsedSeconds++
+            PlayLifeCycleSpeedup();
+            if(elapsedSeconds == 15)
+            {
+                CycleLifeState()
+                elapsedSeconds = 0
+            }
+        }
+    }
+    
+    func CycleLifeState()
+    {
+        if(self.lifeState == LifeState.Newborn)
+        {
+            self.lifeState = LifeState.Child
+            CurrentAnimation = GetAnimation("stand")
+            return
+        }
+        if(self.lifeState == LifeState.Child)
+        {
+            self.lifeState = LifeState.Adult
+            CurrentAnimation = GetAnimation("stand")
+            return
+        }
+        if(self.lifeState == LifeState.Adult)
+        {
+            self.lifeState = LifeState.Newborn
+            CurrentAnimation = GetAnimation("stand")
+            return
+        }
+    }
+    
+    func WalkLeft()
+    {
+        self.Location = Point(x: self.Location.X - 1, y: self.Location.Y)
+    }
+    
+    func WalkRight()
+    {
+        self.Location = Point(x: self.Location.X + 1, y: self.Location.Y)
+    }
+    
+    func PlayLifeCycleSpeedup()
+    {
+        if(elapsedSeconds == 3)
+        {
+            CurrentAnimation = GetAnimation("sleep")
+            return
+        }
+        
+        if(elapsedSeconds == 7)
+        {
+            CurrentAnimation = GetAnimation("walk_left")
+            return
+        }
+        
+        if(elapsedSeconds == 8 || elapsedSeconds == 9)
+        {
+            WalkLeft()
+            return
+        }
+        
+        if(elapsedSeconds == 10)
+        {
+            CurrentAnimation = GetAnimation("walk_right")
+            return
+        }
+        
+        if(elapsedSeconds == 11 || elapsedSeconds == 12)
+        {
+            WalkRight()
+            return
+        }
+        
+        if(elapsedSeconds == 13)
+        {
+            CurrentAnimation = GetAnimation("happy")
+            return
+        }
+    }
 }
