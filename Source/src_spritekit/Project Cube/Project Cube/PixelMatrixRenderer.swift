@@ -40,8 +40,8 @@ class PixelMatrixRenderer: SKSpriteNode {
         var ctx:CGContextRef = UIGraphicsGetCurrentContext()
         
         // Calculate render parameters - should be separated to a one-time init
-        var pixelSize: CGFloat = CGFloat((Int(self.frame.width) / _width) - 1) // make sure we can round up to 1 pixelspace
-        var spaceSize:CGFloat = 1
+        var pixelSize: CGFloat = CGFloat((Int(self.frame.width) / _width)) // make sure we can round up to 1 pixelspace
+        var spaceSize:CGFloat = 0
         var virtualPixelSize: CGFloat = pixelSize + spaceSize
         var offset: CGFloat = CGFloat(Int((self.frame.width - (virtualPixelSize * CGFloat(_width))) / 2))
         

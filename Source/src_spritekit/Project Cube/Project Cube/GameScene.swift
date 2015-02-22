@@ -22,7 +22,8 @@ class GameScene: SKScene {
     
     override func didMoveToView(view: SKView) {
         scaleMode = SKSceneScaleMode.ResizeFill
-        backgroundColor = UIColor(red: 125/255, green: 140/255, blue: 115/255, alpha: 1)        
+        //backgroundColor = UIColor(red: 125/255, green: 140/255, blue: 115/255, alpha: 1)
+        backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         anchorPoint = CGPointMake(0.5,0.5)
         
         _pmr.size = CGSize(width: view.frame.width, height: view.frame.width)
