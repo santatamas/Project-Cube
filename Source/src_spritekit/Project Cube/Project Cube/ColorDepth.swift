@@ -11,4 +11,5 @@ import Foundation
 enum ColorDepth {
     case OneBit
     case GrayScale
+    case Color
 }

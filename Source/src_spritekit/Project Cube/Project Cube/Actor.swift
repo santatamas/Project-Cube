@@ -20,7 +20,7 @@ class Actor {
         ElapsedTime += delta;
     }
     
-    func GetCurrentFrameData() -> [[Int]] {
+    func GetCurrentFrameData() -> [[PixelColor]] {
         return CurrentAnimation.GetCurrentFrame().Data
     }
     

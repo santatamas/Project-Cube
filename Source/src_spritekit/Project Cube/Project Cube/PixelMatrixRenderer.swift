@@ -14,7 +14,7 @@ class PixelMatrixRenderer: SKSpriteNode {
     var IsInverted: Bool = false
     private let _width: Int = 50
     private let _height: Int = 50
-    private var _screenBuffer : [[Int]] = [[Int]](count: 50, repeatedValue: [Int](count: 50, repeatedValue: 0))
+    private var _screenBuffer : [[PixelColor]] = [[PixelColor]](count: 50, repeatedValue: [PixelColor](count: 50, repeatedValue: PixelColor(alpha: 0, red: 0, green: 0, blue: 0)))
     private var _actors: Array<Actor> = []
     private var _totalDelta: Float = 0
     
@@ -53,19 +53,19 @@ class PixelMatrixRenderer: SKSpriteNode {
         for var i = 0; i < _width; i++ {
             for var j = 0; j < _height; j++ {
                 
-                var currentPixelValue:Int = Int(_screenBuffer[i][_height - 1 - j])
-                if(IsInverted)
-                {
-                    currentPixelValue = 255 - currentPixelValue
-                }
+                var currentPixelValue:PixelColor = _screenBuffer[i][_height - 1 - j]
+                //if(IsInverted)
+                //{
+                //    currentPixelValue = 255 - currentPixelValue
+                //}
                 
-                if (currentPixelValue == 0)
+                if (currentPixelValue.alpha == 0)
                 {
                     UIColor(red:116 / 255,green:129 / 255,blue:107 / 255,alpha:0.2).setFill()
                 }
                 else
                 {
-                    UIColor(red:53 / 255,green:53 / 255,blue:53 / 255,alpha: CGFloat(currentPixelValue) / 255).setFill()
+                    UIColor(red:CGFloat(currentPixelValue.red), green:CGFloat(currentPixelValue.green), blue:CGFloat(currentPixelValue.blue), alpha: CGFloat(currentPixelValue.alpha)).setFill()
                 }
                 
                 CGContextFillRect(ctx,
@@ -118,7 +118,7 @@ class PixelMatrixRenderer: SKSpriteNode {
                     
                     var flippedYaxis = frame.Height - 1 - y
                     
-                    if(frame.Data[x][flippedYaxis] != 0)
+                    if(frame.Data[x][flippedYaxis].alpha != 0)
                     {
                         _screenBuffer[x + actor.Location.X][y + actor.Location.Y] = frame.Data[x][flippedYaxis]
                     }
@@ -128,6 +128,6 @@ class PixelMatrixRenderer: SKSpriteNode {
     }
     
     func ResetBuffer() {
-        _screenBuffer = [[Int]](count: 50, repeatedValue: [Int](count: 50, repeatedValue: 0))
+        _screenBuffer = [[PixelColor]](count: 50, repeatedValue: [PixelColor](count: 50, repeatedValue: PixelColor(alpha: 0, red: 0, green: 0, blue: 0)))
     }
 }

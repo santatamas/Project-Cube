@@ -10,7 +10,7 @@ import Foundation
 
 class Animation {
     
-    var Depth: ColorDepth = ColorDepth.GrayScale
+    var Depth: ColorDepth = ColorDepth.Color
     var ElapsedTime: Float = 0
     var CurrentFrameIndex: Int = 0
     var CurrentFrameDuration: Int = 0

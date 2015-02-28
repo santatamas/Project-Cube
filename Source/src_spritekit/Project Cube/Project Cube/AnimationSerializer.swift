@@ -39,10 +39,14 @@ class AnimationSerializer {
         {
             result.Depth = ColorDepth.GrayScale
         }
+        if(colorDepthValue == 16)
+        {
+            result.Depth = ColorDepth.Color
+        }
         
         var frame:Frame
         
-        var data: [[Int]]
+        var data: [[PixelColor]]
         // Iterate through the frames and add them to Animation
 
         for var frameIndex:UInt16 = 0;frameIndex < noFrames;frameIndex++ {
@@ -61,11 +65,13 @@ class AnimationSerializer {
             frame.Depth = result.Depth
             
             // Fill pixel data
-            data = [[Int]](count: frame.Width, repeatedValue: [Int](count: frame.Height, repeatedValue: 0))
+            data = [[PixelColor]](count: frame.Width, repeatedValue: [PixelColor](count: frame.Height, repeatedValue: PixelColor(alpha: 0, red: 0, green: 0, blue: 0)));
             for var i:Int = 0;i < Int(frame.Width); i++ {
                 for var j:Int = 0;j < Int(frame.Height); j++ {
-                    var temp: UInt8? = binaryScanner.readByte()!
-                    data[i][j] = Int(temp!)
+                    data[i][j].alpha = binaryScanner.readByte()!
+                    data[i][j].red = binaryScanner.readByte()!
+                    data[i][j].green = binaryScanner.readByte()!
+                    data[i][j].blue = binaryScanner.readByte()!
                 }
             }
             frame.Data = data

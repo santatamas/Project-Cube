@@ -10,9 +10,9 @@ import Foundation
 
 class Frame {
     
-    var Depth: ColorDepth = ColorDepth.GrayScale
+    var Depth: ColorDepth = ColorDepth.Color
     var Width: Int = 0
     var Height: Int = 0
     var Duration: Int = 0
-    var Data: [[Int]] = [[]]
+    var Data: [[PixelColor]] = [[]]
 }
