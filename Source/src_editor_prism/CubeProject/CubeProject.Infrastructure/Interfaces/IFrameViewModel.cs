@@ -3,8 +3,8 @@
     /// <summary>
     /// Handles user interaction and rendering tasks for an <see cref="IFrame"/> object.
     /// </summary>
-    public interface IFrameViewModel
+    public interface IFrameViewModel<T>
     {
-        IFrame<byte> Frame { get; set; }
+        IFrame<T> Frame { get; set; }
     }
 }

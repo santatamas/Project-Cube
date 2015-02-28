@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CubeProject.Data.Entities;
 
 namespace CubeProject.Graphics.Renderers
 {
@@ -116,7 +117,7 @@ namespace CubeProject.Graphics.Renderers
         /// <param name="sizeY">The size y.</param>
         /// <returns>A memory-mapped BitmapSource</returns>
         /// <exception cref="System.ArgumentException">Renderer called with invalid frame size!</exception>
-        public abstract unsafe BitmapSource Render(byte[,] frame, int sizeX, int sizeY);
+        public abstract unsafe BitmapSource Render(PixelColor[,] frame, int sizeX, int sizeY);
 
         #endregion
 

@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CubeProject.Data.Entities;
 using CubeProject.Graphics.Utilities;
 using CubeProject.Infrastructure.Enums;
 
@@ -35,7 +36,7 @@ namespace CubeProject.Graphics.Renderers
         /// <param name="sizeY">The size y.</param>
         /// <returns>A memory-mapped BitmapSource</returns>
         /// <exception cref="System.ArgumentException">Renderer called with invalid frame size!</exception>
-        public override unsafe BitmapSource Render(byte[,] frame, int sizeX, int sizeY)
+        public override unsafe BitmapSource Render(PixelColor[,] frame, int sizeX, int sizeY)
         {
             if (sizeX != Settings.SizeX || sizeY != Settings.SizeY)
                 throw new ArgumentException("Renderer called with invalid frame size!");
@@ -64,21 +65,7 @@ namespace CubeProject.Graphics.Renderers
             {
                 for (int j = 0; j < Settings.SizeY; j++)
                 {
-                    if (Settings.ColorDepth == ColorDepth.Onebit)
-                    {
-                        if (frame[i, j] == 1 || frame[i, j] == 255)
-                        {
-                            currentPixelColor = _pixelOnBrush;
-                        }
-                        else
-                        {
-                            currentPixelColor = Color.FromArgb(0, 0, 0, 0);
-                        }
-                    }
-                    else
-                    {
-                        currentPixelColor = Color.FromArgb(frame[i, j], _pixelOnBrush.R, _pixelOnBrush.G, _pixelOnBrush.B);
-                    }
+                    currentPixelColor = Color.FromArgb(frame[i, j].Alpha, frame[i, j].Red, frame[i, j].Green, frame[i, j].Blue);
                     UnSafeToolKit.DrawRectange(new Rect(i * rectSize, j * rectSize, Settings.PixelSize, Settings.PixelSize), currentPixelColor, mapPtr, Settings.ScreenWidth);
                 }
             }

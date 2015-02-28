@@ -2,6 +2,7 @@
 {
     public enum FileVersion
     {
-        V1 = 1
+        V1 = 1,
+        V2 = 2
     }
 }

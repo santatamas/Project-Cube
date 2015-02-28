@@ -1,4 +1,5 @@
-﻿using CubeProject.Infrastructure.BaseClasses;
+﻿using CubeProject.Data.Entities;
+using CubeProject.Infrastructure.BaseClasses;
 using CubeProject.Infrastructure.Constants;
 using CubeProject.Infrastructure.Interfaces;
 using CubeProject.Modules.Editor.ViewModels;
@@ -18,7 +19,7 @@ namespace CubeProject.Modules.Editor
 
         public override void Initialize()
         {
-            Container.RegisterType<IFrameViewModel, FrameViewModel>(new InjectionConstructor(typeof(IUnityContainer), typeof(IEventAggregator), typeof(IDialogService)));
+            Container.RegisterType<IFrameViewModel<PixelColor>, FrameViewModel>(new InjectionConstructor(typeof(IUnityContainer), typeof(IEventAggregator), typeof(IDialogService)));
             Container.RegisterType<IShellViewModel, ShellViewModel>(new InjectionConstructor(typeof(IUnityContainer), typeof(IEventAggregator)));
             Container.RegisterType<IChangeDurationViewModel, ChangeDurationViewModel>(new InjectionConstructor(typeof(IUnityContainer), typeof(IEventAggregator)));
             Container.RegisterType<IPlayerControlViewModel, PlayerControlViewModel>(new InjectionConstructor(typeof(IUnityContainer), typeof(IEventAggregator)));

@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CubeProject.Data.Entities;
 using CubeProject.Graphics.Utilities;
 
 namespace CubeProject.Graphics.Renderers
@@ -35,7 +36,7 @@ namespace CubeProject.Graphics.Renderers
         /// <param name="sizeY">The size y.</param>
         /// <returns>A memory-mapped BitmapSource</returns>
         /// <exception cref="System.ArgumentException">Renderer called with invalid frame size!</exception>
-        public override unsafe BitmapSource Render(byte[,] frame, int sizeX, int sizeY)
+        public override unsafe BitmapSource Render(PixelColor[,] frame, int sizeX, int sizeY)
         {
             if (sizeX != Settings.SizeX || sizeY != Settings.SizeY)
                 throw new ArgumentException("Renderer called with invalid frame size!");
@@ -53,7 +54,7 @@ namespace CubeProject.Graphics.Renderers
                 {
                     UnSafeToolKit.DrawRectange(
                         new Rect(i*rectSize, j*rectSize, Settings.PixelSize, Settings.PixelSize),
-                        frame[i, j] == 0 ? clearColor : currentPixelColor, 
+                        frame[i, j].Alpha == 0 ? clearColor : currentPixelColor, 
                         mapPtr, 
                         Settings.ScreenWidth);
                 }

@@ -164,29 +164,29 @@ namespace CubeProject.Modules.Editor.Views
             // checking boundaries
             if (coordinate.X >= _viewModel.Settings.SizeX || coordinate.Y >= _viewModel.Settings.SizeY || coordinate.X < 0 || coordinate.Y < 0) return;
 
-            switch (mode)
-            {
-                case ToggleMode.On:
-                    _viewModel.Frame.Data[coordinate.X, coordinate.Y] = shadeLevel;
-                    break;
-                case ToggleMode.Off:
-                    _viewModel.Frame.Data[coordinate.X, coordinate.Y] = 0;
-                    break;
-                case ToggleMode.Inverse:
+            //switch (mode)
+            //{
+            //    case ToggleMode.On:
+            //        _viewModel.Frame.Data[coordinate.X, coordinate.Y] = shadeLevel;
+            //        break;
+            //    case ToggleMode.Off:
+            //        _viewModel.Frame.Data[coordinate.X, coordinate.Y] = 0;
+            //        break;
+            //    case ToggleMode.Inverse:
 
-                    if (_viewModel.Frame.Data[coordinate.X, coordinate.Y] == 0)
-                    {
-                        _viewModel.Frame.Data[coordinate.X, coordinate.Y] = shadeLevel;
-                    }
-                    else
-                    {
-                        _viewModel.Frame.Data[coordinate.X, coordinate.Y] = 0;
-                    }
+            //        if (_viewModel.Frame.Data[coordinate.X, coordinate.Y] == 0)
+            //        {
+            //            _viewModel.Frame.Data[coordinate.X, coordinate.Y] = shadeLevel;
+            //        }
+            //        else
+            //        {
+            //            _viewModel.Frame.Data[coordinate.X, coordinate.Y] = 0;
+            //        }
 
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("mode");
-            }
+            //        break;
+            //    default:
+            //        throw new ArgumentOutOfRangeException("mode");
+            //}
             _viewModel.InvokeOnFrameChanged();
         }
         #endregion

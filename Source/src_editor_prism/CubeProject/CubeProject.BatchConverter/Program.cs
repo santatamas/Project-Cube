@@ -12,8 +12,8 @@ namespace CubeProject.BatchConverter
         {
             //ValidateArguments(args);
 
-            var source = @"Y:\GitHub\project-cube\Assets\Characters\Kitty\Graphics";
-            var destination = @"Y:\GitHub\project-cube\Assets\Characters\Kitty\Animations";
+            var source = @"Y:\GitHub\project-cube\Assets\Graphics\Kitty\Graphics\";
+            var destination = @"Y:\GitHub\project-cube\Assets\Characters\Kitty\Animations\";
 
             if (IsDirectory(source))
             {

@@ -231,7 +231,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         {
             var isCompressed = Path.GetExtension(path) == ".pmz";
             var serializer = isCompressed ? new ZippedAnimationSerializer() : new AnimationSerializer();
-            animation.Frames = FrameViewModels.Select(fvm => (Frame<byte>)fvm.Frame).ToList();
+            animation.Frames = FrameViewModels.Select(fvm => (Frame<PixelColor>)fvm.Frame).ToList();
             var animData = serializer.Serialize(animation);
 
             using (var fs = File.Create(path))
@@ -255,10 +255,10 @@ namespace CubeProject.Modules.Editor.ViewModels
             FrameViewModels.Add(newFrame);
         }
 
-        private FrameViewModel CreateFrameViewModel(IFrame<byte> frame)
+        private FrameViewModel CreateFrameViewModel(IFrame<PixelColor> frame)
         {
             var newFrame = Container.Resolve<FrameViewModel>();
-            newFrame.Frame = frame ?? new Frame<byte>(_currentAnimationFrameWidth, _currentAnimationFrameHeight, _animation.ColorDepth);
+            newFrame.Frame = frame ?? new Frame<PixelColor>(_currentAnimationFrameWidth, _currentAnimationFrameHeight, _animation.ColorDepth);
             return newFrame;
         }
 
@@ -271,7 +271,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
             for (int i = 0; i < 5; i++)
             {
-                animation.Frames.Add(new Frame<byte>(frameWidth, frameHeight) { Duration = 500 });
+                animation.Frames.Add(new Frame<PixelColor>(frameWidth, frameHeight) { Duration = 500 });
             }
 
             _currentAnimationFrameWidth = frameWidth;
@@ -369,7 +369,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
         private void CopyContent(object frame)
         {
-            _clipBoardFrame = DeepCopy.Make(frame as Frame<byte>);
+            _clipBoardFrame = DeepCopy.Make(frame as Frame<PixelColor>);
         }
 
         private void GotoFrame(int obj)
@@ -441,7 +441,7 @@ namespace CubeProject.Modules.Editor.ViewModels
         private bool _isPlaying = false;
 
         private FrameViewModel _clipBoardFVM = null;
-        private Frame<byte> _clipBoardFrame = null;
+        private Frame<PixelColor> _clipBoardFrame = null;
         private bool _isGhostVisible = false;
         private readonly IDialogService _dialogService;
 

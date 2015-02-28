@@ -23,7 +23,7 @@ namespace CubeProject.Data.Serializers
             BinaryWriter bw = new BinaryWriter(ms);
 
             // Write out file version - 1 byte
-            bw.Write((byte)FileVersion.V1);
+            bw.Write((byte)FileVersion.V2);
 
             // Write out the number of frames - 2 bytes
             bw.Write((short)data.Frames.Count);
@@ -37,18 +37,23 @@ namespace CubeProject.Data.Serializers
                 var frame = data.Frames[index];
 
                 // Write out current frame duration - 2 byte
-                bw.Write((short)data.Frames[index].Duration);
+                bw.Write(data.Frames[index].Duration);
 
                 // Write out current Frame width and height
-                bw.Write((short)frame.Width);
-                bw.Write((short)frame.Height);
+                bw.Write(frame.Width);
+                bw.Write(frame.Height);
 
                 // Write out pixel data
                 for (int i = 0; i < frame.Width; i++)
                 {
                     for (int j = 0; j < frame.Height; j++)
                     {
-                        bw.Write((byte)frame[i, j]);
+                        var currentPixel = frame[i, j];
+                        bw.Write(currentPixel.Alpha);
+                        bw.Write(currentPixel.Red);
+                        bw.Write(currentPixel.Green);
+                        bw.Write(currentPixel.Blue);
+
                     }
                 }
             }
@@ -84,7 +89,7 @@ namespace CubeProject.Data.Serializers
             ColorDepth colorDepth = (ColorDepth)br.ReadByte();
             result.ColorDepth = colorDepth;
 
-            Frame<byte> frame;
+            Frame<PixelColor> frame;
             // Iterate through the frames and add them to Animation
             for (int frameIndex = 0; frameIndex < noFrames; frameIndex++)
             {
@@ -95,14 +100,20 @@ namespace CubeProject.Data.Serializers
                 var width = br.ReadInt16();
                 var height = br.ReadInt16();
 
-                frame = new Frame<byte>(width, height, colorDepth) { Duration = duration };
+                frame = new Frame<PixelColor>(width, height, colorDepth) { Duration = duration };
 
                 // Fill pixel data
                 for (int i = 0; i < frame.Width; i++)
                 {
                     for (int j = 0; j < frame.Height; j++)
                     {
-                        frame[i, j] = br.ReadByte();
+                        frame[i, j] = new PixelColor
+                        {
+                            Alpha = br.ReadByte(),
+                            Red = br.ReadByte(),
+                            Green = br.ReadByte(),
+                            Blue = br.ReadByte()
+                        };
                     }
                 }
                 result.Frames.Add(frame);
@@ -118,7 +129,7 @@ namespace CubeProject.Data.Serializers
         /// <returns>Whether the current implementation supports the specified <see cref="FileVersion"/></returns>
         public bool SupportsFileVersion(FileVersion version)
         {
-            return version == FileVersion.V1;
+            return version == FileVersion.V2;
         }
     }
 }

@@ -73,6 +73,7 @@
     <Compile Include="Converters\GifConverter.cs" />
     <Compile Include="Entities\Animation.cs" />
     <Compile Include="Entities\Frame.cs" />
+    <Compile Include="Entities\PixelColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializers\AnimationSerializer.cs" />
     <Compile Include="Serializers\ZippedAnimationSerializer.cs" />

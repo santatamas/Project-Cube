@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using CubeProject.Data.Entities;
 using CubeProject.Graphics;
 using CubeProject.Graphics.Renderers;
 using CubeProject.Modules.Editor.ViewModels;
@@ -39,7 +40,7 @@ namespace CubeProject.Modules.Editor.Views
             if (_viewModel.BrushSize == 1)
             {
                 if (coordinate.X >= _viewModel.Settings.SizeX || coordinate.Y >= _viewModel.Settings.SizeY || coordinate.X < 0 || coordinate.Y < 0) return;
-                _tempCursorFrame[coordinate.X, coordinate.Y] = 254;
+                _tempCursorFrame[coordinate.X, coordinate.Y] = new PixelColor{Alpha = 254,Red = 120, Green = 120, Blue = 120};
                 cursorImage.Source = _cursorRenderer.Render(_tempCursorFrame, _viewModel.Frame.Width, _viewModel.Frame.Height);
             }
             else
@@ -51,7 +52,7 @@ namespace CubeProject.Modules.Editor.Views
                     {
                         // checking boundaries
                         if (i >= _viewModel.Settings.SizeX || j >= _viewModel.Settings.SizeY || i < 0 || j < 0) continue;
-                        _tempCursorFrame[i, j] = 254;
+                        _tempCursorFrame[i, j] = new PixelColor { Alpha = 254, Red = 120, Green = 120, Blue = 120 }; ;
                     }
                 }
                 cursorImage.Source = _cursorRenderer.Render(_tempCursorFrame, _viewModel.Frame.Width, _viewModel.Frame.Height);
@@ -64,7 +65,7 @@ namespace CubeProject.Modules.Editor.Views
             {
                 for (int j = 0; j < _viewModel.Frame.Height; j++)
                 {
-                    _tempCursorFrame[i, j] = 0;
+                    _tempCursorFrame[i, j] = new PixelColor { Alpha = 0, Red = 0, Green = 0, Blue = 0 }; ;
                 }
             }
         }
@@ -84,7 +85,7 @@ namespace CubeProject.Modules.Editor.Views
             _gridRenderer = new GridRenderer(_viewModel.Settings);
             _cursorRenderer = new CursorRenderer(_viewModel.Settings);
             gridImage.Source = _gridRenderer.Render(null, 0, 0);
-            _tempCursorFrame = new byte[_viewModel.Frame.Width, _viewModel.Frame.Height];
+            _tempCursorFrame = new PixelColor[_viewModel.Frame.Width, _viewModel.Frame.Height];
         }
         private Point GetRelativelLocation(Point clickLocation)
         {
@@ -99,7 +100,7 @@ namespace CubeProject.Modules.Editor.Views
         private FrameViewModel _viewModel;
 
         private PixelCoordinate _previousCoordinate;
-        private byte[,] _tempCursorFrame;
+        private PixelColor[,] _tempCursorFrame;
         private CursorRenderer _cursorRenderer;
 
         #endregion

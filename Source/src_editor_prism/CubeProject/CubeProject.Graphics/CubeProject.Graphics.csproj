@@ -85,6 +85,10 @@
     <Compile Include="Utilities\UnsafeToolkit.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CubeProject.Data\CubeProject.Data.csproj">
+      <Project>{1C062B6B-C585-4624-BB7F-8E13C1AD6D82}</Project>
+      <Name>CubeProject.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CubeProject.Infrastructure\CubeProject.Infrastructure.csproj">
       <Project>{c5eb436c-2a75-4d43-9ff4-058407db9476}</Project>
       <Name>CubeProject.Infrastructure</Name>

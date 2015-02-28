@@ -1,4 +1,5 @@
 ﻿using System;
+using CubeProject.Data.Entities;
 using CubeProject.Graphics;
 using CubeProject.Infrastructure.BaseClasses;
 using CubeProject.Infrastructure.Events;
@@ -10,7 +11,7 @@ using CubeProject.Infrastructure.Enums;
 
 namespace CubeProject.Modules.Editor.ViewModels
 {
-    public class FrameViewModel : ViewModelBase, IFrameViewModel
+    public class FrameViewModel : ViewModelBase, IFrameViewModel<PixelColor>
     {
         public FrameViewModel(IUnityContainer container, IEventAggregator aggregator, IDialogService dialogService)
             : base(container, aggregator)
@@ -42,7 +43,7 @@ namespace CubeProject.Modules.Editor.ViewModels
             }
         }
 
-        public IFrame<byte> Frame
+        public IFrame<PixelColor> Frame
         {
             get { return _frame; }
             set
@@ -198,7 +199,7 @@ namespace CubeProject.Modules.Editor.ViewModels
 
 
         private RendererSettings _settings;
-        private IFrame<byte> _frame;
+        private IFrame<PixelColor> _frame;
         private DelegateCommand<object> _deleteCommand;
         private DelegateCommand<object> _changeDurationCommand;
         private DelegateCommand<object> _copyCommand;

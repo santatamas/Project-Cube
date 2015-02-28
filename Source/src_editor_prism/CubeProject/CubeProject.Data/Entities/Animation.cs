@@ -11,8 +11,8 @@ namespace CubeProject.Data.Entities
     {
         public Animation()
         {
-            Frames = new List<Frame<byte>>();
-            ColorDepth = ColorDepth.Onebit;
+            Frames = new List<Frame<PixelColor>>();
+            ColorDepth = ColorDepth.Color;
         }
 
         /// <summary>
@@ -29,6 +29,6 @@ namespace CubeProject.Data.Entities
         /// <value>
         /// The frames.
         /// </value>
-        public List<Frame<byte>> Frames { get; set; }
+        public List<Frame<PixelColor>> Frames { get; set; }
     }
 }

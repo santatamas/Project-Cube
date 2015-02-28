@@ -19,20 +19,20 @@ namespace CubeProject.Data.Tests
                 ColorDepth = ColorDepth.Onebit
             };
 
-            var frame = new Frame<byte>(2, 2);
-            frame.Data[0, 0] = 1;
-            frame.Data[0, 1] = 1;
-            frame.Data[1, 0] = 1;
-            frame.Data[1, 1] = 1;
+            var frame = new Frame<PixelColor>(2, 2);
+            frame.Data[0, 0] = new PixelColor{Alpha = 254, Red = 120, Green = 120, Blue = 120};
+            frame.Data[0, 1] = new PixelColor{Alpha = 254, Red = 120, Green = 120, Blue = 120};
+            frame.Data[1, 0] = new PixelColor { Alpha = 254, Red = 120, Green = 120, Blue = 120 };
+            frame.Data[1, 1] = new PixelColor { Alpha = 254, Red = 120, Green = 120, Blue = 120 };
             frame.Duration = 500;
 
             _animation.Frames.Add(frame);
 
-            var frame2 = new Frame<byte>(2, 2);
-            frame2.Data[0, 0] = 0;
-            frame2.Data[0, 1] = 0;
-            frame2.Data[1, 0] = 0;
-            frame2.Data[1, 1] = 0;
+            var frame2 = new Frame<PixelColor>(2, 2);
+            frame2.Data[0, 0] = new PixelColor{Alpha = 0, Red = 120, Green = 120, Blue = 120};
+            frame2.Data[0, 1] = new PixelColor { Alpha = 0, Red = 120, Green = 120, Blue = 120 };
+            frame2.Data[1, 0] = new PixelColor { Alpha = 0, Red = 120, Green = 120, Blue = 120 };
+            frame2.Data[1, 1] = new PixelColor { Alpha = 0, Red = 120, Green = 120, Blue = 120 };
             frame2.Duration = 500;
 
             _animation.Frames.Add(frame2);
