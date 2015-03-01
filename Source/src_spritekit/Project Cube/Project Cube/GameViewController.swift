@@ -11,12 +11,14 @@ import SpriteKit
 
 class GameViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        var scene = GameScene()
-        scene.Initialize()
-        
+    @IBOutlet weak var menuButton:UIBarButtonItem!
+    
+    func LoadScene(gameScene: GameScene)
+    {
+        if(!gameScene.initialized)
+        {
+            gameScene.Initialize()
+        }
         // Configure the view.
         let skView = self.view as SKView
         skView.showsFPS = true
@@ -24,11 +26,24 @@ class GameViewController: UIViewController {
         skView.showsDrawCount = true
         skView.showsQuadCount = true
         skView.showsPhysics = true
-
+        
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = true
         
-        skView.presentScene(scene)
+        skView.presentScene(gameScene)
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if self.revealViewController() != nil {
+            menuButton.target = self.revealViewController()
+            menuButton.action = "revealToggle:"
+            self.navigationController!.navigationBar.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
+        LoadScene((UIApplication.sharedApplication().delegate! as AppDelegate)._game)
     }
 
     override func shouldAutorotate() -> Bool {

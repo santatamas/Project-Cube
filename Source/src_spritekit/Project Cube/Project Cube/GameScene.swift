@@ -14,11 +14,14 @@ class GameScene: SKScene {
     var _kitty = Kitty(location: Point(x: 17, y: 0))
     var _previousframeTime: CFTimeInterval = 0
     
+    var initialized:Bool = false
+    
     func Initialize() {
         _pmr.SetBackground(Background().GetCurrentFrameData())
         _pmr.AddActor(_kitty)
         _pmr.position = CGPointMake(0,0)
         self.addChild(_pmr)
+        initialized = true
     }
     
     override func didMoveToView(view: SKView) {
