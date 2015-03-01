@@ -39,6 +39,7 @@ class PixelMatrixRenderer: SKSpriteNode {
         UIGraphicsBeginImageContext(CGSizeMake(self.frame.width, self.frame.height))
         var ctx:CGContextRef = UIGraphicsGetCurrentContext()
         
+        
         // Calculate render parameters - should be separated to a one-time init
         var pixelSize: CGFloat = CGFloat((Int(self.frame.width) / _width)) // make sure we can round up to 1 pixelspace
         var spaceSize:CGFloat = 0
@@ -58,14 +59,13 @@ class PixelMatrixRenderer: SKSpriteNode {
                 //{
                 //    currentPixelValue = 255 - currentPixelValue
                 //}
-                
-                if (currentPixelValue.alpha == 0)
+                if(currentPixelValue.alpha == 0)
                 {
-                    UIColor(red:116 / 255,green:129 / 255,blue:107 / 255,alpha:0.2).setFill()
+                    UIColor(red:1, green:1, blue:1, alpha: 0.2).setFill()
                 }
                 else
                 {
-                    UIColor(red:CGFloat(currentPixelValue.red), green:CGFloat(currentPixelValue.green), blue:CGFloat(currentPixelValue.blue), alpha: CGFloat(currentPixelValue.alpha)).setFill()
+                    UIColor(red: CGFloat(currentPixelValue.red) / 255, green: CGFloat(currentPixelValue.green) / 255,blue: CGFloat(currentPixelValue.blue) / 255, alpha: CGFloat(currentPixelValue.alpha) / 255).setFill()
                 }
                 
                 CGContextFillRect(ctx,
