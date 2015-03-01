@@ -17,10 +17,28 @@ class PixelMatrixRenderer: SKSpriteNode {
     private var _screenBuffer : [[PixelColor]] = [[PixelColor]](count: 50, repeatedValue: [PixelColor](count: 50, repeatedValue: PixelColor(alpha: 0, red: 0, green: 0, blue: 0)))
     private var _actors: Array<Actor> = []
     private var _totalDelta: Float = 0
+    private var _background : [[PixelColor]] = [[]]
     
     func AddActor(actor:Actor)
     {
         _actors.append(actor)
+    }
+    
+    func SetBackground(background:[[PixelColor]])
+    {
+        _background = background
+        for var y = 0; y < _height; y++
+        {
+            for var x = 0; x < _width; x++
+            {
+                var flippedYaxis = _height - 1 - y
+                
+                if(background[x][flippedYaxis].alpha != 0)
+                {
+                    _background[x][y] = background[x][flippedYaxis]
+                }
+            }
+        }
     }
     
     func Act(delta: Float) {
@@ -55,13 +73,14 @@ class PixelMatrixRenderer: SKSpriteNode {
             for var j = 0; j < _height; j++ {
                 
                 var currentPixelValue:PixelColor = _screenBuffer[i][_height - 1 - j]
+                var backgroundPixelValue:PixelColor = _background[i][_height - 1 - j]
                 //if(IsInverted)
                 //{
                 //    currentPixelValue = 255 - currentPixelValue
                 //}
                 if(currentPixelValue.alpha == 0)
                 {
-                    UIColor(red:1, green:1, blue:1, alpha: 0.2).setFill()
+                    UIColor(red: CGFloat(backgroundPixelValue.red) / 255, green: CGFloat(backgroundPixelValue.green) / 255,blue: CGFloat(backgroundPixelValue.blue) / 255, alpha: CGFloat(backgroundPixelValue.alpha) / 255).setFill()
                 }
                 else
                 {

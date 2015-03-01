@@ -10,6 +10,7 @@ import Foundation
 
 class Actor {
     
+    var zIndex:Int = 0
     var Location: Point = Point(x: 0,y: 0)
     var Animations: Array<Animation> = Array<Animation>()
     var CurrentAnimation:Animation = Animation()

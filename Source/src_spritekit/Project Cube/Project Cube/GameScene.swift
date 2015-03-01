@@ -15,6 +15,7 @@ class GameScene: SKScene {
     var _previousframeTime: CFTimeInterval = 0
     
     func Initialize() {
+        _pmr.SetBackground(Background().GetCurrentFrameData())
         _pmr.AddActor(_kitty)
         _pmr.position = CGPointMake(0,0)
         self.addChild(_pmr)
