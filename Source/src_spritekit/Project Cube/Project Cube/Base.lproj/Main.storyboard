@@ -21,29 +21,49 @@
             </objects>
             <point key="canvasLocation" x="1051" y="-253"/>
         </scene>
-        <!--Game View Controller-->
+        <!--Szaffi Amalia-->
         <scene sceneID="tXr-a1-R10">
             <objects>
                 <viewController id="BV1-FR-VrT" customClass="GameViewController" customModule="Project_Cube" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="maK-i9-Uhn"/>
-                        <viewControllerLayoutGuide type="bottom" id="khH-OB-KpY"/>
+                        <viewControllerLayoutGuide type="top" id="RAX-ej-I7n"/>
+                        <viewControllerLayoutGuide type="bottom" id="joi-rF-oSV"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <view key="view" contentMode="scaleToFill" id="a5K-qt-fP3" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="hMg-Za-4eL">
+                    <navigationItem key="navigationItem" title="Szaffi Amalia" id="hMg-Za-4eL">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="sHl-Pt-nTh"/>
                     </navigationItem>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="800"/>
                     <connections>
                         <outlet property="menuButton" destination="sHl-Pt-nTh" id="bBp-ds-sFi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1849" y="-253"/>
+            <point key="canvasLocation" x="1919" y="-307"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="vFC-Hb-Ff0">
+            <objects>
+                <viewController id="61x-Wz-kbI" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="U57-m1-qdh"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vvt-Gb-vr4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KYV-Bz-iCB">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pt4-XA-vP2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2593" y="-407"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="kmB-pM-fm9">

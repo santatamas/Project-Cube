@@ -29,7 +29,7 @@ class Kitty: Pet {
     override func Act(delta: Float) {
         super.Act(delta)
  
-        if(Int(ElapsedTime / 1000) == 1)
+        if(Int(ElapsedTime / 1000) >= 1)
         {
             ElapsedTime = 0
             elapsedSeconds++

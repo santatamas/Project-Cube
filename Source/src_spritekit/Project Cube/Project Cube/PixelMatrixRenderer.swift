@@ -19,9 +19,24 @@ class PixelMatrixRenderer: SKSpriteNode {
     private var _totalDelta: Float = 0
     private var _background : [[PixelColor]] = [[]]
     
+    var _pixelSize: CGFloat = 0
+    var _spaceSize:CGFloat = 0
+    var _virtualPixelSize: CGFloat = 0
+    var _offset: CGFloat = 0
+   
+    
     func AddActor(actor:Actor)
     {
         _actors.append(actor)
+    }
+    
+    func Initialize()
+    {
+        // Calculate render parameters - should be separated to a one-time init
+        _pixelSize = CGFloat((Int(self.frame.width) / _width)) // make sure we can round up to 1 pixelspace
+        _spaceSize = 0
+        _virtualPixelSize = _pixelSize + _spaceSize
+        _offset = CGFloat(Int((self.frame.width - (_virtualPixelSize * CGFloat(_width))) / 2))
     }
     
     func SetBackground(background:[[PixelColor]])
@@ -54,15 +69,8 @@ class PixelMatrixRenderer: SKSpriteNode {
     
     func RenderTexture() -> SKTexture
     {
-        UIGraphicsBeginImageContext(CGSizeMake(self.frame.width, self.frame.height))
+        UIGraphicsBeginImageContext(CGSizeMake(self.frame.width - _offset * 2, self.frame.height - _offset * 2))
         var ctx:CGContextRef = UIGraphicsGetCurrentContext()
-        
-        
-        // Calculate render parameters - should be separated to a one-time init
-        var pixelSize: CGFloat = CGFloat((Int(self.frame.width) / _width)) // make sure we can round up to 1 pixelspace
-        var spaceSize:CGFloat = 0
-        var virtualPixelSize: CGFloat = pixelSize + spaceSize
-        var offset: CGFloat = CGFloat(Int((self.frame.width - (virtualPixelSize * CGFloat(_width))) / 2))
         
         // #DEBUG - DRAW BACKGROUND
         //UIColor(red:255 / 255,green:255 / 255,blue:255 / 255,alpha:1).setFill()
@@ -89,10 +97,10 @@ class PixelMatrixRenderer: SKSpriteNode {
                 
                 CGContextFillRect(ctx,
                                   CGRectMake(
-                                  CGFloat(i) * virtualPixelSize + offset,
-                                  CGFloat(j) * virtualPixelSize + offset,
-                                  pixelSize,
-                                  pixelSize));
+                                  CGFloat(i) * _virtualPixelSize,// + _offset,
+                                  CGFloat(j) * _virtualPixelSize,// + _offset,
+                                  _pixelSize,
+                                  _pixelSize));
             }}
         
         var textureImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()

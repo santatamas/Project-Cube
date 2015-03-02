@@ -21,6 +21,8 @@
 		E91008601A67330B00501E49 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910085F1A67330B00501E49 /* Actor.swift */; };
 		E91008631A67333400501E49 /* PixelMatrixRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91008621A67333400501E49 /* PixelMatrixRenderer.swift */; };
 		E9192BF01A6C2C8A004311F9 /* Segment14.otf in Resources */ = {isa = PBXBuildFile; fileRef = E9192BEF1A6C2C8A004311F9 /* Segment14.otf */; };
+		E960E1FB1AA3D6DC00FC49B9 /* StatisticsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E960E1FA1AA3D6DC00FC49B9 /* StatisticsNode.swift */; };
+		E960E1FD1AA3DD2200FC49B9 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E960E1FC1AA3DD2200FC49B9 /* ButtonNode.swift */; };
 		E9B39CC81A6333CA00088ED0 /* AnimationSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B39CC71A6333CA00088ED0 /* AnimationSerializer.swift */; };
 		E9B39CFC1A63450E00088ED0 /* GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B39CFB1A63450E00088ED0 /* GZIP.m */; };
 		E9B39CFE1A63454100088ED0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B39CFD1A63454100088ED0 /* libz.dylib */; };
@@ -67,6 +69,8 @@
 		E910085F1A67330B00501E49 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		E91008621A67333400501E49 /* PixelMatrixRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PixelMatrixRenderer.swift; sourceTree = "<group>"; };
 		E9192BEF1A6C2C8A004311F9 /* Segment14.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Segment14.otf; path = "../../../../Assets/Fonts/segment14/hdad-segment14-1.002/Segment14.otf"; sourceTree = "<group>"; };
+		E960E1FA1AA3D6DC00FC49B9 /* StatisticsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsNode.swift; sourceTree = "<group>"; };
+		E960E1FC1AA3DD2200FC49B9 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		E9B39CC71A6333CA00088ED0 /* AnimationSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationSerializer.swift; sourceTree = "<group>"; };
 		E9B39CE31A633DEE00088ED0 /* Project Cube-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Project Cube-Bridging-Header.h"; sourceTree = "<group>"; };
 		E9B39CFA1A63450E00088ED0 /* GZIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GZIP.h; path = ../Libraries/GZIP/GZIP/GZIP.h; sourceTree = "<group>"; };
@@ -144,6 +148,8 @@
 				E90435001A90C30000275185 /* Pet.swift */,
 				E90435061A90C9BB00275185 /* Kitty.swift */,
 				E901BA961AA358CB00DF7C97 /* Background.swift */,
+				E960E1FA1AA3D6DC00FC49B9 /* StatisticsNode.swift */,
+				E960E1FC1AA3DD2200FC49B9 /* ButtonNode.swift */,
 			);
 			name = Actors;
 			sourceTree = "<group>";
@@ -394,8 +400,10 @@
 				E9B39CC81A6333CA00088ED0 /* AnimationSerializer.swift in Sources */,
 				E9D734231A65DA0900F1676C /* BinaryDataScanner.swift in Sources */,
 				E9D7341F1A65CD5800F1676C /* Frame.swift in Sources */,
+				E960E1FB1AA3D6DC00FC49B9 /* StatisticsNode.swift in Sources */,
 				E901BA9D1AA36B0D00DF7C97 /* MenuController.swift in Sources */,
 				E9D7341D1A65CCEA00F1676C /* Animation.swift in Sources */,
+				E960E1FD1AA3DD2200FC49B9 /* ButtonNode.swift in Sources */,
 				E901BA9B1AA36A0A00DF7C97 /* SWRevealViewController.m in Sources */,
 				E901BA9F1AA36BA000DF7C97 /* AchievementsTableViewController.swift in Sources */,
 				E9CB953B1A62E22B009DB63B /* AppDelegate.swift in Sources */,
