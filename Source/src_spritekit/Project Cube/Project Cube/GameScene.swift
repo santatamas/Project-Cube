@@ -14,7 +14,7 @@ class GameScene: SKScene {
     var _kitty = Kitty(location: Point(x: 17, y: 0))
     var _previousframeTime: CFTimeInterval = 0
     var _statistics: StatisticsNode = StatisticsNode()
-    var _buttons: [ButtonNode] = [ButtonNode](count: 4, repeatedValue: ButtonNode())
+    var _buttons: Array<ButtonNode> = Array<ButtonNode>()
     
     var initialized:Bool = false
     
@@ -65,6 +65,7 @@ class GameScene: SKScene {
             button.size = buttonSize
             button.position = CGPointMake(startingPositionX + (buttonCnt * (buttonSize.width + padding / 2)), startingPositionY)
             button.color = UIColor.redColor()
+            button.Initialize()
             buttonCnt++
         }
     }

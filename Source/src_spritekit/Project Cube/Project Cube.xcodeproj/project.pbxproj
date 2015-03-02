@@ -21,6 +21,7 @@
 		E91008601A67330B00501E49 /* Actor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E910085F1A67330B00501E49 /* Actor.swift */; };
 		E91008631A67333400501E49 /* PixelMatrixRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91008621A67333400501E49 /* PixelMatrixRenderer.swift */; };
 		E9192BF01A6C2C8A004311F9 /* Segment14.otf in Resources */ = {isa = PBXBuildFile; fileRef = E9192BEF1A6C2C8A004311F9 /* Segment14.otf */; };
+		E9337DAA1AA4DB5200D02932 /* Progressbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9337DA91AA4DB5200D02932 /* Progressbar.swift */; };
 		E960E1FB1AA3D6DC00FC49B9 /* StatisticsNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E960E1FA1AA3D6DC00FC49B9 /* StatisticsNode.swift */; };
 		E960E1FD1AA3DD2200FC49B9 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E960E1FC1AA3DD2200FC49B9 /* ButtonNode.swift */; };
 		E9B39CC81A6333CA00088ED0 /* AnimationSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B39CC71A6333CA00088ED0 /* AnimationSerializer.swift */; };
@@ -69,6 +70,7 @@
 		E910085F1A67330B00501E49 /* Actor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actor.swift; sourceTree = "<group>"; };
 		E91008621A67333400501E49 /* PixelMatrixRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PixelMatrixRenderer.swift; sourceTree = "<group>"; };
 		E9192BEF1A6C2C8A004311F9 /* Segment14.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Segment14.otf; path = "../../../../Assets/Fonts/segment14/hdad-segment14-1.002/Segment14.otf"; sourceTree = "<group>"; };
+		E9337DA91AA4DB5200D02932 /* Progressbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Progressbar.swift; sourceTree = "<group>"; };
 		E960E1FA1AA3D6DC00FC49B9 /* StatisticsNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsNode.swift; sourceTree = "<group>"; };
 		E960E1FC1AA3DD2200FC49B9 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		E9B39CC71A6333CA00088ED0 /* AnimationSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationSerializer.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				E901BA961AA358CB00DF7C97 /* Background.swift */,
 				E960E1FA1AA3D6DC00FC49B9 /* StatisticsNode.swift */,
 				E960E1FC1AA3DD2200FC49B9 /* ButtonNode.swift */,
+				E9337DA91AA4DB5200D02932 /* Progressbar.swift */,
 			);
 			name = Actors;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				E9CB95411A62E22B009DB63B /* GameViewController.swift in Sources */,
 				E90435071A90C9BB00275185 /* Kitty.swift in Sources */,
 				E9BE80181AA2893900F622D7 /* PixelColor.swift in Sources */,
+				E9337DAA1AA4DB5200D02932 /* Progressbar.swift in Sources */,
 				E9B39CC81A6333CA00088ED0 /* AnimationSerializer.swift in Sources */,
 				E9D734231A65DA0900F1676C /* BinaryDataScanner.swift in Sources */,
 				E9D7341F1A65CD5800F1676C /* Frame.swift in Sources */,
@@ -526,6 +530,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -540,6 +545,7 @@
 				INFOPLIST_FILE = "Project Cube/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Project Cube/Project Cube-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -555,6 +561,7 @@
 				INFOPLIST_FILE = "Project Cube/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Project Cube/Project Cube-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = /zipzap;
