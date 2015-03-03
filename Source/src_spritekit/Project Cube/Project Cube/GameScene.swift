@@ -13,7 +13,7 @@ class GameScene: SKScene {
     var _pmr: PixelMatrixRenderer = PixelMatrixRenderer()
     var _kitty = Kitty(location: Point(x: 17, y: 0))
     var _previousframeTime: CFTimeInterval = 0
-    var _statistics: StatisticsNode = StatisticsNode()
+    var _statistics: StatisticsNode = StatisticsNode(texture: nil, color: AppConstants.GameBackgroundColor, size: CGSize(width: 0, height: 0))
     var _buttons: Array<ButtonNode> = Array<ButtonNode>()
     
     var initialized:Bool = false
@@ -25,14 +25,17 @@ class GameScene: SKScene {
         self.addChild(_pmr)
         self.addChild(_statistics)
         
-        _buttons[0] = ButtonNode()
-        _buttons[1] = ButtonNode()
-        _buttons[2] = ButtonNode()
-        _buttons[3] = ButtonNode()
+        _buttons.append(ButtonNode(buttonImageName: "feed", buttonText: "Feed"))
+        _buttons.append(ButtonNode(buttonImageName: "play", buttonText: "Play"))
+        _buttons.append(ButtonNode(buttonImageName: "vet", buttonText: "VET"))
+        _buttons.append(ButtonNode(buttonImageName: "fight", buttonText: "Fight"))
         
         for button in _buttons {
             self.addChild(button)
+            button.Initialize()
         }
+        
+        _statistics.Initialize()
         
         initialized = true
     }
@@ -53,7 +56,6 @@ class GameScene: SKScene {
         var statisticsHeight = view.frame.height - padding - view.frame.width - navBarHeight / 0.3
         _statistics.size = CGSize(width: view.frame.width - padding, height: statisticsHeight)
         _statistics.position = CGPointMake(0, -view.frame.width - statisticsHeight / 2 - 45)
-        _statistics.color = UIColor.greenColor()
         
         var buttonCnt:CGFloat = 0
         var buttonHeight = view.frame.height - _pmr.size.height - statisticsHeight - padding * 6.5
@@ -64,8 +66,7 @@ class GameScene: SKScene {
         for button in _buttons {
             button.size = buttonSize
             button.position = CGPointMake(startingPositionX + (buttonCnt * (buttonSize.width + padding / 2)), startingPositionY)
-            button.color = UIColor.redColor()
-            button.Initialize()
+            button.ArrangeContent()
             buttonCnt++
         }
     }
