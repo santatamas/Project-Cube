@@ -15,6 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var _game:GameScene = GameScene()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        UINavigationBar.appearance().barTintColor = AppConstants.GameBackgroundColor
+        UINavigationBar.appearance().tintColor = AppConstants.GameFontColor
+        let titleDict: NSDictionary = [NSForegroundColorAttributeName: AppConstants.GameFontColor]
+        UINavigationBar.appearance().titleTextAttributes = titleDict
         // Override point for customization after application launch.
         return true
     }

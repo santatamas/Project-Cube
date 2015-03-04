@@ -22,17 +22,13 @@ class StatisticsNode : SKSpriteNode {
     override init(texture: SKTexture!, color: UIColor!, size: CGSize) {
 
         healthLabel.fontName = AppConstants.FontName
-        healthLabel.fontSize = 20
-        healthBar.setCurrentPercent(0.2)
+        healthLabel.fontSize = AppConstants.GameFontSize
         
         energyLabel.fontName = AppConstants.FontName
-        energyLabel.fontSize = 20
-        energyBar.setCurrentPercent(0.7)
+        energyLabel.fontSize = AppConstants.GameFontSize
         
         hungerLabel.fontName = AppConstants.FontName
-        hungerLabel.fontSize = 20
-        hungerBar.setCurrentPercent(0.5)
-        
+        hungerLabel.fontSize = AppConstants.GameFontSize
         
         super.init(texture: texture, color: AppConstants.GameBackgroundColor, size: size)
     }
@@ -44,15 +40,31 @@ class StatisticsNode : SKSpriteNode {
         self.addChild(energyBar)
         self.addChild(hungerLabel)
         self.addChild(hungerBar)
+    }
+    
+    func ArrangeContent()
+    {
+        var space:CGFloat = 12
+        var barsXcoordinate =  self.frame.width * 0.06 //56%
+        var barsYcoordinate = self.frame.height / 2
+        var barWidth = Int(self.frame.width * 0.42)
+        var barHeight = Int(self.frame.height / 10)
         
-        healthLabel.position = CGPoint(x: 0, y: 0)
-        healthBar.position = CGPoint(x: 0, y: -20)
+        healthLabel.position = CGPoint(x: barsXcoordinate + healthLabel.frame.width / 2, y: barsYcoordinate - 20)
+        healthBar.size = CGSize(width: barWidth, height: barHeight)
+        healthBar.position = CGPoint(x: barsXcoordinate + healthBar.frame.width / 2, y: healthLabel.position.y - space)
+        healthBar.setCurrentPercent(0.2)
         
-        energyLabel.position = CGPoint(x: 0, y: 25)
-        energyBar.position = CGPoint(x: 0, y: 5)
+        energyLabel.position = CGPoint(x: barsXcoordinate + energyLabel.frame.width / 2, y: healthBar.position.y - healthBar.frame.height - space)
+        energyBar.size = CGSize(width: barWidth, height: barHeight)
+        energyBar.position = CGPoint(x: barsXcoordinate + energyBar.frame.width / 2, y: energyLabel.position.y - space)
+        energyBar.setCurrentPercent(0.7)
         
-        hungerLabel.position = CGPoint(x: 0, y: 50)
-        hungerBar.position = CGPoint(x: 0, y: 30)
+        hungerLabel.position = CGPoint(x: barsXcoordinate + hungerLabel.frame.width / 2, y: energyBar.position.y - energyBar.frame.height - space)
+        hungerBar.size = CGSize(width: barWidth, height: barHeight)
+        hungerBar.position = CGPoint(x: barsXcoordinate + hungerBar.frame.width / 2, y: hungerLabel.position.y - space)
+        hungerBar.setCurrentPercent(0.5)
+        
     }
 
     required init?(coder aDecoder: NSCoder) {

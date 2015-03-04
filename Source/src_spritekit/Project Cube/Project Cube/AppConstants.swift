@@ -16,5 +16,6 @@ struct AppConstants {
     static var MenuFontColor:UIColor = UIColor.darkTextColor()
     static var MenuBackgroundColor:UIColor = UIColor.whiteColor()
     
-    static var FontName = "HelveticaNeue-Light"
+    static var FontName = "HelveticaNeue-Thin"
+    static var GameFontSize:CGFloat = 16
 }

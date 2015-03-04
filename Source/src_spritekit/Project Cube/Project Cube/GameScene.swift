@@ -53,15 +53,27 @@ class GameScene: SKScene {
         _pmr.position = CGPointMake(0, -view.frame.width / 2 - navBarHeight)
         _pmr.Initialize()
         
-        var statisticsHeight = view.frame.height - padding - view.frame.width - navBarHeight / 0.3
-        _statistics.size = CGSize(width: view.frame.width - padding, height: statisticsHeight)
-        _statistics.position = CGPointMake(0, -view.frame.width - statisticsHeight / 2 - 45)
+        
+    
+        var heightForControls = view.frame.height - _pmr.size.height - navBarHeight - padding
+        var statisticsHeight = heightForControls * 0.6
+        if(statisticsHeight > 120)
+        {
+            _statistics.size = CGSize(width: view.frame.width - padding, height: statisticsHeight)
+            _statistics.position = CGPointMake(0, -view.frame.width - statisticsHeight / 2 - navBarHeight)
+            _statistics.ArrangeContent()
+        }
+        else
+        {
+            statisticsHeight = 0 - padding / 2
+            _statistics.hidden = true
+        }
         
         var buttonCnt:CGFloat = 0
-        var buttonHeight = view.frame.height - _pmr.size.height - statisticsHeight - padding * 6.5
+        var buttonHeight = heightForControls - statisticsHeight - padding
         var buttonSize = CGSize(width: (view.frame.width - padding * 2.5) / 4, height: buttonHeight)
         var startingPositionX = -(view.frame.width / 2) + buttonSize.width / 2 + padding / 2
-        var startingPositionY = _statistics.position.y - _statistics.size.height + padding * 1
+        var startingPositionY = _pmr.position.y - _pmr.frame.height / 2 - statisticsHeight - buttonHeight / 2 - padding
         
         for button in _buttons {
             button.size = buttonSize

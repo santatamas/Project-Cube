@@ -649,13 +649,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Project Cube/ButtonNode.swift"
-            timestampString = "447110546.754252"
+            filePath = "Project Cube/GameScene.swift"
+            timestampString = "447199545.747251"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "init(buttonImageName:buttonText:)"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "didMoveToView(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -665,13 +665,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Project Cube/ButtonNode.swift"
-            timestampString = "447113425.659015"
+            filePath = "Project Cube/GameScene.swift"
+            timestampString = "447199530.265663"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
-            landmarkName = "Initialize()"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "didMoveToView(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -31,21 +31,23 @@ class ButtonNode : SKSpriteNode {
     {
         super.init()
         self.color = AppConstants.GameBackgroundColor
-        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
         self.image = SKSpriteNode(imageNamed: buttonImageName)
-        //self.image.size = CGSize(width: self.image.size.width / 2, height: self.image.size.height / 2)
-        
-        self.image.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 15)
+
         
         self.label.text = buttonText
         self.label.fontColor = AppConstants.GameFontColor
-        self.label.fontSize = 20
-        self.label.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 35)
+        self.label.fontSize = AppConstants.GameFontSize
+        
     }
     
     func ArrangeContent() {
-        self.image.size = CGSize(width: self.frame.width / 2, height: self.frame.height / 2)
+        var desiredWidth = self.frame.width / 2
+        var scaledHeight = self.image.frame.height / (self.image.frame.width / desiredWidth)
+        self.image.size = CGSize(width: desiredWidth, height: scaledHeight)
+        self.image.position = CGPoint(x: 0, y: self.image.frame.height / 3)
+        
+        self.label.position = CGPoint(x: 0, y: -self.frame.height / 3)
     }
     
     func Initialize()
