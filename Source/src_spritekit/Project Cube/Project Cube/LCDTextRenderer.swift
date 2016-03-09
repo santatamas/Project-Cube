@@ -52,7 +52,7 @@ class LCDTextRenderer: SKNode {
             if(DirectionLeftToRight)
             {
                 var firstChar = _text[_text.startIndex]
-                var newString = _text.substringFromIndex(advance(_text.startIndex,1))
+                var newString = _text.substringFromIndex(_text.startIndex.advancedBy(1))
                 newString.append(firstChar)
                 _text = newString
             }

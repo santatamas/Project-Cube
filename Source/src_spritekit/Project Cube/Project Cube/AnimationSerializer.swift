@@ -13,7 +13,7 @@ class AnimationSerializer {
     
     func ReadZip(filePath:NSString) -> NSData? {
 
-        var data:NSData? = NSFileManager.defaultManager().contentsAtPath(filePath)
+        var data:NSData? = NSFileManager.defaultManager().contentsAtPath(filePath as String)
         return data?.gunzippedData()
     }
     
@@ -23,14 +23,14 @@ class AnimationSerializer {
         var result: Animation = Animation()
         
         // Get File version - 1 byte
-        var version: Byte = binaryScanner.readByte()!
+        var version: UInt8 = binaryScanner.readByte()!
         //TODO: check for supported file versions
         
         // Get number of frames - 2 bytes
         var noFrames:UInt16 = binaryScanner.read16()!
         
         // Get the ColorDepth of the frames in animation - 1 byte
-        var colorDepthValue: Byte = binaryScanner.readByte()!
+        var colorDepthValue: UInt8 = binaryScanner.readByte()!
         if(colorDepthValue == 1)
         {
             result.Depth = ColorDepth.OneBit

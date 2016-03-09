@@ -37,7 +37,7 @@ class PixelMatrixRenderer: SKSpriteNode {
     func RenderTexture() -> SKTexture
     {
         UIGraphicsBeginImageContext(CGSizeMake(self.frame.width, self.frame.height))
-        var ctx:CGContextRef = UIGraphicsGetCurrentContext()
+        var ctx:CGContextRef = UIGraphicsGetCurrentContext()!
         
         // Calculate render parameters - should be separated to a one-time init
         var pixelSize: CGFloat = CGFloat((Int(self.frame.width) / _width)) // make sure we can round up to 1 pixelspace

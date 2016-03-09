@@ -36,22 +36,25 @@ class Pet : Actor {
         // get config file and parse as JSON object
         var err: NSError?
         var data:NSData? = NSFileManager.defaultManager().contentsAtPath(configPath)
-        let result = NSJSONSerialization.JSONObjectWithData(data!, options: nil, error: &err) as NSDictionary
+        
+        do {
+        let result = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSDictionary
+
         
         // get categories
-        let animCats = result["AnimationCategories"] as NSArray
+        let animCats = result["AnimationCategories"] as! NSArray
         for (category) in animCats {
-            let cat = category as NSDictionary
-            var lifeState = LifeState(rawValue: category["@LifeState"] as String)
-            var categoryName = category["@Name"] as String
+            let cat = category as! NSDictionary
+            var lifeState = LifeState(rawValue: ((category as! NSDictionary)["@LifeState"] as! String))
+            var categoryName = ((category as! NSDictionary)["@Name"] as! String)
             
             // get animations
             let animations = category["Animations"] as NSArray
             var result = Dictionary<String, Animation>()
             for (animationPhase) in animations {
-                let anim = animationPhase as NSDictionary
-                var path = anim["@Path"] as String
-                var name = anim["@Name"] as String
+                let anim = animationPhase as! NSDictionary
+                var path = anim["@Path"] as! String
+                var name = anim["@Name"] as! String
                 
                 var directoryPath = path.stringByDeletingLastPathComponent
                 var filenameAndExtension = path.lastPathComponent
@@ -64,6 +67,9 @@ class Pet : Actor {
             }
             
             animationDictionary[lifeState!] = result
+        }
+        } catch {
+            
         }
     }
 }

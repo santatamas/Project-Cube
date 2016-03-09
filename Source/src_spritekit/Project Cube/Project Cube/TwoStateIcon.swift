@@ -18,10 +18,10 @@ class TwoStateIcon: SKSpriteNode {
     private var _state = false
     
     init(state1:NSString, state2:NSString) {
-        _state1Texture = SKTexture(imageNamed: state1)
+        _state1Texture = SKTexture(imageNamed: state1 as String)
         _state1Texture.filteringMode = SKTextureFilteringMode.Nearest
         
-        _state2Texture = SKTexture(imageNamed: state2)
+        _state2Texture = SKTexture(imageNamed: state2 as String)
         _state2Texture.filteringMode = SKTextureFilteringMode.Nearest
         
         super.init(texture: _state1Texture, color: UIColor.clearColor(), size: _state1Texture.size())

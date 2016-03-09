@@ -14,24 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E9CB95341A62E22B009DB63B"
-               BuildableName = "Project Cube.app"
-               BlueprintName = "Project Cube"
-               ReferencedContainer = "container:Project Cube.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E9CB954D1A62E22B009DB63B"
-               BuildableName = "Project CubeTests.xctest"
-               BlueprintName = "Project CubeTests"
-               ReferencedContainer = "container:Project Cube.xcodeproj">
+               BlueprintIdentifier = "E9F976721C90A8C700B23512"
+               BuildableName = "GifConverter"
+               BlueprintName = "GifConverter"
+               ReferencedContainer = "container:GifConverter.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -42,24 +28,14 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E9CB954D1A62E22B009DB63B"
-               BuildableName = "Project CubeTests.xctest"
-               BlueprintName = "Project CubeTests"
-               ReferencedContainer = "container:Project Cube.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E9CB95341A62E22B009DB63B"
-            BuildableName = "Project Cube.app"
-            BlueprintName = "Project Cube"
-            ReferencedContainer = "container:Project Cube.xcodeproj">
+            BlueprintIdentifier = "E9F976721C90A8C700B23512"
+            BuildableName = "GifConverter"
+            BlueprintName = "GifConverter"
+            ReferencedContainer = "container:GifConverter.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -79,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E9CB95341A62E22B009DB63B"
-            BuildableName = "Project Cube.app"
-            BlueprintName = "Project Cube"
-            ReferencedContainer = "container:Project Cube.xcodeproj">
+            BlueprintIdentifier = "E9F976721C90A8C700B23512"
+            BuildableName = "GifConverter"
+            BlueprintName = "GifConverter"
+            ReferencedContainer = "container:GifConverter.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -98,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E9CB95341A62E22B009DB63B"
-            BuildableName = "Project Cube.app"
-            BlueprintName = "Project Cube"
-            ReferencedContainer = "container:Project Cube.xcodeproj">
+            BlueprintIdentifier = "E9F976721C90A8C700B23512"
+            BuildableName = "GifConverter"
+            BlueprintName = "GifConverter"
+            ReferencedContainer = "container:GifConverter.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
