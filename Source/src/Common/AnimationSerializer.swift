@@ -11,11 +11,11 @@ import Foundation
 
 class AnimationSerializer {
     
-    func ReadZip(filePath:NSString) -> NSData? {
+   /* func ReadZip(filePath:NSString) -> NSData? {
 
         let data:NSData? = NSFileManager.defaultManager().contentsAtPath(filePath as String)
         return data?.gunzippedData()
-    }
+    }*/
     
     func WriteZip(filePath:NSString, data:NSData) -> Bool {
         return true;

@@ -3,40 +3,44 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E9D7B4461C935C1800220140 /* GifConverter in CopyFiles */ = {isa = PBXBuildFile; fileRef = E9F976731C90A8C700B23512 /* GifConverter */; };
+		E9D7B4481C93912B00220140 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9D7B4471C93912B00220140 /* AppKit.framework */; };
+		E9D7B44E1C93976000220140 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D7B4491C93976000220140 /* ArrayExtension.swift */; };
+		E9D7B4511C93976000220140 /* ImageSourceHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D7B44C1C93976000220140 /* ImageSourceHelpers.swift */; };
 		E9F976771C90A8C700B23512 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F976761C90A8C700B23512 /* main.swift */; };
 		E9F976811C90A90F00B23512 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F9767D1C90A90F00B23512 /* Animation.swift */; };
 		E9F976821C90A90F00B23512 /* AnimationSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F9767E1C90A90F00B23512 /* AnimationSerializer.swift */; };
 		E9F976831C90A90F00B23512 /* BinaryDataScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F9767F1C90A90F00B23512 /* BinaryDataScanner.swift */; };
 		E9F976841C90A90F00B23512 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F976801C90A90F00B23512 /* Frame.swift */; };
-		E9F976881C90ACBD00B23512 /* GZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F976871C90ACBD00B23512 /* GZIP.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		E9F976711C90A8C700B23512 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
+			buildActionMask = 12;
+			dstPath = "/Users/thomas/Work/Project-Cube/Source/src/bin";
 			dstSubfolderSpec = 0;
 			files = (
+				E9D7B4461C935C1800220140 /* GifConverter in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E9D7B4471C93912B00220140 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		E9D7B4491C93976000220140 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArrayExtension.swift; path = ../../Common/ArrayExtension.swift; sourceTree = "<group>"; };
+		E9D7B44C1C93976000220140 /* ImageSourceHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageSourceHelpers.swift; path = ../../Common/ImageSourceHelpers.swift; sourceTree = "<group>"; };
 		E9F976731C90A8C700B23512 /* GifConverter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = GifConverter; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9F976761C90A8C700B23512 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		E9F9767D1C90A90F00B23512 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Animation.swift; path = ../../Common/Animation.swift; sourceTree = "<group>"; };
 		E9F9767E1C90A90F00B23512 /* AnimationSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimationSerializer.swift; path = ../../Common/AnimationSerializer.swift; sourceTree = "<group>"; };
 		E9F9767F1C90A90F00B23512 /* BinaryDataScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinaryDataScanner.swift; path = ../../Common/BinaryDataScanner.swift; sourceTree = "<group>"; };
 		E9F976801C90A90F00B23512 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Frame.swift; path = ../../Common/Frame.swift; sourceTree = "<group>"; };
-		E9F976851C90ACBD00B23512 /* GifConverter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GifConverter-Bridging-Header.h"; sourceTree = "<group>"; };
-		E9F976861C90ACBD00B23512 /* GZIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GZIP.h; path = ../Common/GZIP.h; sourceTree = "<group>"; };
-		E9F976871C90ACBD00B23512 /* GZIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GZIP.m; path = ../Common/GZIP.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9D7B4481C93912B00220140 /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,11 +58,9 @@
 		E9F9766A1C90A8C700B23512 = {
 			isa = PBXGroup;
 			children = (
-				E9F976861C90ACBD00B23512 /* GZIP.h */,
-				E9F976871C90ACBD00B23512 /* GZIP.m */,
+				E9D7B4471C93912B00220140 /* AppKit.framework */,
 				E9F976751C90A8C700B23512 /* GifConverter */,
 				E9F976741C90A8C700B23512 /* Products */,
-				E9F976851C90ACBD00B23512 /* GifConverter-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,6 +75,8 @@
 		E9F976751C90A8C700B23512 /* GifConverter */ = {
 			isa = PBXGroup;
 			children = (
+				E9D7B4491C93976000220140 /* ArrayExtension.swift */,
+				E9D7B44C1C93976000220140 /* ImageSourceHelpers.swift */,
 				E9F9768A1C90AEB600B23512 /* Models */,
 				E9F976891C90AEA500B23512 /* Helpers */,
 				E9F9767E1C90A90F00B23512 /* AnimationSerializer.swift */,
@@ -133,7 +138,7 @@
 				};
 			};
 			buildConfigurationList = E9F9766E1C90A8C700B23512 /* Build configuration list for PBXProject "GifConverter" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -155,9 +160,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9F976811C90A90F00B23512 /* Animation.swift in Sources */,
-				E9F976881C90ACBD00B23512 /* GZIP.m in Sources */,
+				E9D7B4511C93976000220140 /* ImageSourceHelpers.swift in Sources */,
 				E9F976821C90A90F00B23512 /* AnimationSerializer.swift in Sources */,
 				E9F976771C90A8C700B23512 /* main.swift in Sources */,
+				E9D7B44E1C93976000220140 /* ArrayExtension.swift in Sources */,
 				E9F976831C90A90F00B23512 /* BinaryDataScanner.swift in Sources */,
 				E9F976841C90A90F00B23512 /* Frame.swift in Sources */,
 			);
@@ -252,7 +258,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "GifConverter-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -263,7 +268,6 @@
 				CLANG_ENABLE_MODULES = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "GifConverter-Bridging-Header.h";
 			};
 			name = Release;
 		};

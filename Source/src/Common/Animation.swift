@@ -13,7 +13,7 @@ class Animation {
     var ElapsedTime: Float = 0
     var CurrentFrameIndex: Int = 0
     
-    var CurrentFrameDuration: Int {
+    var CurrentFrameDuration: Int32 {
         get
         {
             return _frames[CurrentFrameIndex].Duration;
