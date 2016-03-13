@@ -11,7 +11,24 @@ import AppKit
 
 func PrintHelp()
 {
-    print("usage: GifConverter source_path target_path");
+    print("usage: GifConverter source_path");
+}
+
+func convertFile(source:String, dest:String) {
+    let processor = GifProcessor()
+    let serializer = AnimationSerializer()
+    
+    print(source)
+    print("-----------------------------------")
+    
+    let data = NSData.init(contentsOfFile: source)
+    let animation = processor.getAnimation(data!)
+    let binaryAnimationData = serializer.Serialize(animation)
+    let compressedData : NSData = try! binaryAnimationData!.gzippedData()
+    
+    compressedData.writeToFile(dest, atomically: true)
+    print("-----------------------------------")
+
 }
 
 if Process.arguments.count < -2 {
@@ -19,28 +36,29 @@ if Process.arguments.count < -2 {
 }
 else {
     //let source = Process.arguments[0]
-    let source = "/Users/thomas/Work/Project-Cube/Source/src/bin/demo.gif"
-    let dest = "/Users/thomas/Work/Project-Cube/Source/src/bin/demo.pma"
-    //let dest = Process.arguments[1]
-
-    //print("source: " + source)
-    //print("destination: " + dest)
+    let source = "/Users/thomas/Work/Project-Cube/Source/src/bin/"
     
-    var processor = GifProcessor()
-    var serializer = AnimationSerializer()
+    // Create result directory
+    do {
+        try NSFileManager.defaultManager().createDirectoryAtPath(source + "result/", withIntermediateDirectories: false, attributes: nil)
+    } catch let error as NSError {
+        print(error.localizedDescription);
+    }
     
-    print("========= CONVERTING FILE =========")
-    print(source)
-    print("-----------------------------------")
-    var data = NSData.init(contentsOfFile: source)
-    var animation = processor.getAnimation(data!)
-    var binaryAnimationData = serializer.Serialize(animation)
-    let compressedData : NSData = try! data!.gzippedData()
-
-    compressedData.writeToFile(dest, atomically: true)
-    print("-----------------------------------")
+    // Iterate through GIFs, put the converter result into -> /result/
+    let fileManager = NSFileManager.defaultManager()
+    let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(source)!
+    
+    print("========= CONVERTING FILE(S) =========")
+    while let element = enumerator.nextObject() as? String {
+        if element.hasSuffix("gif") {
+            let destUrl = source + "result/" + (NSURL(fileURLWithPath: element).URLByDeletingPathExtension?.lastPathComponent!)! + ".pmz"
+            convertFile(source + element, dest: destUrl)
+        }
+    }
     print("Conversion Finished.")
 }
+
 
 
 

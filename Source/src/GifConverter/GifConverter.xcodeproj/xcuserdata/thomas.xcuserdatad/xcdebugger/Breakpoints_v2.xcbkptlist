@@ -26,25 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GifConverter/main.swift"
-            timestampString = "479520725.884605"
+            timestampString = "479523036.841156"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GifConverter/main.swift"
-            timestampString = "479520725.884605"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42">
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "convertFile(_:dest:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
