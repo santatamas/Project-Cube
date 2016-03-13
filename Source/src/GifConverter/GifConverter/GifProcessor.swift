@@ -32,9 +32,9 @@ class GifProcessor {
             print("Duration: " + String(frameDuration));
             
             frame = Frame()
-            frame.Duration = Int32(frameDuration)
-            frame.Width = Int32(width)
-            frame.Height = Int32(height)
+            frame.Duration = UInt32(frameDuration)
+            frame.Width = UInt32(width)
+            frame.Height = UInt32(height)
             
             print("Dumping pixel data...")
             frameData = [[UInt32]](count: Int(width), repeatedValue: [UInt32](count: Int(height), repeatedValue: 0))

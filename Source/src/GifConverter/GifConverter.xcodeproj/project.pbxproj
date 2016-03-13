@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E919D23D1C94E5810070FEC7 /* NSData+GZIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E919D23B1C94E5810070FEC7 /* NSData+GZIP.swift */; };
+		E91545ED1C961AD100292A07 /* NSData+GZIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91545EC1C961AD100292A07 /* NSData+GZIP.swift */; };
 		E919D2401C94E5BB0070FEC7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E919D23F1C94E5BB0070FEC7 /* libz.tbd */; };
 		E971AC401C94CC8E00BF19B3 /* GifProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E971AC3F1C94CC8E00BF19B3 /* GifProcessor.swift */; };
 		E9D7B4461C935C1800220140 /* GifConverter in CopyFiles */ = {isa = PBXBuildFile; fileRef = E9F976731C90A8C700B23512 /* GifConverter */; };
@@ -34,10 +34,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E919D23B1C94E5810070FEC7 /* NSData+GZIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+GZIP.swift"; sourceTree = "<group>"; };
+		E91545EA1C961AC300292A07 /* include.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = include.h; path = ../../Common/zlib/include.h; sourceTree = "<group>"; };
+		E91545EB1C961AC300292A07 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = ../../Common/zlib/module.modulemap; sourceTree = "<group>"; };
+		E91545EC1C961AD100292A07 /* NSData+GZIP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSData+GZIP.swift"; path = "../../Common/NSData+GZIP.swift"; sourceTree = "<group>"; };
 		E919D23F1C94E5BB0070FEC7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		E919D2441C94E7A90070FEC7 /* include.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = include.h; path = ../zlib/include.h; sourceTree = "<group>"; };
-		E919D2451C94E7A90070FEC7 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = ../zlib/module.modulemap; sourceTree = "<group>"; };
 		E971AC3F1C94CC8E00BF19B3 /* GifProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifProcessor.swift; sourceTree = "<group>"; };
 		E9D7B4471C93912B00220140 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		E9D7B44C1C93976000220140 /* ImageSourceHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageSourceHelpers.swift; path = ../../Common/ImageSourceHelpers.swift; sourceTree = "<group>"; };
@@ -65,8 +65,8 @@
 		E919D2431C94E78A0070FEC7 /* zlib */ = {
 			isa = PBXGroup;
 			children = (
-				E919D2441C94E7A90070FEC7 /* include.h */,
-				E919D2451C94E7A90070FEC7 /* module.modulemap */,
+				E91545EA1C961AC300292A07 /* include.h */,
+				E91545EB1C961AC300292A07 /* module.modulemap */,
 			);
 			name = zlib;
 			sourceTree = "<group>";
@@ -105,7 +105,7 @@
 		E9F976891C90AEA500B23512 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				E919D23B1C94E5810070FEC7 /* NSData+GZIP.swift */,
+				E91545EC1C961AD100292A07 /* NSData+GZIP.swift */,
 				E9D7B44C1C93976000220140 /* ImageSourceHelpers.swift */,
 				E9F9767F1C90A90F00B23512 /* BinaryDataScanner.swift */,
 			);
@@ -182,7 +182,7 @@
 				E971AC401C94CC8E00BF19B3 /* GifProcessor.swift in Sources */,
 				E9D7B4511C93976000220140 /* ImageSourceHelpers.swift in Sources */,
 				E9F976821C90A90F00B23512 /* AnimationSerializer.swift in Sources */,
-				E919D23D1C94E5810070FEC7 /* NSData+GZIP.swift in Sources */,
+				E91545ED1C961AD100292A07 /* NSData+GZIP.swift in Sources */,
 				E9F976771C90A8C700B23512 /* main.swift in Sources */,
 				E9F976831C90A90F00B23512 /* BinaryDataScanner.swift in Sources */,
 				E9F976841C90A90F00B23512 /* Frame.swift in Sources */,
@@ -278,7 +278,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"SWIFT_INCLUDE_PATHS[arch=*]" = zlib/;
+				"SWIFT_INCLUDE_PATHS[arch=*]" = ../Common/zlib/;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -289,7 +289,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				"SWIFT_INCLUDE_PATHS[arch=*]" = zlib/;
+				"SWIFT_INCLUDE_PATHS[arch=*]" = ../Common/zlib/;
 			};
 			name = Release;
 		};

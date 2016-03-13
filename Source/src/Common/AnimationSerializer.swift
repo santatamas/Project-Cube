@@ -10,7 +10,12 @@ import Foundation
 
 
 class AnimationSerializer {
-        
+    
+    func ReadZip(path:String) -> NSData? {
+        let data = NSData.init(contentsOfFile: path)
+        return try! data!.gunzippedData()
+    }
+    
     func Serialize(animation:Animation) -> NSData? {
 
         let data = NSMutableData()
@@ -28,14 +33,14 @@ class AnimationSerializer {
             let currentFrame = animation.Frames[Int(frameIndex)]
             
             // duration - 4 byte
-            var duration: Int32 = currentFrame.Duration
-            data.appendBytes(&duration, length:sizeof(Int32))
+            var duration = currentFrame.Duration
+            data.appendBytes(&duration, length:sizeof(UInt32))
             
             // width and height - 4 + 4 bytes
-            var width: Int32 = currentFrame.Width
-            data.appendBytes(&width, length:sizeof(Int32))
-            var height: Int32 = currentFrame.Height
-            data.appendBytes(&height, length:sizeof(Int32))
+            var width = currentFrame.Width
+            data.appendBytes(&width, length:sizeof(UInt32))
+            var height = currentFrame.Height
+            data.appendBytes(&height, length:sizeof(UInt32))
             
             // Write pixel data
             var temp: UInt32 = 0
@@ -67,12 +72,12 @@ class AnimationSerializer {
 
         for var frameIndex:Int32 = 0;frameIndex < noFrames;frameIndex++ {
             
-            // Get the duration - 2 byte
-            let duration:Int32 = Int32(binaryScanner.read32()!)
+            // Get the duration - 4 byte
+            let duration = binaryScanner.read32()!
             
             // Get the width and height
-            let width:Int32 = Int32(binaryScanner.read32()!)
-            let height:Int32 = Int32(binaryScanner.read32()!)
+            let width = binaryScanner.read32()!
+            let height = binaryScanner.read32()!
             
             frame = Frame()
             frame.Width = width

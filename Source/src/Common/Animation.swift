@@ -11,9 +11,9 @@ import Foundation
 class Animation {
     
     var ElapsedTime: Float = 0
-    var CurrentFrameIndex: Int = 0
+    var CurrentFrameIndex = 0
     
-    var CurrentFrameDuration: Int32 {
+    var CurrentFrameDuration: UInt32 {
         get
         {
             return _frames[CurrentFrameIndex].Duration;

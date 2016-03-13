@@ -10,9 +10,9 @@ import Foundation
 
 class Frame {
     
-    var Width: Int32 = 0
-    var Height: Int32 = 0
-    var Duration: Int32 = 0
+    var Width: UInt32 = 0
+    var Height: UInt32 = 0
+    var Duration: UInt32 = 0
     
     // unsigned 32 bit -- RGBA
     var Data: [[UInt32]] = [[]]
