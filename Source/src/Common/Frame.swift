@@ -14,6 +14,6 @@ class Frame {
     var Height: Int32 = 0
     var Duration: Int32 = 0
     
-    // 32 bit -- ARGB
-    var Data: [[Int32]] = [[]]
+    // unsigned 32 bit -- RGBA
+    var Data: [[UInt32]] = [[]]
 }

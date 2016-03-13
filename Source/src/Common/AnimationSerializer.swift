@@ -10,17 +10,7 @@ import Foundation
 
 
 class AnimationSerializer {
-    
-   /* func ReadZip(filePath:NSString) -> NSData? {
-
-        let data:NSData? = NSFileManager.defaultManager().contentsAtPath(filePath as String)
-        return data?.gunzippedData()
-    }*/
-    
-    func WriteZip(filePath:NSString, data:NSData) -> Bool {
-        return true;
-    }
-    
+        
     func Serialize(animation:Animation) -> NSData? {
 
         let data = NSMutableData()
@@ -48,7 +38,7 @@ class AnimationSerializer {
             data.appendBytes(&height, length:sizeof(Int32))
             
             // Write pixel data
-            var temp: Int32 = 0
+            var temp: UInt32 = 0
             for var i:Int = 0;i < Int(width); i++ {
                 for var j:Int = 0;j < Int(height); j++ {
                     temp = currentFrame.Data[i][j]
@@ -72,7 +62,7 @@ class AnimationSerializer {
         
         var frame:Frame
         
-        var data: [[Int32]]
+        var data: [[UInt32]]
         // Iterate through the frames and add them to Animation
 
         for var frameIndex:Int32 = 0;frameIndex < noFrames;frameIndex++ {
@@ -90,12 +80,12 @@ class AnimationSerializer {
             frame.Duration = duration
             
             // Fill pixel data
-            data = [[Int32]](count: Int(width), repeatedValue: [Int32](count: Int(height), repeatedValue: 0))
+            data = [[UInt32]](count: Int(width), repeatedValue: [UInt32](count: Int(height), repeatedValue: 0))
             
             for var i:Int = 0;i < Int(frame.Width); i++ {
                 for var j:Int = 0;j < Int(frame.Height); j++ {
                     let temp: UInt32? = binaryScanner.read32()!
-                    data[i][j] = Int32(temp!)
+                    data[i][j] = temp!
                 }
             }
             frame.Data = data
