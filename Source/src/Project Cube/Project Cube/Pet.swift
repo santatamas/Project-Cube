@@ -49,7 +49,7 @@ class Pet : Actor {
             var categoryName = ((category as! NSDictionary)["@Name"] as! String)
             
             // get animations
-            let animations = category["Animations"] as NSArray
+            let animations = category["Animations"] as! NSArray
             var result = Dictionary<String, Animation>()
             for (animationPhase) in animations {
                 let anim = animationPhase as! NSDictionary

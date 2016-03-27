@@ -45,7 +45,7 @@ class Animation {
     
     func Act(delta: Float) {
         ElapsedTime += delta;
-        if ElapsedTime >= Float(CurrentFrameDuration)
+        if ElapsedTime >= Float(CurrentFrameDuration * 1000)
         {
             ElapsedTime = 0
             CurrentFrameIndex = CurrentFrameIndex < (_frames.count - 1) ? (CurrentFrameIndex + 1) : 0

@@ -21,15 +21,15 @@ class AnimationSerializer {
         let data = NSMutableData()
         
         // Write File version - 1 byte
-        var version: UInt8 = 1
-        data.appendBytes(&version, length:sizeof(UInt8))
+        var version: UInt32 = 1
+        data.appendBytes(&version, length:sizeof(UInt32))
         
         // Write number of frames - 4 bytes
-        var noFrames: Int32 = Int32(animation.Frames.count)
-        data.appendBytes(&noFrames, length:sizeof(Int))
+        var noFrames: UInt32 = UInt32(animation.Frames.count)
+        data.appendBytes(&noFrames, length:sizeof(UInt32))
         
         // Write out frames
-        for var frameIndex:Int32 = 0;frameIndex < noFrames;frameIndex++ {
+        for var frameIndex:UInt32 = 0;frameIndex < noFrames;frameIndex++ {
             let currentFrame = animation.Frames[Int(frameIndex)]
             
             // duration - 4 byte
@@ -47,7 +47,7 @@ class AnimationSerializer {
             for var i:Int = 0;i < Int(width); i++ {
                 for var j:Int = 0;j < Int(height); j++ {
                     temp = currentFrame.Data[i][j]
-                    data.appendBytes(&temp, length:sizeof(Int32))
+                    data.appendBytes(&temp, length:sizeof(UInt32))
                 }
             }
         }
@@ -60,17 +60,17 @@ class AnimationSerializer {
         let result: Animation = Animation()
         
         // Get File version - 1 byte
-        let version: UInt8 = binaryScanner.readByte()!
+        let version: UInt32 = binaryScanner.read32()!
         
         // Get number of frames - 4 bytes
-        let noFrames:Int32 = Int32(binaryScanner.read32()!)
+        let noFrames:UInt32 = binaryScanner.read32()!
         
         var frame:Frame
         
         var data: [[UInt32]]
         // Iterate through the frames and add them to Animation
 
-        for var frameIndex:Int32 = 0;frameIndex < noFrames;frameIndex++ {
+        for var frameIndex:UInt32 = 0;frameIndex < noFrames;frameIndex++ {
             
             // Get the duration - 4 byte
             let duration = binaryScanner.read32()!
@@ -89,8 +89,7 @@ class AnimationSerializer {
             
             for var i:Int = 0;i < Int(frame.Width); i++ {
                 for var j:Int = 0;j < Int(frame.Height); j++ {
-                    let temp: UInt32? = binaryScanner.read32()!
-                    data[i][j] = temp!
+                    data[i][j] = binaryScanner.read32()!
                 }
             }
             frame.Data = data

@@ -19,7 +19,7 @@ class Kitty: Pet {
         codeName = "Kitty"
         species = "Feline"
         
-        var configPath = NSBundle.mainBundle().pathForResource("kitty", ofType: "json", inDirectory: "Kitty")
+        let configPath = NSBundle.mainBundle().pathForResource("kitty", ofType: "json", inDirectory: "Kitty")
         LoadAnimations(configPath!)
         
         CurrentAnimation = GetAnimation("stand")
@@ -29,10 +29,10 @@ class Kitty: Pet {
     override func Act(delta: Float) {
         super.Act(delta)
  
-        if(Int(ElapsedTime / 1000) == 1)
+        if(Int(ElapsedTime / 1000) >= 1)
         {
             ElapsedTime = 0
-            elapsedSeconds++
+            elapsedSeconds += 1
             PlayLifeCycleSpeedup();
             if(elapsedSeconds == 15)
             {
@@ -76,37 +76,37 @@ class Kitty: Pet {
     
     func PlayLifeCycleSpeedup()
     {
-        if(elapsedSeconds == 3)
+        if(elapsedSeconds == 6)//3)
         {
             CurrentAnimation = GetAnimation("sleep")
             return
         }
         
-        if(elapsedSeconds == 7)
+        if(elapsedSeconds == 10)//7)
         {
             CurrentAnimation = GetAnimation("walk_left")
             return
         }
         
-        if(elapsedSeconds == 8 || elapsedSeconds == 9)
+        if(elapsedSeconds == 11 || elapsedSeconds == 12)
         {
             WalkLeft()
             return
         }
         
-        if(elapsedSeconds == 10)
+        if(elapsedSeconds == 13)//10)
         {
             CurrentAnimation = GetAnimation("walk_right")
             return
         }
         
-        if(elapsedSeconds == 11 || elapsedSeconds == 12)
+        if(elapsedSeconds == 14 || elapsedSeconds == 15)
         {
             WalkRight()
             return
         }
         
-        if(elapsedSeconds == 13)
+        if(elapsedSeconds == 16)//13)
         {
             CurrentAnimation = GetAnimation("happy")
             return

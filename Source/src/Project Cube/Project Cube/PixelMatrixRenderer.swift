@@ -24,14 +24,25 @@ class PixelMatrixRenderer: SKSpriteNode {
     }
     
     func Act(delta: Float) {
-        if(_totalDelta >= 0.100) // frame limiter (calculation)
+        if(_totalDelta >= 500) // frame limiter (calculation)
         {
             ResetBuffer()
             RefreshScreenBuffer(delta)
+            
             self.texture = RenderTexture()
             _totalDelta = 0;
         }
         _totalDelta += delta
+        
+        var actor: Actor
+        // do first time load to buffer
+        for i in 0 ..< _actors.count
+        {
+            actor = _actors[i]
+            
+            // update animation state
+            actor.Act(delta)
+        }
     }
     
     func RenderTexture() -> SKTexture
@@ -50,20 +61,22 @@ class PixelMatrixRenderer: SKSpriteNode {
         //CGContextFillRect(ctx, CGRectMake(0,0,self.frame.width, self.frame.height))
         // #END
         
-        for var i:Int = 0; i < Int(_width); i++ {
-            for var j:Int = 0; j < Int(_height); j++ {
+        for i:Int in 0 ..< Int(_width) {
+            for j:Int in 0 ..< Int(_height) {
                 
                 let currentPixelValue = _screenBuffer[i][Int(_height) - 1 - j]
                 
-                let redComponent = Int((currentPixelValue & 0xFF000000) >> 24)
+                let redComponent   = Int((currentPixelValue & 0xFF000000) >> 24)
                 let greenComponent = Int((currentPixelValue & 0x00FF0000) >> 16)
-                let blueComponent = Int(currentPixelValue & 0x0000FF00 >> 8)
+                let blueComponent  = Int((currentPixelValue & 0x0000FF00) >> 8)
                 let alphaComponent = Int((currentPixelValue & 0x000000FF))
                 
-                UIColor(red:CGFloat(redComponent) / 255,
-                        green:CGFloat(greenComponent) / 255,
-                        blue:CGFloat(blueComponent) / 255,
-                        alpha:CGFloat(alphaComponent) / 255).setFill()
+                let color = UIColor(red:CGFloat(redComponent) / 255.0,
+                                    green:CGFloat(greenComponent) / 255.0,
+                                    blue:CGFloat(blueComponent) / 255.0,
+                                    alpha:CGFloat(alphaComponent) / 255.0)
+                
+                color.setFill()
 
                 
                 CGContextFillRect(ctx,
@@ -94,19 +107,16 @@ class PixelMatrixRenderer: SKSpriteNode {
         var actor: Actor
         
         // do first time load to buffer
-        for var i = 0; i < _actors.count;i++
+        for i in 0 ..< _actors.count
         {
             actor = _actors[i]
-            
-            // update animation state
-            actor.Act(delta)
             
             // get current frame and update buffer
             let frame = actor.GetCurrentFrame()
             
-            for var y:UInt32 = 0; y < frame.Height; y++
+            for y:UInt32 in 0 ..< frame.Height
             {
-                for var x:UInt32 = 0; x < frame.Width; x++
+                for x:UInt32 in 0 ..< frame.Width
                 {
                     if(x + actor.Location.X >= _width) {continue}
                     if(x + actor.Location.X < 0) {continue}

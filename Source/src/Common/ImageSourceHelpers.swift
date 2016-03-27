@@ -34,7 +34,7 @@ func durationFromGIFProperties(properties: GIFProperties) -> Double? {
   let unclampedDelayTime = properties[String(kCGImagePropertyGIFUnclampedDelayTime)]
   let delayTime = properties[String(kCGImagePropertyGIFDelayTime)]
 
-  return unclampedDelayTime! * delayTime!
+  return delayTime!
 }
 
 /// Calculates frame duration based on both clamped and unclamped times.

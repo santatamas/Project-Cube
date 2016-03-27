@@ -11,7 +11,7 @@ import AppKit
 
 func PrintHelp()
 {
-    print("usage: GifConverter source_path");
+    print("usage: GifConverter source_path dest_path");
 }
 
 func convertFile(source:String, dest:String) {
@@ -27,20 +27,29 @@ func convertFile(source:String, dest:String) {
     let compressedData : NSData = try! binaryAnimationData!.gzippedData()
     
     compressedData.writeToFile(dest, atomically: true)
+    print("Verifying...")
+    var dataToVerify = serializer.ReadZip(dest)
+    var verifiedResult = serializer.Deserialize(dataToVerify!)
     print("-----------------------------------")
+    
 
 }
 
-if Process.arguments.count < -2 {
+if Process.arguments.count < 3 {
     PrintHelp();
 }
 else {
-    //let source = Process.arguments[0]
-    let source = "/Users/thomas/Work/Project-Cube/Source/src/bin/"
+    let source = Process.arguments[1]
+    let dest = Process.arguments[2]
+
+    //let source = "/Users/thomas/Work/Project-Cube/Source/src/bin/"
+    //slet dest = "/Users/thomas/Work/Project-Cube/Source/src/bin/"
+    print("Source path: " + source)
+    print("Destination path: " + dest)
     
     // Create result directory
     do {
-        try NSFileManager.defaultManager().createDirectoryAtPath(source + "result/", withIntermediateDirectories: false, attributes: nil)
+        try NSFileManager.defaultManager().createDirectoryAtPath(dest, withIntermediateDirectories: false, attributes: nil)
     } catch let error as NSError {
         print(error.localizedDescription);
     }
@@ -52,7 +61,7 @@ else {
     print("========= CONVERTING FILE(S) =========")
     while let element = enumerator.nextObject() as? String {
         if element.hasSuffix("gif") {
-            let destUrl = source + "result/" + (NSURL(fileURLWithPath: element).URLByDeletingPathExtension?.lastPathComponent!)! + ".pmz"
+            let destUrl = dest + (NSURL(fileURLWithPath: element).URLByDeletingPathExtension?.lastPathComponent!)! + ".pmz"
             convertFile(source + element, dest: destUrl)
         }
     }
