@@ -16,32 +16,16 @@ class GameViewController: UIViewController {
         
         let scene = GameScene()
         scene.Initialize()
-        
-        // Configure the view.
+
         let skView = self.view as! SKView
         skView.showsFPS = true
-        //skView.showsNodeCount = true
-        //skView.showsDrawCount = true
-        //skView.showsQuadCount = true
-        //skView.showsPhysics = true
-
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = true
-        
         skView.presentScene(scene)
     }
 
     override func shouldAutorotate() -> Bool {
         return false
     }
-
-  /*  override func supportedInterfaceOrientations() -> Int {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.AllButUpsideDown.rawValue)
-        } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
-        }
-    }*/
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -29,7 +29,7 @@ class AnimationSerializer {
         data.appendBytes(&noFrames, length:sizeof(UInt32))
         
         // Write out frames
-        for var frameIndex:UInt32 = 0;frameIndex < noFrames;frameIndex++ {
+        for frameIndex:UInt32 in 0 ..< noFrames {
             let currentFrame = animation.Frames[Int(frameIndex)]
             
             // duration - 4 byte
@@ -44,8 +44,8 @@ class AnimationSerializer {
             
             // Write pixel data
             var temp: UInt32 = 0
-            for var i:Int = 0;i < Int(width); i++ {
-                for var j:Int = 0;j < Int(height); j++ {
+            for i:Int in 0 ..< Int(width) {
+                for j:Int in 0 ..< Int(height) {
                     temp = currentFrame.Data[i][j]
                     data.appendBytes(&temp, length:sizeof(UInt32))
                 }
@@ -70,7 +70,7 @@ class AnimationSerializer {
         var data: [[UInt32]]
         // Iterate through the frames and add them to Animation
 
-        for var frameIndex:UInt32 = 0;frameIndex < noFrames;frameIndex++ {
+        for _:UInt32 in 0 ..< noFrames {
             
             // Get the duration - 4 byte
             let duration = binaryScanner.read32()!
@@ -87,8 +87,8 @@ class AnimationSerializer {
             // Fill pixel data
             data = [[UInt32]](count: Int(width), repeatedValue: [UInt32](count: Int(height), repeatedValue: 0))
             
-            for var i:Int = 0;i < Int(frame.Width); i++ {
-                for var j:Int = 0;j < Int(frame.Height); j++ {
+            for i:Int in 0 ..< Int(frame.Width) {
+                for j:Int in 0 ..< Int(frame.Height) {
                     data[i][j] = binaryScanner.read32()!
                 }
             }

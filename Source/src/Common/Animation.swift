@@ -10,6 +10,7 @@ import Foundation
 
 class Animation {
     
+    var Name = ""
     var ElapsedTime: Float = 0
     var CurrentFrameIndex = 0
     

@@ -8,68 +8,38 @@
 
 import Foundation
 
-enum LifeState : String {
-    case Newborn = "NewBorn"
-    case Child = "Child"
-    case Adult = "Adult"
-}
-
 class Pet : Actor {
     
+    var animationDictionary = Dictionary<LifeState, Dictionary<String, Animation>>()
     var lifeState = LifeState.Newborn
     var codeName:String = ""
     var species:String = ""
+    var age = 0
     var minHealth = 0
-    var maxHealth = 0
-    var startHealth = 0
-    let serializer = AnimationSerializer()
-    
-    var animationDictionary = Dictionary<LifeState, Dictionary<String, Animation>>()
+    var maxHealth = 100
     
     func GetAnimation(name:String) -> Animation {
         var animationsForCurrentLifeState = animationDictionary[lifeState]!
         return animationsForCurrentLifeState[name]!
     }
     
-    func LoadAnimations(configPath: String)
+    override func Act(delta: Float) {
+        super.Act(delta)
+    }
+    
+    func setLifeState(state:LifeState)
     {
-        // get config file and parse as JSON object
-        var err: NSError?
-        var data:NSData? = NSFileManager.defaultManager().contentsAtPath(configPath)
-        
-        do {
-        let result = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as! NSDictionary
-
-        
-        // get categories
-        let animCats = result["AnimationCategories"] as! NSArray
-        for (category) in animCats {
-            let cat = category as! NSDictionary
-            var lifeState = LifeState(rawValue: ((category as! NSDictionary)["@LifeState"] as! String))
-            var categoryName = ((category as! NSDictionary)["@Name"] as! String)
-            
-            // get animations
-            let animations = category["Animations"] as! NSArray
-            var result = Dictionary<String, Animation>()
-            for (animationPhase) in animations {
-                let anim = animationPhase as! NSDictionary
-                var path = anim["@Path"] as! String
-                var name = anim["@Name"] as! String
-                
-                var directoryPath = path.stringByDeletingLastPathComponent
-                var filenameAndExtension = path.lastPathComponent
-                var fileName = filenameAndExtension.stringByDeletingPathExtension
-                var fileExt = filenameAndExtension.pathExtension
-                var bundlePath = NSBundle.mainBundle().pathForResource(fileName, ofType: fileExt, inDirectory: directoryPath)
-                
-                var unzippedFile = serializer.ReadZip(bundlePath!)
-                result[name] = serializer.Deserialize(unzippedFile!)
-            }
-            
-            animationDictionary[lifeState!] = result
-        }
-        } catch {
-            
-        }
+        self.lifeState = state
+        self.CurrentAnimation = GetAnimation(CurrentAnimation.Name)
+    }
+    
+    func WalkLeft()
+    {
+        self.Location = Point(x: self.Location.X - 1, y: self.Location.Y)
+    }
+    
+    func WalkRight()
+    {
+        self.Location = Point(x: self.Location.X + 1, y: self.Location.Y)
     }
 }
